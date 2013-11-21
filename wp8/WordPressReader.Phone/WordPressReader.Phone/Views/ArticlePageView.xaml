@@ -1,0 +1,34 @@
+﻿<phone:PhoneApplicationPage
+    x:Class="WordPressReader.Phone.Views.ArticlePageView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:msc="clr-namespace:MSC.Phone.Shared.Controls;assembly=MSC.Phone.Shared.Controls"
+    mc:Ignorable="d"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="Portrait"  Orientation="Portrait"
+    DataContext="{Binding Source={StaticResource Locator}, Path=ArticlePageViewModel}"
+    shell:SystemTray.IsVisible="True">
+
+    <!--LayoutRoot is the root grid where all page content is placed-->
+    <Grid x:Name="LayoutRoot" Background="Transparent">
+        <!--Pivot Control-->
+        <phone:Pivot Title="{Binding PageTitle}">
+            <!--Pivot item one-->
+            <phone:PivotItem Header="blog post">
+                <phone:WebBrowser msc:WebBrowserExtension.Html="{Binding Html}" />
+            </phone:PivotItem>
+
+            <!--Pivot item two-->
+            <phone:PivotItem Header="komentari">
+                <Grid/>
+            </phone:PivotItem>
+        </phone:Pivot>
+    </Grid>
+    
+</phone:PhoneApplicationPage>
