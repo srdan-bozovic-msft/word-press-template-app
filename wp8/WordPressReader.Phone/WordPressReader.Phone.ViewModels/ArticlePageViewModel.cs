@@ -18,6 +18,7 @@ namespace WordPressReader.Phone.ViewModels
     public class ArticlePageViewModel : ViewModelBase, IArticlePageViewModel
     {
         private IBlogRepository _blogRepository;
+        private INavigationService _navigationService;
         private Article[] _articles;
 
         private string _pageTitle;
@@ -87,9 +88,10 @@ namespace WordPressReader.Phone.ViewModels
             }
         }
 
-        public ArticlePageViewModel(IBlogRepository blogRepository)
+        public ArticlePageViewModel(IBlogRepository blogRepository, INavigationService navigationService)
         {
             _blogRepository = blogRepository;
+            _navigationService = navigationService;
             PageTitle = "Vitki Gurman";
             FlipArticleHorizontalCommand = new RelayCommand<double>(async velocity => {
                 try
@@ -105,6 +107,8 @@ namespace WordPressReader.Phone.ViewModels
 
                 }
             });
+            GoToCommentsCommand = new RelayCommand(
+                ()=>_navigationService.Navigate("Comments",_articles[_current].Link));
         }
 
         public async Task InitializeAsync(dynamic parameter)
@@ -120,7 +124,7 @@ namespace WordPressReader.Phone.ViewModels
                     break;
                 }
             }
-            await OnSetIndex(0,0);
+            await OnSetIndex(SelectedIndex, SelectedIndex);
         }
 
         private int _current;
@@ -133,48 +137,43 @@ namespace WordPressReader.Phone.ViewModels
                 var nextUrl = _articles[(_current + 1) % count].Link;
                 var previousUrl = _articles[(_current - 1 + count) % count].Link;
                 var cts = new CancellationTokenSource();
-                if (newValue == 0 && oldValue == 0)
-                {
-                    HtmlOne = await _blogRepository.GetArticleContentAsync(url, cts.Token);
-                
-                    var results = await Task.WhenAll(
-                        _blogRepository.GetArticleContentAsync(nextUrl, cts.Token),
-                        _blogRepository.GetArticleContentAsync(previousUrl, cts.Token));
-                    HtmlTwo = results[0];
-                    HtmlThree = results[1];
-                    return;
-                }
                 if (newValue == 1)
                 {
-                    HtmlOne = "";
                     HtmlThree = "";
+                    HtmlOne = "";
+                    if(oldValue == 1)
+                        HtmlTwo = await _blogRepository.GetArticleContentAsync(url, cts.Token);
                     var results = await Task.WhenAll(
                         _blogRepository.GetArticleContentAsync(nextUrl, cts.Token),
                         _blogRepository.GetArticleContentAsync(previousUrl, cts.Token));
-                    HtmlOne = results[0];
-                    HtmlThree = results[1];
+                    HtmlThree = results[0];
+                    HtmlOne = results[1];
                     return;
                 }
                 if (newValue == 2)
                 {
                     HtmlTwo = "";
                     HtmlOne = "";
+                    if (oldValue == 2)
+                        HtmlThree = await _blogRepository.GetArticleContentAsync(url, cts.Token);
                     var results = await Task.WhenAll(
                         _blogRepository.GetArticleContentAsync(nextUrl, cts.Token),
                         _blogRepository.GetArticleContentAsync(previousUrl, cts.Token));
-                    HtmlTwo = results[0];
-                    HtmlOne = results[1];
+                    HtmlTwo = results[1];
+                    HtmlOne = results[0];
                     return;
                 }
                 if (newValue == 0)
                 {
                     HtmlThree = "";
                     HtmlTwo = "";
+                    if (oldValue == 0)
+                        HtmlOne = await _blogRepository.GetArticleContentAsync(url, cts.Token);
                     var results = await Task.WhenAll(
                         _blogRepository.GetArticleContentAsync(nextUrl, cts.Token),
                         _blogRepository.GetArticleContentAsync(previousUrl, cts.Token));
-                    HtmlThree = results[0];
-                    HtmlTwo = results[1];
+                    HtmlThree = results[1];
+                    HtmlTwo = results[0];
                     return;
                 }
             }
@@ -186,5 +185,6 @@ namespace WordPressReader.Phone.ViewModels
 
         public ICommand FlipArticleHorizontalCommand { get; set; }
 
+        public ICommand GoToCommentsCommand { get; set; }
     }
 }

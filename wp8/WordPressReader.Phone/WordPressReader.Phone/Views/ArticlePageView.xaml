@@ -10,6 +10,7 @@
     xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
     xmlns:controls="clr-namespace:WordPressReader.Phone.Controls"
     mc:Ignorable="d"
+    xmlns:bar="clr-namespace:BindableApplicationBar;assembly=BindableApplicationBar"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
@@ -49,5 +50,15 @@
             </phone:PivotItem>
         </phone:Pivot>
     </Grid>
+
+    <bar:Bindable.ApplicationBar>
+        <bar:BindableApplicationBar>
+            <bar:BindableApplicationBarButton 
+                IconUri="/Assets/AppBar/appbar.send.text.rest.png" 
+                Text="komentari"
+                Command="{Binding GoToCommentsCommand}"
+                />
+        </bar:BindableApplicationBar>
+    </bar:Bindable.ApplicationBar>
     
 </phone:PhoneApplicationPage>

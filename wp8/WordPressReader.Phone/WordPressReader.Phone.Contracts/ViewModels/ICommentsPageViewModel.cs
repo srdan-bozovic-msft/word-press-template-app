@@ -8,14 +8,9 @@ using System.Windows.Input;
 
 namespace WordPressReader.Phone.Contracts.ViewModels
 {
-    public interface IArticlePageViewModel : IPageViewModel
+    public interface ICommentsPageViewModel : IPageViewModel
     {
         string PageTitle { get; }
-        string HtmlOne { get; }
-        string HtmlTwo { get; }
-        string HtmlThree { get; }
-        int SelectedIndex { get; }
-        ICommand FlipArticleHorizontalCommand { get; }
-        ICommand GoToCommentsCommand { get; }
+        string Url { get; }
     }
 }

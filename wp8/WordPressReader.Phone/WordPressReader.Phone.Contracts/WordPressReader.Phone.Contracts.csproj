@@ -86,8 +86,10 @@
     <Compile Include="Models\Article.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\IBlogRepository.cs" />
+    <Compile Include="ViewModels\ICommentsPageViewModel.cs" />
     <Compile Include="ViewModels\IMainPageViewModel.cs" />
     <Compile Include="ViewModels\IArticlePageViewModel.cs" />
+    <Compile Include="Views\ICommentsPageView.cs" />
     <Compile Include="Views\IMainPageView.cs" />
     <Compile Include="Views\IArticlePageView.cs" />
   </ItemGroup>
