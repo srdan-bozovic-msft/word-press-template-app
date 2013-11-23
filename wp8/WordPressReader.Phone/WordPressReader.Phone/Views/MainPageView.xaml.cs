@@ -7,20 +7,14 @@ using System.Windows.Controls;
 using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
-using WordPressReader.Phone.Contracts.Views;
 using MSC.Phone.Shared.Contracts.ViewModels;
-using MSC.Phone.Shared.Controls.LinqToVisualTree;
-using System.Windows.Input;
-using System.Diagnostics;
-using System.Threading;
-using System.Threading.Tasks;
-
+using WordPressReader.Phone.Contracts.Views;
 
 namespace WordPressReader.Phone.Views
 {
-    public partial class ArticlePageView : PhoneApplicationPage, IArticlePageView
+    public partial class MainPageView : PhoneApplicationPage, IMainPageView
     {
-        public ArticlePageView()
+        public MainPageView()
         {
             InitializeComponent();
         }

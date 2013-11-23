@@ -11,5 +11,6 @@ namespace MSC.Phone.Shared.Contracts.Services
     {
         Task<string> GetRawAsync(string url, CancellationToken cancellationToken);
         Task<T> GetJsonAsync<T>(string url, CancellationToken cancellationToken);
+        Task<T> GetXmlAsync<T>(string url, CancellationToken cancellationToken);
     }
 }

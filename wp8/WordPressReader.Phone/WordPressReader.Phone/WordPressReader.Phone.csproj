@@ -93,6 +93,10 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\HtmlView.xaml.cs">
+      <DependentUpon>HtmlView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\LinqToVisualTree.cs" />
     <Compile Include="LocalizedStrings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\AppResources.Designer.cs">
@@ -103,6 +107,9 @@
     <Compile Include="Common\ViewModelLocator.cs" />
     <Compile Include="Views\ArticlePageView.xaml.cs">
       <DependentUpon>ArticlePageView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MainPageView.xaml.cs">
+      <DependentUpon>MainPageView.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -138,6 +145,12 @@
     <Content Include="Assets\Tiles\IconicTileSmall.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="README_FIRST.txt" />
+    <Content Include="Toolkit.Content\ApplicationBar.Add.png" />
+    <Content Include="Toolkit.Content\ApplicationBar.Cancel.png" />
+    <Content Include="Toolkit.Content\ApplicationBar.Check.png" />
+    <Content Include="Toolkit.Content\ApplicationBar.Delete.png" />
+    <Content Include="Toolkit.Content\ApplicationBar.Select.png" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\AppResources.resx">
@@ -156,6 +169,9 @@
       <HintPath>..\packages\PhoneThemeManager.1.5\lib\sl4-windowsphone71\JeffWilcox.PhoneThemeManager.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Phone.Controls, Version=8.0.0.0, Culture=neutral, PublicKeyToken=24eec0d8c86cda1e, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.Phone.Controls.Toolkit">
+      <HintPath>..\packages\WPtoolkit.4.2013.08.16\lib\wp8\Microsoft.Phone.Controls.Toolkit.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Practices.ServiceLocation">
       <HintPath>..\packages\MvvmLightLibs.4.2.30.0\lib\wp8\Microsoft.Practices.ServiceLocation.dll</HintPath>
     </Reference>
@@ -180,6 +196,10 @@
       <Project>{CEACEDAA-C99D-4DED-AACB-28C981BC456F}</Project>
       <Name>WordPressReader.Phone.Contracts</Name>
     </ProjectReference>
+    <ProjectReference Include="..\WordPressReader.Phone.Repositories\WordPressReader.Phone.Repositories.csproj">
+      <Project>{B84C5FCD-9C09-4D42-AAF7-18FAB0A797B5}</Project>
+      <Name>WordPressReader.Phone.Repositories</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WordPressReader.Phone.ViewModels\WordPressReader.Phone.ViewModels.csproj">
       <Project>{F0B14EB3-B273-4D1C-9C98-94198DD36794}</Project>
       <Name>WordPressReader.Phone.ViewModels</Name>
@@ -187,7 +207,15 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Page Include="Controls\HtmlView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\ArticlePageView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MainPageView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

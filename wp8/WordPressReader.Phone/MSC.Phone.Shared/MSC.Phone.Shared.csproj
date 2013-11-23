@@ -84,6 +84,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Contracts\DI\IInstanceFactory.cs" />
+    <Compile Include="Contracts\Models\RssFeed.cs" />
     <Compile Include="Contracts\PhoneServices\ITileService.cs" />
     <Compile Include="Contracts\Repositories\RepositoryResult.cs" />
     <Compile Include="Contracts\Services\ICacheItem.cs" />

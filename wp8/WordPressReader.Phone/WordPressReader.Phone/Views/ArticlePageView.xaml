@@ -7,6 +7,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:msc="clr-namespace:MSC.Phone.Shared.Controls;assembly=MSC.Phone.Shared.Controls"
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+    xmlns:controls="clr-namespace:WordPressReader.Phone.Controls"
     mc:Ignorable="d"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
@@ -18,15 +20,32 @@
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot" Background="Transparent">
         <!--Pivot Control-->
-        <phone:Pivot Title="{Binding PageTitle}">
+        <phone:Pivot x:Name="Pivot" Title="{Binding PageTitle}" SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}">
             <!--Pivot item one-->
-            <phone:PivotItem Header="blog post">
-                <phone:WebBrowser msc:WebBrowserExtension.Html="{Binding Html}" />
+            <phone:PivotItem>
+                <Grid>
+                    <controls:HtmlView Html="{Binding Path=HtmlOne}" FlipHorizontalCommand="{Binding FlipArticleHorizontalCommand}">
+
+                    </controls:HtmlView>
+                </Grid>
             </phone:PivotItem>
 
             <!--Pivot item two-->
-            <phone:PivotItem Header="komentari">
-                <Grid/>
+            <phone:PivotItem>
+                <Grid>
+                    <controls:HtmlView Html="{Binding Path=HtmlTwo}" FlipHorizontalCommand="{Binding FlipArticleHorizontalCommand}">
+
+                    </controls:HtmlView>
+                </Grid>
+            </phone:PivotItem>
+
+            <!--Pivot item three-->
+            <phone:PivotItem>
+                <Grid>
+                    <controls:HtmlView Html="{Binding Path=HtmlThree}" FlipHorizontalCommand="{Binding FlipArticleHorizontalCommand}">
+
+                    </controls:HtmlView>
+                </Grid>
             </phone:PivotItem>
         </phone:Pivot>
     </Grid>
