@@ -13,6 +13,7 @@ using System.Windows.Shapes;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Reactive;
 using System.Text;
+using Microsoft.Phone.Tasks;
 
 namespace WordPressReader.Phone.Controls
 {
@@ -25,6 +26,15 @@ namespace WordPressReader.Phone.Controls
             WebBrowser.ScriptNotify += WebBrowser_ScriptNotify;
 
             WebBrowser.Loaded += browser_Loaded;
+            WebBrowser.Navigating+=WebBrowser_Navigating;
+        }
+
+        private void WebBrowser_Navigating(object sender, NavigatingEventArgs e)
+        {
+            e.Cancel = true;
+            var webBrowserTask = new WebBrowserTask();
+            webBrowserTask.Uri = e.Uri;
+            webBrowserTask.Show();
         }
 
         private void browser_Loaded(object sender, RoutedEventArgs e)
