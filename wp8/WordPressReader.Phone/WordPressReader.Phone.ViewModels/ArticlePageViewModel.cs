@@ -35,47 +35,175 @@ namespace WordPressReader.Phone.ViewModels
             }
         }
 
-        private string _html;
+        private string _htmlOne;
         public  string HtmlOne
         {
             get 
             {
-                return _html;
+                return _htmlOne;
             }
             set
             {
-                _html = value;
+                _htmlOne = value;
                 RaisePropertyChanged(() => HtmlOne);
             }
         }
 
-        private string _htmlNext;
+        private string _titleOne;
+        public string TitleOne
+        {
+            get
+            {
+                return _titleOne;
+            }
+            set
+            {
+                _titleOne = value;
+                RaisePropertyChanged(() => TitleOne);
+            }
+        }
+
+        private string _leadOne;
+        public string LeadOne
+        {
+            get
+            {
+                return _leadOne;
+            }
+            set
+            {
+                _leadOne = value;
+                RaisePropertyChanged(() => LeadOne);
+            }
+        }
+
+        private string _positionOne;
+        public string PositionOne
+        {
+            get
+            {
+                return _positionOne;
+            }
+            set
+            {
+                _positionOne = value;
+                RaisePropertyChanged(() => PositionOne);
+            }
+        }
+
+        private string _htmlTwo;
         public string HtmlTwo
         {
             get
             {
-                return _htmlNext;
+                return _htmlTwo;
             }
             set
             {
-                _htmlNext = value;
+                _htmlTwo = value;
                 RaisePropertyChanged(() => HtmlTwo);
             }
         }
 
-        private string _htmlPrevious;
+        private string _titleTwo;
+        public string TitleTwo
+        {
+            get
+            {
+                return _titleTwo;
+            }
+            set
+            {
+                _titleTwo = value;
+                RaisePropertyChanged(() => TitleTwo);
+            }
+        }
+
+        private string _leadTwo;
+        public string LeadTwo
+        {
+            get
+            {
+                return _leadTwo;
+            }
+            set
+            {
+                _leadTwo = value;
+                RaisePropertyChanged(() => LeadTwo);
+            }
+        }
+
+        private string _positionTwo;
+        public string PositionTwo
+        {
+            get
+            {
+                return _positionTwo;
+            }
+            set
+            {
+                _positionTwo = value;
+                RaisePropertyChanged(() => PositionTwo);
+            }
+        }
+
+
+        private string _htmlThree;
         public  string HtmlThree
         {
             get 
             {
-                return _htmlPrevious;
+                return _htmlThree;
             }
             set
             {
-                _htmlPrevious = value;
+                _htmlThree = value;
                 RaisePropertyChanged(() => HtmlThree);
             }
         }
+
+        private string _titleThree;
+        public string TitleThree
+        {
+            get
+            {
+                return _titleThree;
+            }
+            set
+            {
+                _titleThree = value;
+                RaisePropertyChanged(() => TitleThree);
+            }
+        }
+
+        private string _leadThree;
+        public string LeadThree
+        {
+            get
+            {
+                return _leadThree;
+            }
+            set
+            {
+                _leadThree = value;
+                RaisePropertyChanged(() => LeadThree);
+            }
+        }
+
+        private string _positionThree;
+        public string PositionThree
+        {
+            get
+            {
+                return _positionThree;
+            }
+            set
+            {
+                _positionThree = value;
+                RaisePropertyChanged(() => PositionThree);
+            }
+        }
+
 
         private int _selectedIndex;
         public int SelectedIndex
@@ -133,7 +261,10 @@ namespace WordPressReader.Phone.ViewModels
             try
             {
                 var count = _articles.Length;
-                var url = _articles[(_current + count) % count].Link;
+                var article = _articles[(_current + count) % count];
+                var nextArticle = _articles[(_current + 1 + count) % count];
+                var previousArticle = _articles[(_current - 1 + count) % count];
+                var url = article.Link;
                 var nextUrl = _articles[(_current + 1) % count].Link;
                 var previousUrl = _articles[(_current - 1 + count) % count].Link;
                 var cts = new CancellationTokenSource();
@@ -141,11 +272,17 @@ namespace WordPressReader.Phone.ViewModels
                 {
                     HtmlThree = "";
                     HtmlOne = "";
-                    if(oldValue == 1)
+                    if (oldValue == 1)
+                    {
                         HtmlTwo = await _blogRepository.GetArticleContentAsync(url, cts.Token);
+                    }
+                    TitleTwo = article.Title;
+                    LeadTwo = string.Format("{0:00}.{1:00}.{2:0000} | {3}", article.PublishingDate.Day, article.PublishingDate.Month, article.PublishingDate.Year, article.Category);
+                    PositionTwo = string.Format("{0}/{1}", _current + 1, count); 
                     var results = await Task.WhenAll(
                         _blogRepository.GetArticleContentAsync(nextUrl, cts.Token),
                         _blogRepository.GetArticleContentAsync(previousUrl, cts.Token));
+
                     HtmlThree = results[0];
                     HtmlOne = results[1];
                     return;
@@ -155,7 +292,12 @@ namespace WordPressReader.Phone.ViewModels
                     HtmlTwo = "";
                     HtmlOne = "";
                     if (oldValue == 2)
+                    {
                         HtmlThree = await _blogRepository.GetArticleContentAsync(url, cts.Token);
+                    }
+                    TitleThree = article.Title;
+                    LeadThree = string.Format("{0:00}.{1:00}.{2:0000} | {3}", article.PublishingDate.Day, article.PublishingDate.Month, article.PublishingDate.Year, article.Category);
+                    PositionThree = string.Format("{0}/{1}", _current + 1, count);
                     var results = await Task.WhenAll(
                         _blogRepository.GetArticleContentAsync(nextUrl, cts.Token),
                         _blogRepository.GetArticleContentAsync(previousUrl, cts.Token));
@@ -168,7 +310,12 @@ namespace WordPressReader.Phone.ViewModels
                     HtmlThree = "";
                     HtmlTwo = "";
                     if (oldValue == 0)
+                    {
                         HtmlOne = await _blogRepository.GetArticleContentAsync(url, cts.Token);
+                    }
+                    TitleOne = article.Title;
+                    LeadOne = string.Format("{0:00}.{1:00}.{2:0000} | {3}", article.PublishingDate.Day, article.PublishingDate.Month, article.PublishingDate.Year, article.Category);
+                    PositionOne = string.Format("{0}/{1}", _current + 1, count);
                     var results = await Task.WhenAll(
                         _blogRepository.GetArticleContentAsync(nextUrl, cts.Token),
                         _blogRepository.GetArticleContentAsync(previousUrl, cts.Token));

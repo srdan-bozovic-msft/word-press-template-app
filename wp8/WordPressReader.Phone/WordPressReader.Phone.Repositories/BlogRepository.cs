@@ -45,7 +45,8 @@ namespace WordPressReader.Phone.Repositories
                         Description = item.Description,
                         Link = item.Link,
                         PublishingDate = item.Date, 
-                        CommentLink = item.CommentRss })
+                        CommentLink = item.CommentRss,
+                        Category = item.Categories.FirstOrDefault()})
                     );
             }
             return _articles.ToArray();

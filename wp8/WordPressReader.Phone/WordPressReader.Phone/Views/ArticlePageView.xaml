@@ -21,11 +21,18 @@
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot" Background="Transparent">
         <!--Pivot Control-->
-        <phone:Pivot x:Name="Pivot" Title="{Binding PageTitle}" SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}">
+        <phone:Pivot x:Name="Pivot" SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}">
             <!--Pivot item one-->
             <phone:PivotItem>
                 <Grid>
-                    <controls:HtmlView Html="{Binding Path=HtmlOne}" FlipHorizontalCommand="{Binding FlipArticleHorizontalCommand}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="{Binding TitleOne}" Style="{StaticResource PhoneTextLargeStyle}" FontWeight="Bold" TextWrapping="Wrap" />
+                    <TextBlock Grid.Row="1" Text="{Binding LeadOne}" Style="{StaticResource PhoneTextSubtleStyle}" TextWrapping="Wrap" />
+                    <controls:HtmlView Grid.Row="2" Html="{Binding Path=HtmlOne}" FlipHorizontalCommand="{Binding FlipArticleHorizontalCommand}">
 
                     </controls:HtmlView>
                 </Grid>
@@ -34,7 +41,14 @@
             <!--Pivot item two-->
             <phone:PivotItem>
                 <Grid>
-                    <controls:HtmlView Html="{Binding Path=HtmlTwo}" FlipHorizontalCommand="{Binding FlipArticleHorizontalCommand}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="{Binding TitleTwo}" Style="{StaticResource PhoneTextLargeStyle}" FontWeight="Bold" TextWrapping="Wrap" />
+                    <TextBlock Grid.Row="1" Text="{Binding LeadTwo}" Style="{StaticResource PhoneTextSubtleStyle}" TextWrapping="Wrap" />
+                    <controls:HtmlView Grid.Row="2" Html="{Binding Path=HtmlTwo}" FlipHorizontalCommand="{Binding FlipArticleHorizontalCommand}">
 
                     </controls:HtmlView>
                 </Grid>
@@ -43,7 +57,14 @@
             <!--Pivot item three-->
             <phone:PivotItem>
                 <Grid>
-                    <controls:HtmlView Html="{Binding Path=HtmlThree}" FlipHorizontalCommand="{Binding FlipArticleHorizontalCommand}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="{Binding TitleThree}" Style="{StaticResource PhoneTextLargeStyle}" FontWeight="Bold"  TextWrapping="Wrap" />
+                    <TextBlock Grid.Row="1" Text="{Binding LeadThree}" Style="{StaticResource PhoneTextSubtleStyle}" TextWrapping="Wrap" />                    
+                    <controls:HtmlView Grid.Row="2" Html="{Binding Path=HtmlThree}" FlipHorizontalCommand="{Binding FlipArticleHorizontalCommand}">
 
                     </controls:HtmlView>
                 </Grid>

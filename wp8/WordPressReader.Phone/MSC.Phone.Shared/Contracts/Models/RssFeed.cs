@@ -29,6 +29,9 @@ namespace MSC.Phone.Shared.Contracts.Models
                 [XmlElement(ElementName = "commentRss", Namespace = "http://wellformedweb.org/CommentAPI/")]
                 public string CommentRss { get; set; }
 
+                [XmlElement(ElementName = "category")]
+                public string[] Categories { get; set; }
+
                 [XmlIgnore]
                 public DateTime Date
                 {
