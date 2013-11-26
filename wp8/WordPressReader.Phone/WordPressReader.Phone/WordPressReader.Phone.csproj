@@ -134,6 +134,7 @@
     <Content Include="Assets\ApplicationIcon.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Assets\Templates\ArticleTemplate.html" />
     <Content Include="Assets\Tiles\FlipCycleTileLarge.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -206,6 +207,10 @@
     <ProjectReference Include="..\WordPressReader.Phone.Repositories\WordPressReader.Phone.Repositories.csproj">
       <Project>{B84C5FCD-9C09-4D42-AAF7-18FAB0A797B5}</Project>
       <Name>WordPressReader.Phone.Repositories</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WordPressReader.Phone.Services\WordPressReader.Phone.Services.csproj">
+      <Project>{CEFA9F6B-B359-44F3-AEFC-DCDEB6FE0ABF}</Project>
+      <Name>WordPressReader.Phone.Services</Name>
     </ProjectReference>
     <ProjectReference Include="..\WordPressReader.Phone.ViewModels\WordPressReader.Phone.ViewModels.csproj">
       <Project>{F0B14EB3-B273-4D1C-9C98-94198DD36794}</Project>

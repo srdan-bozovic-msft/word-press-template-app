@@ -16,22 +16,25 @@ using System.Windows.Shapes;
 using WordPressReader.Phone.Contracts.Models;
 using WordPressReader.Phone.Contracts.Repositories;
 using System.Linq;
+using WordPressReader.Phone.Contracts.Services;
 
 namespace WordPressReader.Phone.Repositories
 {
     public class BlogRepository : IBlogRepository
     {
         private IHttpClientService _httpClientService;
+        private IConfigurationService _configurationService;
         private readonly List<Article> _articles;
 
-        public BlogRepository(IHttpClientService httpClientService)
+        public BlogRepository(IHttpClientService httpClientService, IConfigurationService configurationService)
         {
             _httpClientService = httpClientService;
+            _configurationService = configurationService;
             _articles = new List<Article>();
         }
         public async Task<Article[]> GetArticlesAsync(CancellationToken cancellationToken)
         {
-            var feedUrl = "http://www.vitkigurman.com/feed";
+            var feedUrl = await _configurationService.GetFeedUrlAsync();
             if(_articles.Count == 0)
             {
                 var feed = await _httpClientService.GetXmlAsync<RssFeed>(feedUrl, cancellationToken);
@@ -57,7 +60,12 @@ namespace WordPressReader.Phone.Repositories
             }
             if(string.IsNullOrEmpty(article.Content))
             {
-                article.Content = await _httpClientService.GetRawAsync(articleUrl, cancellationToken);
+                article.Content =
+                    string.Format(await _configurationService.GetArticleTemplateAsync(),
+                        HtmlHelper.ExtractContent(
+                            await _httpClientService.GetRawAsync(articleUrl, cancellationToken),
+                            await _configurationService.GetContentXPathAsync())
+                    );
             }
             return article.Content;
         }
