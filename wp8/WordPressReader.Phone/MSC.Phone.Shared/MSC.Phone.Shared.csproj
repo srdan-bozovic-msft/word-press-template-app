@@ -85,6 +85,7 @@
   <ItemGroup>
     <Compile Include="Contracts\DI\IInstanceFactory.cs" />
     <Compile Include="Contracts\Models\RssFeed.cs" />
+    <Compile Include="Contracts\PhoneServices\ISocialShare.cs" />
     <Compile Include="Contracts\PhoneServices\ITileService.cs" />
     <Compile Include="Contracts\Repositories\RepositoryResult.cs" />
     <Compile Include="Contracts\Services\ICacheItem.cs" />
@@ -100,6 +101,7 @@
     <Compile Include="Implementation\HttpClientService.cs" />
     <Compile Include="Implementation\NavigationService.cs" />
     <Compile Include="Implementation\PhoneStorageCacheService.cs" />
+    <Compile Include="Implementation\SocialShare.cs" />
     <Compile Include="Implementation\StatefullPhoneApplicationPage.cs" />
     <Compile Include="Implementation\TileService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

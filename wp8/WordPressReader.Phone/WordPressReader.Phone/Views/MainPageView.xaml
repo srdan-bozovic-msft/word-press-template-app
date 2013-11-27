@@ -14,6 +14,7 @@
     Foreground="{StaticResource PhoneForegroundBrush}"
     SupportedOrientations="Portrait" Orientation="Portrait"
     mc:Ignorable="d"
+    xmlns:bar="clr-namespace:BindableApplicationBar;assembly=BindableApplicationBar"
     DataContext="{Binding Source={StaticResource Locator}, Path=MainPageViewModel}"
     shell:SystemTray.IsVisible="True">
 
@@ -24,20 +25,15 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <!--TitlePanel contains the name of the application and page title-->
-        <StackPanel Grid.Row="0" Margin="12,17,0,28">
-            <TextBlock Text="{Binding PageTitle}" Style="{StaticResource PhoneTextNormalStyle}"/>
-        </StackPanel>
-
         <!--ContentPanel - place additional content here-->
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
             <phone:LongListSelector x:Name="ArticleList"  ItemsSource="{Binding Articles}" >
                 <phone:LongListSelector.ItemTemplate>
                     <DataTemplate>
-                        <Grid toolkit:TiltEffect.IsTiltEnabled="True" Background="LightGray" Margin="12 6 12 6">
+                        <Grid toolkit:TiltEffect.IsTiltEnabled="True"  Margin="12 6 12 6">
                             <StackPanel Margin="3">
-                                <TextBlock Text="{Binding Title}" TextWrapping="Wrap" Style="{StaticResource PhoneTextLargeStyle}"/>
-                                <TextBlock Text="{Binding Description}" TextWrapping="Wrap" Style="{StaticResource PhoneTextNormalStyle}"/>
+                                <TextBlock Text="{Binding Title}" Foreground="#cc0001" TextWrapping="Wrap" Style="{StaticResource PhoneTextLargeStyle}"/>
+                                <TextBlock Text="{Binding Description}"  Foreground="#444444" TextTrimming="WordEllipsis" Style="{StaticResource PhoneTextNormalStyle}"/>
                             </StackPanel>
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="Tap">
@@ -51,4 +47,14 @@
         </Grid>
     </Grid>
 
+    <bar:Bindable.ApplicationBar>
+        <bar:BindableApplicationBar>
+            <bar:BindableApplicationBarButton 
+                IconUri="/Assets/AppBar/appbar.sync.rest.png" 
+                Text="osveži"
+                Command="{Binding ReloadCommand}"
+                />
+        </bar:BindableApplicationBar>
+    </bar:Bindable.ApplicationBar>
+    
 </phone:PhoneApplicationPage>

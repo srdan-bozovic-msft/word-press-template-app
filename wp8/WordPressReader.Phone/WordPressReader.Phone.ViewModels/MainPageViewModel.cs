@@ -55,6 +55,17 @@ namespace WordPressReader.Phone.ViewModels
                 article => 
                     _navigationService.Navigate("Article", article.Link)
                 );
+            ReloadCommand = new RelayCommand(async () =>
+                {
+                    _articles.Clear();
+                    var cts = new CancellationTokenSource();
+                    var articles = await _blogRepository.GetArticlesAsync(cts.Token);
+                    foreach (var article in articles)
+                    {
+                        _articles.Add(article);
+                    }
+
+                });
         }
 
         public async Task InitializeAsync(dynamic parameter)
@@ -68,5 +79,6 @@ namespace WordPressReader.Phone.ViewModels
         }
 
         public ICommand SelectArticleCommand { get; set; }
+        public ICommand ReloadCommand { get; set; }
     }
 }

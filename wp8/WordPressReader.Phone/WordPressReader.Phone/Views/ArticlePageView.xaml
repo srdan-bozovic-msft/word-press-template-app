@@ -79,6 +79,11 @@
                 Text="komentari"
                 Command="{Binding GoToCommentsCommand}"
                 />
+            <bar:BindableApplicationBarButton 
+                IconUri="/Assets/AppBar/appbar.share.rest.png" 
+                Text="podeli"
+                Command="{Binding ShareCommand}"
+                />
         </bar:BindableApplicationBar>
     </bar:Bindable.ApplicationBar>
     

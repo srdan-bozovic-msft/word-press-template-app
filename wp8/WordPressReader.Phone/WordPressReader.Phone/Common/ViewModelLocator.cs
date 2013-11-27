@@ -20,6 +20,7 @@ using MSC.Phone.Shared.Contracts.DI;
 using MSC.Phone.Shared.Contracts.PhoneServices;
 using MSC.Phone.Shared.Contracts.Services;
 using MSC.Phone.Shared.DI;
+using MSC.Phone.Shared.Implementation;
 using WordPressReader.Phone.Contracts.Repositories;
 using WordPressReader.Phone.Contracts.Services;
 using WordPressReader.Phone.Contracts.ViewModels;
@@ -56,6 +57,7 @@ namespace WordPressReader.Phone.Common
             ioc.RegisterType<IHttpClientService, HttpClientService>();
             ioc.RegisterType<ICacheService, PhoneStorageCacheService>();
             ioc.RegisterType<INavigationService, NavigationService>();
+            ioc.RegisterType<ISocialShare, SocialShare>();
             ioc.RegisterType<IConfigurationService, ConfigurationService>();
             ioc.RegisterType<IBlogRepository, BlogRepository>();
             ioc.RegisterType<IMainPageViewModel, MainPageViewModel>();

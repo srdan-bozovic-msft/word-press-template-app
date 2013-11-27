@@ -1,6 +1,7 @@
 ﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using MSC.Phone.Shared.Contracts.Models;
+using MSC.Phone.Shared.Contracts.PhoneServices;
 using MSC.Phone.Shared.Contracts.Services;
 using System;
 using System.Collections.Generic;
@@ -19,6 +20,7 @@ namespace WordPressReader.Phone.ViewModels
     {
         private IBlogRepository _blogRepository;
         private INavigationService _navigationService;
+        private ISocialShare _socialShare;
         private Article[] _articles;
 
         private string _pageTitle;
@@ -216,10 +218,11 @@ namespace WordPressReader.Phone.ViewModels
             }
         }
 
-        public ArticlePageViewModel(IBlogRepository blogRepository, INavigationService navigationService)
+        public ArticlePageViewModel(IBlogRepository blogRepository, INavigationService navigationService, ISocialShare socialShare)
         {
             _blogRepository = blogRepository;
             _navigationService = navigationService;
+            _socialShare = socialShare;
             PageTitle = "Vitki Gurman";
             FlipArticleHorizontalCommand = new RelayCommand<double>(async velocity => {
                 try
@@ -237,6 +240,11 @@ namespace WordPressReader.Phone.ViewModels
             });
             GoToCommentsCommand = new RelayCommand(
                 ()=>_navigationService.Navigate("Comments",_articles[_current].Link));
+            ShareCommand = new RelayCommand(
+                () => {
+                    var article = _articles[_current];
+                    _socialShare.ShareLink(article.Title, new Uri(article.Link, UriKind.RelativeOrAbsolute));
+                });
         }
 
         public async Task InitializeAsync(dynamic parameter)
@@ -272,13 +280,14 @@ namespace WordPressReader.Phone.ViewModels
                 {
                     HtmlThree = "";
                     HtmlOne = "";
-                    if (oldValue == 1)
-                    {
-                        HtmlTwo = await _blogRepository.GetArticleContentAsync(url, cts.Token);
-                    }
                     TitleTwo = article.Title;
                     LeadTwo = string.Format("{0:00}.{1:00}.{2:0000} | {3}", article.PublishingDate.Day, article.PublishingDate.Month, article.PublishingDate.Year, article.Category);
-                    PositionTwo = string.Format("{0}/{1}", _current + 1, count); 
+                    PositionTwo = string.Format("{0}/{1}", _current + 1, count);
+                    if (oldValue == 1)
+                    {
+                        HtmlTwo = "";
+                        HtmlTwo = await _blogRepository.GetArticleContentAsync(url, cts.Token);
+                    }
                     var results = await Task.WhenAll(
                         _blogRepository.GetArticleContentAsync(nextUrl, cts.Token),
                         _blogRepository.GetArticleContentAsync(previousUrl, cts.Token));
@@ -291,13 +300,14 @@ namespace WordPressReader.Phone.ViewModels
                 {
                     HtmlTwo = "";
                     HtmlOne = "";
-                    if (oldValue == 2)
-                    {
-                        HtmlThree = await _blogRepository.GetArticleContentAsync(url, cts.Token);
-                    }
                     TitleThree = article.Title;
                     LeadThree = string.Format("{0:00}.{1:00}.{2:0000} | {3}", article.PublishingDate.Day, article.PublishingDate.Month, article.PublishingDate.Year, article.Category);
                     PositionThree = string.Format("{0}/{1}", _current + 1, count);
+                    if (oldValue == 2)
+                    {
+                        HtmlThree = "";
+                        HtmlThree = await _blogRepository.GetArticleContentAsync(url, cts.Token);
+                    }
                     var results = await Task.WhenAll(
                         _blogRepository.GetArticleContentAsync(nextUrl, cts.Token),
                         _blogRepository.GetArticleContentAsync(previousUrl, cts.Token));
@@ -309,13 +319,14 @@ namespace WordPressReader.Phone.ViewModels
                 {
                     HtmlThree = "";
                     HtmlTwo = "";
-                    if (oldValue == 0)
-                    {
-                        HtmlOne = await _blogRepository.GetArticleContentAsync(url, cts.Token);
-                    }
                     TitleOne = article.Title;
                     LeadOne = string.Format("{0:00}.{1:00}.{2:0000} | {3}", article.PublishingDate.Day, article.PublishingDate.Month, article.PublishingDate.Year, article.Category);
                     PositionOne = string.Format("{0}/{1}", _current + 1, count);
+                    if (oldValue == 0)
+                    {
+                        HtmlOne = "";
+                        HtmlOne = await _blogRepository.GetArticleContentAsync(url, cts.Token);
+                    }
                     var results = await Task.WhenAll(
                         _blogRepository.GetArticleContentAsync(nextUrl, cts.Token),
                         _blogRepository.GetArticleContentAsync(previousUrl, cts.Token));
@@ -333,5 +344,7 @@ namespace WordPressReader.Phone.ViewModels
         public ICommand FlipArticleHorizontalCommand { get; set; }
 
         public ICommand GoToCommentsCommand { get; set; }
+
+        public ICommand ShareCommand { get; set; }
     }
 }
