@@ -24,11 +24,13 @@ namespace WordPressReader.Phone.Services
         public async Task<string> GetFeedUrlAsync()
         {
             return "http://www.vitkigurman.com/feed/";
+            //return "http://www.vecnidecak.com/feed/";
         }
 
         public async Task<string> GetContentXPathAsync()
         {
             return "//div[@class='pf-content']";
+            //return "//div[@class='entry fix']";
         }
 
         public async Task<string> GetArticleTemplateAsync()

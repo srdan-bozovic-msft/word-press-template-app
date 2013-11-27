@@ -71,6 +71,7 @@ namespace WordPressReader.Phone.ViewModels
         public async Task InitializeAsync(dynamic parameter)
         {
             var cts = new CancellationTokenSource();
+            _articles.Clear();
             var articles = await _blogRepository.GetArticlesAsync(true, cts.Token);
             foreach (var article in articles)
             {
