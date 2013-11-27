@@ -59,7 +59,7 @@ namespace WordPressReader.Phone.ViewModels
                 {
                     _articles.Clear();
                     var cts = new CancellationTokenSource();
-                    var articles = await _blogRepository.GetArticlesAsync(cts.Token);
+                    var articles = await _blogRepository.GetArticlesAsync(true, cts.Token);
                     foreach (var article in articles)
                     {
                         _articles.Add(article);
@@ -71,7 +71,7 @@ namespace WordPressReader.Phone.ViewModels
         public async Task InitializeAsync(dynamic parameter)
         {
             var cts = new CancellationTokenSource();
-            var articles = await _blogRepository.GetArticlesAsync(cts.Token);
+            var articles = await _blogRepository.GetArticlesAsync(true, cts.Token);
             foreach (var article in articles)
             {
                 _articles.Add(article);

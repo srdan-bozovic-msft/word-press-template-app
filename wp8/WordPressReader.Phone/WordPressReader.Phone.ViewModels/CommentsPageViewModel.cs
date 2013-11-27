@@ -22,31 +22,40 @@ namespace WordPressReader.Phone.ViewModels
         private IBlogRepository _blogRepository;
         private INavigationService _navigationService;
 
-        private string _pageTitle;
-        public string PageTitle
+        private readonly ObservableCollection<Comment> _comments;
+        public ObservableCollection<Comment> Comments
         {
             get
             {
-                return _pageTitle;
-            }
-            set
-            {
-                _pageTitle = value;
-                RaisePropertyChanged(() => PageTitle);
+                return _comments;
             }
         }
 
-        private string _url;
-        public string Url
+        private string _title;
+        public string Title
         {
             get
             {
-                return _url;
+                return _title;
             }
             set
             {
-                _url = value;
-                RaisePropertyChanged(() => Url);
+                _title = value;
+                RaisePropertyChanged(() => Title);
+            }
+        }
+
+        private string _lead;
+        public string Lead
+        {
+            get
+            {
+                return _lead;
+            }
+            set
+            {
+                _lead = value;
+                RaisePropertyChanged(() => Lead);
             }
         }
 
@@ -54,12 +63,24 @@ namespace WordPressReader.Phone.ViewModels
         {
             _blogRepository = blogRepository;
             _navigationService = navigationService;
-            PageTitle = "Vitki Gurman";
+            _comments = new ObservableCollection<Comment>();
         }
 
         public async Task InitializeAsync(dynamic parameter)
         {
-            Url = parameter;
+            var cts = new CancellationTokenSource();
+            var articles = await _blogRepository.GetArticlesAsync(false, cts.Token);
+            var article = articles.FirstOrDefault(a => a.Link == parameter);
+            if (article != null)
+            {
+                Title = article.Title;
+                Lead = string.Format("{0:00}.{1:00}.{2:0000} | {3}", article.PublishingDate.Day, article.PublishingDate.Month, article.PublishingDate.Year, article.Category);
+                var comments = await _blogRepository.GetCommentsAsync(article.CommentLink, cts.Token);
+                foreach (var comment in comments)
+                {
+                    _comments.Add(comment);
+                }
+            }
         }
     }
 }

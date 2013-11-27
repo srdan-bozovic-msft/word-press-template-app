@@ -25,31 +25,48 @@ namespace WordPressReader.Phone.Repositories
         private IHttpClientService _httpClientService;
         private IConfigurationService _configurationService;
         private readonly List<Article> _articles;
-
+        private readonly List<Comment> _comments;
         public BlogRepository(IHttpClientService httpClientService, IConfigurationService configurationService)
         {
             _httpClientService = httpClientService;
             _configurationService = configurationService;
             _articles = new List<Article>();
+            _comments = new List<Comment>();
         }
-        public async Task<Article[]> GetArticlesAsync(CancellationToken cancellationToken)
+        public async Task<Article[]> GetArticlesAsync(bool update, CancellationToken cancellationToken)
         {
             var feedUrl = await _configurationService.GetFeedUrlAsync();
-            if(_articles.Count == 0)
+            if (update || _articles.Count == 0)
             {
+                _articles.Clear();
                 var feed = await _httpClientService.GetXmlAsync<RssFeed>(feedUrl, cancellationToken);
                 _articles.AddRange(
                     feed.Channel.Items.Select(
-                    item => new Article {
-                        Title = item.Title, 
+                    item => new Article
+                    {
+                        Title = item.Title,
                         Description = item.Description,
                         Link = item.Link,
-                        PublishingDate = item.Date, 
+                        PublishingDate = item.Date,
                         CommentLink = item.CommentRss,
-                        Category = item.Categories.FirstOrDefault()})
-                    );
+                        Category = item.Categories.FirstOrDefault()
+                    }));
             }
             return _articles.ToArray();
+        }
+
+        public async Task<Comment[]> GetCommentsAsync(string url, CancellationToken cancellationToken)
+        {
+            _comments.Clear();
+            var feed = await _httpClientService.GetXmlAsync<RssFeed>(url, cancellationToken);
+            _comments.AddRange(
+                feed.Channel.Items.Select(
+                item => new Comment
+                {
+                    Content = item.Description,
+                })
+            );
+            return _comments.ToArray();
         }
 
         public async Task<string> GetArticleContentAsync(string articleUrl, CancellationToken cancellationToken)

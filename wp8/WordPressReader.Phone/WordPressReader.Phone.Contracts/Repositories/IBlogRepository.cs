@@ -10,7 +10,8 @@ namespace WordPressReader.Phone.Contracts.Repositories
 {
     public interface IBlogRepository
     {
-        Task<Article[]> GetArticlesAsync(CancellationToken cancellationToken);
+        Task<Article[]> GetArticlesAsync(bool update, CancellationToken cancellationToken);
+        Task<Comment[]> GetCommentsAsync(string url, CancellationToken cancellationToken); 
         Task<string> GetArticleContentAsync(string articleUrl, CancellationToken cancellationToken);
     }
 }

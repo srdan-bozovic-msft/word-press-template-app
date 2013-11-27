@@ -14,6 +14,7 @@
     DataContext="{Binding Source={StaticResource Locator}, Path=CommentsPageViewModel}"  
 
     mc:Ignorable="d"
+    xmlns:c4f="clr-namespace:Coding4Fun.Toolkit.Controls;assembly=Coding4Fun.Toolkit.Controls"
     shell:SystemTray.IsVisible="True">
 
     <!--LayoutRoot is the root grid where all page content is placed-->
@@ -23,15 +24,25 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <!--TitlePanel contains the name of the application and page title-->
-        <StackPanel Grid.Row="0" Margin="12,17,0,28">
-            <TextBlock Text="{Binding PageTitle}" Style="{StaticResource PhoneTextNormalStyle}"/>
-            <TextBlock Text="{Binding Url}" TextWrapping="Wrap" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
-        </StackPanel>
-
         <!--ContentPanel - place additional content here-->
-        <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
-
+        <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,38,12,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <TextBlock Text="{Binding Title}" Style="{StaticResource PhoneTextLargeStyle}" FontWeight="Bold" TextWrapping="Wrap" />
+            <TextBlock Grid.Row="1" Text="{Binding Lead}" Style="{StaticResource PhoneTextSubtleStyle}" TextWrapping="Wrap" />
+            <phone:LongListSelector  Grid.Row="2" x:Name="ArticleList"  ItemsSource="{Binding Comments}" >
+                <phone:LongListSelector.ItemTemplate>
+                    <DataTemplate>
+                        <c4f:ChatBubbleTextBox 
+			                Text="{Binding Content}"
+                            ChatBubbleDirection="UpperRight"
+                            TextWrapping="Wrap"/>
+                    </DataTemplate>
+                </phone:LongListSelector.ItemTemplate>
+            </phone:LongListSelector>
         </Grid>
     </Grid>
     

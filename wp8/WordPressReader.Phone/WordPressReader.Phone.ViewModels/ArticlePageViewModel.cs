@@ -250,7 +250,7 @@ namespace WordPressReader.Phone.ViewModels
         public async Task InitializeAsync(dynamic parameter)
         {
             var cts = new CancellationTokenSource();
-            _articles = await _blogRepository.GetArticlesAsync(cts.Token);
+            _articles = await _blogRepository.GetArticlesAsync(false, cts.Token);
             _current = -1;
             for (int i = 0; i < _articles.Length; i++)
             {
