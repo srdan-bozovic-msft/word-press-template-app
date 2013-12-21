@@ -35,22 +35,34 @@ namespace WordPressReader.Phone.Repositories
         }
         public async Task<Article[]> GetArticlesAsync(bool update, CancellationToken cancellationToken)
         {
-            var feedUrl = await _configurationService.GetFeedUrlAsync();
+            var feedUrl = _configurationService.GetFeedUrl();
             if (update || _articles.Count == 0)
             {
                 _articles.Clear();
-                var feed = await _httpClientService.GetXmlAsync<RssFeed>(feedUrl, cancellationToken);
-                _articles.AddRange(
-                    feed.Channel.Items.Select(
-                    item => new Article
-                    {
-                        Title = item.Title,
-                        Description = item.Description,
-                        Link = item.Link,
-                        PublishingDate = item.Date,
-                        CommentLink = item.CommentRss,
-                        Category = item.Categories.FirstOrDefault()
-                    }));
+                var fetch = true;
+                var page = 1;
+                while (fetch)
+                {
+                    var feed = await _httpClientService.GetXmlAsync<RssFeed>(feedUrl+"?paged="+page, cancellationToken);
+                    _articles.AddRange(
+                        feed.Channel.Items
+                        .Where(i => string.Join("", i.Categories).Contains(_configurationService.GetCategoryFilter()))
+                        .Select(
+                        item => new Article
+                        {
+                            Title = item.Title,
+                            Description = item.Description,
+                            Link = item.Link,
+                            PublishingDate = item.Date,
+                            CommentLink = item.CommentRss,
+                            Category = item.Categories.FirstOrDefault()
+                        }));
+                    page++;
+                    if (feed.Channel.Items.Length == 0)
+                        fetch = false;
+                    else if (feed.Channel.Items.Last().Date < DateTime.Now.AddMonths(-3))
+                        fetch = false;
+                }
             }
             return _articles.ToArray();
         }
@@ -82,7 +94,7 @@ namespace WordPressReader.Phone.Repositories
                     string.Format(await _configurationService.GetArticleTemplateAsync(),
                         HtmlHelper.ExtractContent(
                             await _httpClientService.GetRawAsync(articleUrl, cancellationToken),
-                            await _configurationService.GetContentXPathAsync())
+                            _configurationService.GetContentXPath())
                     );
             }
             return article.Content;

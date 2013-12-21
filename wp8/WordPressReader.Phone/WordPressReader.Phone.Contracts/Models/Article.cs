@@ -14,7 +14,6 @@ namespace WordPressReader.Phone.Contracts.Models
         public string Link { get; set; }
         public string CommentLink { get; set; }
         public string Content { get; set; }
-
         public string Category { get; set; }
     }
 }

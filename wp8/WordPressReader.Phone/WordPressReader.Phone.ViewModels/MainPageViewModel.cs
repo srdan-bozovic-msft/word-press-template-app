@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using WordPressReader.Phone.Contracts.Models;
 using WordPressReader.Phone.Contracts.Repositories;
+using WordPressReader.Phone.Contracts.Services;
 using WordPressReader.Phone.Contracts.ViewModels;
 
 namespace WordPressReader.Phone.ViewModels

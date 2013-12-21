@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Deployment xmlns="http://schemas.microsoft.com/windowsphone/2012/deployment" AppPlatformVersion="8.0">
   <DefaultLanguage xmlns="" code="en-US" />
-  <App xmlns="" ProductID="{9d05ec3c-0810-4ce1-a83e-ce927307b504}" Title="Vitki gurman" RuntimeType="Silverlight" Version="1.0.0.0" Genre="apps.normal" Author="WordPressReader.Phone author" Description="tanak struk uz ukusni hranu" Publisher="WordPressReader.Phone" PublisherID="{4fea5e3c-c7a4-489b-8de1-7f5dd2f79cd6}">
+  <App xmlns="" ProductID="{9d05ec3c-0810-4ce1-a83e-ce927307b504}" Title="Žanin ugao" RuntimeType="Silverlight" Version="1.0.0.0" Genre="apps.normal" Author="WordPressReader.Phone author" Description="Iz Žaninog ugla" Publisher="WordPressReader.Phone" PublisherID="{4fea5e3c-c7a4-489b-8de1-7f5dd2f79cd6}">
     <IconPath IsRelative="true" IsResource="false">Assets\ApplicationIcon.png</IconPath>
     <Capabilities>
       <Capability Name="ID_CAP_NETWORKING" />
