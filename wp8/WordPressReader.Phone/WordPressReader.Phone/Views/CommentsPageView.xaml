@@ -33,7 +33,7 @@
             </Grid.RowDefinitions>
             <TextBlock Text="{Binding Title}" Style="{StaticResource PhoneTextLargeStyle}" FontWeight="Bold" TextWrapping="Wrap" />
             <TextBlock Grid.Row="1" Text="{Binding Lead}" Style="{StaticResource PhoneTextSubtleStyle}" TextWrapping="Wrap" />
-            <phone:LongListSelector  Grid.Row="2" x:Name="ArticleList"  ItemsSource="{Binding Comments}" >
+            <phone:LongListSelector Grid.Row="2" x:Name="ArticleList"  ItemsSource="{Binding Comments}" >
                 <phone:LongListSelector.ItemTemplate>
                     <DataTemplate>
                         <c4f:ChatBubbleTextBox 

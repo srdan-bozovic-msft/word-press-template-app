@@ -76,6 +76,8 @@ namespace WordPressReader.Phone.ViewModels
                 Title = article.Title;
                 Lead = string.Format("{0:00}.{1:00}.{2:0000} | {3}", article.PublishingDate.Day, article.PublishingDate.Month, article.PublishingDate.Year, article.Category);
                 var comments = await _blogRepository.GetCommentsAsync(article.CommentLink, cts.Token);
+                if (comments.Count() > 0)
+                    _comments.Clear();
                 foreach (var comment in comments)
                 {
                     _comments.Add(comment);
