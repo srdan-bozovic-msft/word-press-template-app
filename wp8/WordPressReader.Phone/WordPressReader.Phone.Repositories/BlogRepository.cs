@@ -58,7 +58,9 @@ namespace WordPressReader.Phone.Repositories
                             Category = item.Categories.FirstOrDefault()
                         }));
                     page++;
-                    if (feed.Channel.Items.Length == 0)
+                    if (_articles.Count > 10)
+                        fetch = false;
+                    else if (feed.Channel.Items.Length == 0)
                         fetch = false;
                     else if (feed.Channel.Items.Last().Date < DateTime.Now.AddMonths(-3))
                         fetch = false;
