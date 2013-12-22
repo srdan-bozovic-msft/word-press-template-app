@@ -33,6 +33,7 @@
             </Grid.RowDefinitions>
             <TextBlock Text="{Binding Title}" Style="{StaticResource PhoneTextLargeStyle}" FontWeight="Bold" TextWrapping="Wrap" />
             <TextBlock Grid.Row="1" Text="{Binding Lead}" Style="{StaticResource PhoneTextSubtleStyle}" TextWrapping="Wrap" />
+            <TextBlock Grid.Row="2" Margin="12" Style="{StaticResource PhoneTextSubtleStyle}" Visibility="{Binding HasComments, Converter={StaticResource InvertableBooleanToVisibilityConverter}}" Text="Ne postoje komentari za ovaj članak."/>
             <phone:LongListSelector Grid.Row="2" x:Name="ArticleList"  ItemsSource="{Binding Comments}" >
                 <phone:LongListSelector.ItemTemplate>
                     <DataTemplate>

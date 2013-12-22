@@ -59,6 +59,20 @@ namespace WordPressReader.Phone.ViewModels
             }
         }
 
+        private bool _hasComments;
+        public bool HasComments
+        {
+            get
+            {
+                return _hasComments;
+            }
+            set
+            {
+                _hasComments = value;
+                RaisePropertyChanged(() => HasComments);
+            }
+        }
+
         public CommentsPageViewModel(IBlogRepository blogRepository, INavigationService navigationService)
         {
             _blogRepository = blogRepository;
@@ -68,6 +82,7 @@ namespace WordPressReader.Phone.ViewModels
 
         public async Task InitializeAsync(dynamic parameter)
         {
+            HasComments = true;
             var cts = new CancellationTokenSource();
             var articles = await _blogRepository.GetArticlesAsync(false, cts.Token);
             var article = articles.FirstOrDefault(a => a.Link == parameter);
@@ -82,6 +97,7 @@ namespace WordPressReader.Phone.ViewModels
                 {
                     _comments.Add(comment);
                 }
+                HasComments = _comments.Count > 0;
             }
         }
     }

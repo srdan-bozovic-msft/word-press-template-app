@@ -73,13 +73,16 @@ namespace WordPressReader.Phone.Repositories
         {
             _comments.Clear();
             var feed = await _httpClientService.GetXmlAsync<RssFeed>(url, cancellationToken);
-            _comments.AddRange(
-                feed.Channel.Items.Select(
-                item => new Comment
-                {
-                    Content = item.Description,
-                })
-            );
+            if (feed != null && feed.Channel.Items != null)
+            {
+                _comments.AddRange(
+                    feed.Channel.Items.Select(
+                    item => new Comment
+                    {
+                        Content = item.Description,
+                    })
+                );
+            }
             return _comments.ToArray();
         }
 
