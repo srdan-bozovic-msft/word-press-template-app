@@ -26,5 +26,10 @@ namespace WordPressReader.Phone.Views
         {
             NavigationService.GoBack();
         }
+
+        protected override void OnBackKeyPress(System.ComponentModel.CancelEventArgs e)
+        {
+            NavigationService.RemoveBackEntry();
+        }
     }
 }

@@ -85,19 +85,33 @@ namespace WordPressReader.Phone.ViewModels
             HasComments = true;
             var cts = new CancellationTokenSource();
             var articles = await _blogRepository.GetArticlesAsync(false, cts.Token);
-            var article = articles.Value.FirstOrDefault(a => a.Link == parameter);
-            if (article != null)
+            if (!articles.IsError)
             {
-                Title = article.Title;
-                Lead = string.Format("{0:00}.{1:00}.{2:0000} | {3}", article.PublishingDate.Day, article.PublishingDate.Month, article.PublishingDate.Year, article.Category);
-                var comments = await _blogRepository.GetCommentsAsync(article.CommentLink, cts.Token);
-                if (comments.Value.Count() > 0)
-                    _comments.Clear();
-                foreach (var comment in comments.Value)
+                var article = articles.Value.FirstOrDefault(a => a.Link == parameter);
+                if (article != null)
                 {
-                    _comments.Add(comment);
+                    Title = article.Title;
+                    Lead = string.Format("{0:00}.{1:00}.{2:0000} | {3}", article.PublishingDate.Day, article.PublishingDate.Month, article.PublishingDate.Year, article.Category);
+                    var comments = await _blogRepository.GetCommentsAsync(article.CommentLink, cts.Token);
+                    if (!comments.IsError)
+                    {
+                        if (comments.Value.Count() > 0)
+                            _comments.Clear();
+                        foreach (var comment in comments.Value)
+                        {
+                            _comments.Add(comment);
+                        }
+                        HasComments = _comments.Count > 0;
+                    }
+                    else
+                    {
+                        _navigationService.Navigate("Error");
+                    }
                 }
-                HasComments = _comments.Count > 0;
+            }
+            else
+            {
+                _navigationService.Navigate("Error");
             }
         }
     }

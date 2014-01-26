@@ -235,7 +235,7 @@ namespace WordPressReader.Phone.ViewModels
                 }
                 catch(Exception xcp)
                 {
-
+                    _navigationService.Navigate("Error");
                 }
             });
             GoToCommentsCommand = new RelayCommand(
@@ -286,11 +286,17 @@ namespace WordPressReader.Phone.ViewModels
                     if (oldValue == 1)
                     {
                         HtmlTwo = "";
-                        HtmlTwo = await _blogRepository.GetArticleContentAsync(url, cts.Token);
+                        var result = await _blogRepository.GetArticleContentAsync(url, cts.Token);
+                        if (result.IsError)
+                            _navigationService.Navigate("Error");
+                        HtmlTwo = result;
                     }
                     var results = await Task.WhenAll(
                         _blogRepository.GetArticleContentAsync(nextUrl, cts.Token),
                         _blogRepository.GetArticleContentAsync(previousUrl, cts.Token));
+
+                    if (results[0].IsError || results[1].IsError)
+                        _navigationService.Navigate("Error");
 
                     HtmlThree = results[0];
                     HtmlOne = results[1];
@@ -306,11 +312,16 @@ namespace WordPressReader.Phone.ViewModels
                     if (oldValue == 2)
                     {
                         HtmlThree = "";
-                        HtmlThree = await _blogRepository.GetArticleContentAsync(url, cts.Token);
+                        var result = await _blogRepository.GetArticleContentAsync(url, cts.Token);
+                        if (result.IsError)
+                            _navigationService.Navigate("Error");
+                        HtmlThree = result;
                     }
                     var results = await Task.WhenAll(
                         _blogRepository.GetArticleContentAsync(nextUrl, cts.Token),
                         _blogRepository.GetArticleContentAsync(previousUrl, cts.Token));
+                    if (results[0].IsError || results[1].IsError)
+                        _navigationService.Navigate("Error");
                     HtmlTwo = results[1];
                     HtmlOne = results[0];
                     return;
@@ -325,11 +336,16 @@ namespace WordPressReader.Phone.ViewModels
                     if (oldValue == 0)
                     {
                         HtmlOne = "";
-                        HtmlOne = await _blogRepository.GetArticleContentAsync(url, cts.Token);
+                        var result = await _blogRepository.GetArticleContentAsync(url, cts.Token);
+                        if(result.IsError)
+                            _navigationService.Navigate("Error");
+                        HtmlOne = result;
                     }
                     var results = await Task.WhenAll(
                         _blogRepository.GetArticleContentAsync(nextUrl, cts.Token),
                         _blogRepository.GetArticleContentAsync(previousUrl, cts.Token));
+                    if (results[0].IsError || results[1].IsError)
+                        _navigationService.Navigate("Error");
                     HtmlThree = results[1];
                     HtmlTwo = results[0];
                     return;
@@ -337,7 +353,7 @@ namespace WordPressReader.Phone.ViewModels
             }
             catch(Exception xcp)
             {
-
+                _navigationService.Navigate("Error");
             }
         }
 
