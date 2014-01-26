@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MSC.Phone.Shared.Contracts.Repositories;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,8 +11,8 @@ namespace WordPressReader.Phone.Contracts.Repositories
 {
     public interface IBlogRepository
     {
-        Task<Article[]> GetArticlesAsync(bool update, CancellationToken cancellationToken);
-        Task<Comment[]> GetCommentsAsync(string url, CancellationToken cancellationToken); 
-        Task<string> GetArticleContentAsync(string articleUrl, CancellationToken cancellationToken);
+        Task<RepositoryResult<Article[]>> GetArticlesAsync(bool update, CancellationToken cancellationToken);
+        Task<RepositoryResult<Comment[]>> GetCommentsAsync(string url, CancellationToken cancellationToken); 
+        Task<RepositoryResult<string>> GetArticleContentAsync(string articleUrl, CancellationToken cancellationToken);
     }
 }

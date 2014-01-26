@@ -58,25 +58,30 @@ namespace WordPressReader.Phone.ViewModels
                 );
             ReloadCommand = new RelayCommand(async () =>
                 {
-                    _articles.Clear();
-                    var cts = new CancellationTokenSource();
-                    var articles = await _blogRepository.GetArticlesAsync(true, cts.Token);
-                    foreach (var article in articles)
-                    {
-                        _articles.Add(article);
-                    }
-
+                    await ReloadArticlesAsync();
                 });
         }
 
         public async Task InitializeAsync(dynamic parameter)
         {
+            await ReloadArticlesAsync();
+        }
+
+        private async Task ReloadArticlesAsync()
+        {
             var cts = new CancellationTokenSource();
             _articles.Clear();
             var articles = await _blogRepository.GetArticlesAsync(true, cts.Token);
-            foreach (var article in articles)
+            if (!articles.IsError)
             {
-                _articles.Add(article);
+                foreach (var article in articles.Value)
+                {
+                    _articles.Add(article);
+                }
+            }
+            else
+            {
+                _navigationService.Navigate("Error");
             }
         }
 

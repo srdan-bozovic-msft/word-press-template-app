@@ -85,15 +85,15 @@ namespace WordPressReader.Phone.ViewModels
             HasComments = true;
             var cts = new CancellationTokenSource();
             var articles = await _blogRepository.GetArticlesAsync(false, cts.Token);
-            var article = articles.FirstOrDefault(a => a.Link == parameter);
+            var article = articles.Value.FirstOrDefault(a => a.Link == parameter);
             if (article != null)
             {
                 Title = article.Title;
                 Lead = string.Format("{0:00}.{1:00}.{2:0000} | {3}", article.PublishingDate.Day, article.PublishingDate.Month, article.PublishingDate.Year, article.Category);
                 var comments = await _blogRepository.GetCommentsAsync(article.CommentLink, cts.Token);
-                if (comments.Count() > 0)
+                if (comments.Value.Count() > 0)
                     _comments.Clear();
-                foreach (var comment in comments)
+                foreach (var comment in comments.Value)
                 {
                     _comments.Add(comment);
                 }

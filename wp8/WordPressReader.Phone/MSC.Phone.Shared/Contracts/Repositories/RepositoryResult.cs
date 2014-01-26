@@ -23,7 +23,14 @@ namespace MSC.Phone.Shared.Contracts.Repositories
             return new RepositoryResult<T>(value, isCurrent);
         }
 
+        public static RepositoryResult<T> CreateError(Exception xcp)
+        {
+            return new RepositoryResult<T>(xcp);
+        }
+
         public bool IsCurrent { get; protected set; }
+        public bool IsError { get; protected set; }
+        public Exception Exception { get; protected set; }
         public T Value { get;  protected set; }
 
         protected RepositoryResult(T value, bool isCurrent)
@@ -31,5 +38,12 @@ namespace MSC.Phone.Shared.Contracts.Repositories
             Value = value;
             IsCurrent = isCurrent;
         }
+
+        protected RepositoryResult(Exception xcp)
+        {
+            Exception = xcp;
+            IsError = true;
+        }
+
     }
 }
