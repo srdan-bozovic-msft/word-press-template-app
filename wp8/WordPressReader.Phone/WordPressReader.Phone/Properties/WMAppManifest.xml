@@ -4,7 +4,7 @@
   <Languages xmlns="">
     <Language code="sr-Latn" />
   </Languages>
-  <App xmlns="" ProductID="{9d05ec3c-0810-4ce1-a83e-ce927307b504}" Title="Žanin ugao" RuntimeType="Silverlight" Version="1.0.0.0" Genre="apps.normal" Author="BlogStudio" Description="Iz Žaninog ugla" Publisher="BlogStudio" PublisherID="{4fea5e3c-c7a4-489b-8de1-7f5dd2f79cd6}">
+  <App xmlns="" ProductID="{9d05ec3c-0810-4ce1-a83e-ce927307b504}" Title="Žanin ugao" RuntimeType="Silverlight" Version="1.0.0.1" Genre="apps.normal" Author="BlogStudio" Description="Iz Žaninog ugla" Publisher="BlogStudio" PublisherID="{4fea5e3c-c7a4-489b-8de1-7f5dd2f79cd6}">
     <IconPath IsRelative="true" IsResource="false">Assets\ApplicationIcon.png</IconPath>
     <Capabilities>
       <Capability Name="ID_CAP_NETWORKING" />
