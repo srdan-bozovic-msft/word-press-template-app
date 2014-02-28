@@ -31,6 +31,20 @@ namespace WordPressReader.Phone.ViewModels
             }
         }
 
+        private bool _isLoading;
+        public bool IsLoading
+        {
+            get
+            {
+                return _isLoading;
+            }
+            set
+            {
+                _isLoading = value;
+                RaisePropertyChanged(() => IsLoading);
+            }
+        }
+
         private string _title;
         public string Title
         {
@@ -82,6 +96,7 @@ namespace WordPressReader.Phone.ViewModels
 
         public async Task InitializeAsync(dynamic parameter)
         {
+            IsLoading = true;
             HasComments = true;
             var cts = new CancellationTokenSource();
             var articles = await _blogRepository.GetArticlesAsync(false, cts.Token);
@@ -114,6 +129,7 @@ namespace WordPressReader.Phone.ViewModels
             {
                 _navigationService.Navigate("Error");
             }
+            IsLoading = false;
         }
     }
 }

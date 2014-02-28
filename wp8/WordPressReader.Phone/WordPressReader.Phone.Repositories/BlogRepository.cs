@@ -27,6 +27,7 @@ namespace WordPressReader.Phone.Repositories
         private IConfigurationService _configurationService;
         private readonly List<Article> _articles;
         private readonly List<Comment> _comments;
+        private int _nextPage = 0;
         public BlogRepository(IHttpClientService httpClientService, IConfigurationService configurationService)
         {
             _httpClientService = httpClientService;
@@ -42,51 +43,8 @@ namespace WordPressReader.Phone.Repositories
                 if (update || _articles.Count == 0)
                 {
                     _articles.Clear();
-                    var fetch = true;
-                    var page = 1;
-                    while (fetch)
-                    {
-                        var feed = await _httpClientService.GetXmlAsync<RssFeed>(feedUrl + "?paged=" + page, cancellationToken);
-                        var categoryFilter = _configurationService.GetCategoryFilter();
-                        if (!string.IsNullOrEmpty(categoryFilter))
-                        {
-                            _articles.AddRange(
-                                feed.Channel.Items
-                                .Where(i => string.Join("", i.Categories).Contains(_configurationService.GetCategoryFilter()))
-                                .Select(
-                                item => new Article
-                                {
-                                    Title = item.Title,
-                                    Description = item.Description,
-                                    Link = item.Link,
-                                    PublishingDate = item.Date,
-                                    CommentLink = item.CommentRss,
-                                    Category = item.Categories.FirstOrDefault()
-                                }));
-                        }
-                        else
-                        {
-                            _articles.AddRange(
-                                feed.Channel.Items
-                                .Select(
-                                item => new Article
-                                {
-                                    Title = item.Title,
-                                    Description = item.Description,
-                                    Link = item.Link,
-                                    PublishingDate = item.Date,
-                                    CommentLink = item.CommentRss,
-                                    Category = item.Categories.FirstOrDefault()
-                                }));
-                        }
-                        page++;
-                        if (_articles.Count > 10)
-                            fetch = false;
-                        else if (feed.Channel.Items.Length == 0)
-                            fetch = false;
-                        else if (feed.Channel.Items.Last().Date < DateTime.Now.AddMonths(-3))
-                            fetch = false;
-                    }
+                    var _nextPage = 1;
+                    await FetchAsync(cancellationToken, feedUrl);
                 }
                 return _articles.ToArray();
             }
@@ -94,6 +52,86 @@ namespace WordPressReader.Phone.Repositories
             {
                 return RepositoryResult<Article[]>.CreateError(xcp);
             }
+        }
+
+        public async Task<RepositoryResult<Article[]>> GetMoreArticlesAsync(CancellationToken cancellationToken)
+        {
+            try
+            {
+                var feedUrl = _configurationService.GetFeedUrl();
+                await FetchAsync(cancellationToken, feedUrl);
+                return _articles.ToArray();
+            }
+            catch (Exception xcp)
+            {
+                return RepositoryResult<Article[]>.CreateError(xcp);
+            }
+        }
+
+        //private async Task<CancellationToken> FetchAsync(CancellationToken cancellationToken, string feedUrl)
+        //{
+        //    var fetch = true;
+        //    while (fetch)
+        //    {
+        //        var feed = await _httpClientService.GetXmlAsync<RssFeed>(feedUrl + "?paged=" + _nextPage, cancellationToken);
+        //        var categoryFilter = _configurationService.GetCategoryFilter();
+
+        //        var items = feed.Channel.Items;
+
+        //        if (!string.IsNullOrEmpty(categoryFilter))
+        //        {
+        //            items = items.Where(i => string.Join("", i.Categories).Contains(_configurationService.GetCategoryFilter())).ToArray();
+        //        }
+
+        //        _articles.AddRange(
+        //            items.Select(
+        //            item => new Article
+        //            {
+        //                Title = item.Title,
+        //                Description = item.Description,
+        //                Link = item.Link,
+        //                PublishingDate = item.Date,
+        //                CommentLink = item.CommentRss,
+        //                Category = item.Categories.FirstOrDefault()
+        //            }));
+
+        //        _nextPage++;
+        //        if (_articles.Count > 10)
+        //            fetch = false;
+        //        else if (feed.Channel.Items.Length == 0)
+        //            fetch = false;
+        //        else if (feed.Channel.Items.Last().Date < DateTime.Now.AddMonths(-3))
+        //            fetch = false;
+        //    }
+        //    return cancellationToken;
+        //}
+
+        private async Task<CancellationToken> FetchAsync(CancellationToken cancellationToken, string feedUrl)
+        {
+            var feed = await _httpClientService.GetXmlAsync<RssFeed>(feedUrl + "?paged=" + _nextPage, cancellationToken);
+            var categoryFilter = _configurationService.GetCategoryFilter();
+
+            var items = feed.Channel.Items;
+
+            if (!string.IsNullOrEmpty(categoryFilter))
+            {
+                items = items.Where(i => string.Join("", i.Categories).Contains(_configurationService.GetCategoryFilter())).ToArray();
+            }
+
+            _articles.AddRange(
+                items.Select(
+                item => new Article
+                {
+                    Title = item.Title,
+                    Description = item.Description,
+                    Link = item.Link,
+                    PublishingDate = item.Date,
+                    CommentLink = item.CommentRss,
+                    Category = item.Categories.FirstOrDefault()
+                }));
+
+            _nextPage++;
+            return cancellationToken;
         }
 
         public async Task<RepositoryResult<Comment[]>> GetCommentsAsync(string url, CancellationToken cancellationToken)

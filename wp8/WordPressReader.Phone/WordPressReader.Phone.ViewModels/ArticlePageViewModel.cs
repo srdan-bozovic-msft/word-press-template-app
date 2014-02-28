@@ -23,6 +23,20 @@ namespace WordPressReader.Phone.ViewModels
         private ISocialShare _socialShare;
         private Article[] _articles;
 
+        private bool _isLoading;
+        public bool IsLoading
+        {
+            get
+            {
+                return _isLoading;
+            }
+            set
+            {
+                _isLoading = value;
+                RaisePropertyChanged(() => IsLoading);
+            }
+        }
+
         private string _pageTitle;
         public string PageTitle
         {
@@ -225,6 +239,7 @@ namespace WordPressReader.Phone.ViewModels
             _socialShare = socialShare;
             PageTitle = "Vitki Gurman";
             FlipArticleHorizontalCommand = new RelayCommand<double>(async velocity => {
+                IsLoading = true;
                 try
                 {
                     var delta = velocity > 0 ? -1 : 1;
@@ -237,6 +252,7 @@ namespace WordPressReader.Phone.ViewModels
                 {
                     _navigationService.Navigate("Error");
                 }
+                IsLoading = false;
             });
             GoToCommentsCommand = new RelayCommand(
                 ()=>_navigationService.Navigate("Comments",_articles[_current].Link));
@@ -260,7 +276,9 @@ namespace WordPressReader.Phone.ViewModels
                     break;
                 }
             }
+            IsLoading = true;
             await OnSetIndex(SelectedIndex, SelectedIndex);
+            IsLoading = false;
         }
 
         private int _current;
