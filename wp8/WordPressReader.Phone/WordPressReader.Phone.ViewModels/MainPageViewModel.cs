@@ -101,7 +101,26 @@ namespace WordPressReader.Phone.ViewModels
                 _navigationService.Navigate("Error");
             }
             IsLoading = false;
+        }
 
+        public async Task GetMoreArticlesAsync()
+        {
+            IsLoading = true;
+            var cts = new CancellationTokenSource();
+            var articles = await _blogRepository.GetMoreArticlesAsync(cts.Token);
+            if (!articles.IsError)
+            {
+                foreach (var article in articles.Value)
+                {
+                    if (!_articles.Contains(article))
+                    {
+                        article.Title = Utility.HtmlDecode(article.Title);
+                        article.Description = Utility.HtmlDecode(article.Description);
+                        _articles.Add(article);
+                    }
+                }
+            }
+            IsLoading = false;
         }
 
         public ICommand SelectArticleCommand { get; set; }

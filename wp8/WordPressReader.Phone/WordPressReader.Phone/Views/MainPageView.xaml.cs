@@ -9,6 +9,7 @@ using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using MSC.Phone.Shared.Contracts.ViewModels;
 using WordPressReader.Phone.Contracts.Views;
+using WordPressReader.Phone.Contracts.ViewModels;
 
 namespace WordPressReader.Phone.Views
 {
@@ -22,6 +23,20 @@ namespace WordPressReader.Phone.Views
         public IPageViewModel ViewModel
         {
             get { return DataContext as IPageViewModel; }
+        }
+
+        private async void ArticleList_ItemRealized(object sender, ItemRealizationEventArgs e)
+        {
+            if (!ViewModel.IsLoading && ArticleList.ItemsSource != null && ArticleList.ItemsSource.Count >= 2)
+            {
+                if (e.ItemKind == LongListSelectorItemKind.Item)
+                {
+                    if ((e.Container.Content).Equals(ArticleList.ItemsSource[ArticleList.ItemsSource.Count - 2]))
+                    {
+                        await (ViewModel as IMainPageViewModel).GetMoreArticlesAsync();
+                    }
+                }
+            }
         }
     }
 }

@@ -43,7 +43,7 @@ namespace WordPressReader.Phone.Repositories
                 if (update || _articles.Count == 0)
                 {
                     _articles.Clear();
-                    var _nextPage = 1;
+                    _nextPage = 1;
                     await FetchAsync(cancellationToken, feedUrl);
                 }
                 return _articles.ToArray();

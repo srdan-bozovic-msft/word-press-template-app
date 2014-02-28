@@ -18,5 +18,7 @@ namespace WordPressReader.Phone.Contracts.ViewModels
         ObservableCollection<Article> Articles { get; }
 
         ICommand SelectArticleCommand { get; }
+
+        Task GetMoreArticlesAsync();
     }
 }
