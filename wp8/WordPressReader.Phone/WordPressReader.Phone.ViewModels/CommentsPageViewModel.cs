@@ -99,6 +99,7 @@ namespace WordPressReader.Phone.ViewModels
                             _comments.Clear();
                         foreach (var comment in comments.Value)
                         {
+                            comment.Content = Utility.HtmlDecode(comment.Content);
                             _comments.Add(comment);
                         }
                         HasComments = _comments.Count > 0;

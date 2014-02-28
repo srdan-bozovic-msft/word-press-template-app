@@ -76,6 +76,8 @@ namespace WordPressReader.Phone.ViewModels
             {
                 foreach (var article in articles.Value)
                 {
+                    article.Title = Utility.HtmlDecode(article.Title);
+                    article.Description = Utility.HtmlDecode(article.Description);
                     _articles.Add(article);
                 }
             }
