@@ -47,19 +47,38 @@ namespace WordPressReader.Phone.Repositories
                     while (fetch)
                     {
                         var feed = await _httpClientService.GetXmlAsync<RssFeed>(feedUrl + "?paged=" + page, cancellationToken);
-                        _articles.AddRange(
-                            feed.Channel.Items
-                            .Where(i => string.Join("", i.Categories).Contains(_configurationService.GetCategoryFilter()))
-                            .Select(
-                            item => new Article
-                            {
-                                Title = item.Title,
-                                Description = item.Description,
-                                Link = item.Link,
-                                PublishingDate = item.Date,
-                                CommentLink = item.CommentRss,
-                                Category = item.Categories.FirstOrDefault()
-                            }));
+                        var categoryFilter = _configurationService.GetCategoryFilter();
+                        if (!string.IsNullOrEmpty(categoryFilter))
+                        {
+                            _articles.AddRange(
+                                feed.Channel.Items
+                                .Where(i => string.Join("", i.Categories).Contains(_configurationService.GetCategoryFilter()))
+                                .Select(
+                                item => new Article
+                                {
+                                    Title = item.Title,
+                                    Description = item.Description,
+                                    Link = item.Link,
+                                    PublishingDate = item.Date,
+                                    CommentLink = item.CommentRss,
+                                    Category = item.Categories.FirstOrDefault()
+                                }));
+                        }
+                        else
+                        {
+                            _articles.AddRange(
+                                feed.Channel.Items
+                                .Select(
+                                item => new Article
+                                {
+                                    Title = item.Title,
+                                    Description = item.Description,
+                                    Link = item.Link,
+                                    PublishingDate = item.Date,
+                                    CommentLink = item.CommentRss,
+                                    Category = item.Categories.FirstOrDefault()
+                                }));
+                        }
                         page++;
                         if (_articles.Count > 10)
                             fetch = false;

@@ -22,21 +22,21 @@ namespace WordPressReader.Phone.Services
     {
         public string GetCategoryFilter()
         {
-            return "Iz Žaninog ugla";
+            return null;
         }
 
         public string GetFeedUrl()
         {
-            return "http://www.lepotaizdravlje.rs/category/extra/blog/feed";
-            //return "http://www.vitkigurman.com/feed/";
+            //return "http://www.lepotaizdravlje.rs/category/extra/blog/feed";
+            return "http://www.vitkigurman.com/feed/";
             //return "http://www.vecnidecak.com/feed/";
         }
 
         public string GetContentXPath()
         {
-            return "//div[@class='entry']";
+            //return "//div[@class='entry']";
             //return "/html[1]/body[1]/div[1]/div[2]/div[3]/div[1]/div[1]/div[3]";
-            //return "//div[@class='pf-content']";
+            return "//div[@class='pf-content']";
             //return "//div[@class='entry fix']";
         }
 
