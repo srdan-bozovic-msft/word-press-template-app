@@ -70,7 +70,7 @@
                 </Grid>
             </phone:PivotItem>
         </phone:Pivot>
-        <ProgressBar Foreground="#cc0001" IsIndeterminate="{Binding IsLoading, Mode=OneWay}"></ProgressBar>
+        <ProgressBar Foreground="#cc0001" Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityConverter}}" IsIndeterminate="{Binding IsLoading, Mode=OneWay}"></ProgressBar>
     </Grid>
 
     <bar:Bindable.ApplicationBar>

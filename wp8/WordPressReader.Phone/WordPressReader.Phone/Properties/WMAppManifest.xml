@@ -4,7 +4,7 @@
   <Languages xmlns="">
     <Language code="sr-Latn" />
   </Languages>
-  <App xmlns="" ProductID="{78bdf6fb-9390-41d6-a92f-4d8dea22ee63}" Title="Vitki Gurman" RuntimeType="Silverlight" Version="1.0.0.0" Genre="apps.normal" Author="WordPressReader.Phone author" Description="tanak struk uz ukusni hranu" Publisher="WordPressReader.Phone" PublisherID="{4fea5e3c-c7a4-489b-8de1-7f5dd2f79cd6}">
+  <App xmlns="" ProductID="{78bdf6fb-9390-41d6-a92f-4d8dea22ee63}" Title="Vitki Gurman" RuntimeType="Silverlight" Version="1.0.1.0" Genre="apps.normal" Author="WordPressReader.Phone author" Description="tanak struk uz ukusni hranu" Publisher="WordPressReader.Phone" PublisherID="{4fea5e3c-c7a4-489b-8de1-7f5dd2f79cd6}">
     <IconPath IsRelative="true" IsResource="false">Assets\ApplicationIcon.png</IconPath>
     <Capabilities>
       <Capability Name="ID_CAP_NETWORKING" />
