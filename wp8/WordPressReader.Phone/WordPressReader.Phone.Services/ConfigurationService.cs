@@ -28,7 +28,8 @@ namespace WordPressReader.Phone.Services
         public string GetFeedUrl()
         {
             //return "http://www.lepotaizdravlje.rs/category/extra/blog/feed";
-            return "http://www.vitkigurman.com/feed/";
+            //return "http://www.vitkigurman.com/feed/";
+            return "http://nokiamob.me/feed/";
             //return "http://www.vecnidecak.com/feed/";
         }
 
@@ -36,7 +37,8 @@ namespace WordPressReader.Phone.Services
         {
             //return "//div[@class='entry']";
             //return "/html[1]/body[1]/div[1]/div[2]/div[3]/div[1]/div[1]/div[3]";
-            return "//div[@class='pf-content']";
+            //return "//div[@class='pf-content']";
+            return "//div[@class='entry-content']";
             //return "//div[@class='entry fix']";
         }
 
@@ -52,6 +54,12 @@ namespace WordPressReader.Phone.Services
                         .Replace("}","}}").Replace("]]","}");
                 }
             }
+        }
+
+
+        public string ProcessHtml(string html)
+        {
+            return html.Replace("width='584' height='359'", "").Trim();
         }
     }
 }

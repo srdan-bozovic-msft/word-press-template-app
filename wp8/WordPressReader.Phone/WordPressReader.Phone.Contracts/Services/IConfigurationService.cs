@@ -12,5 +12,6 @@ namespace WordPressReader.Phone.Contracts.Services
         string GetContentXPath();
         string GetCategoryFilter();
         Task<string> GetArticleTemplateAsync();
+        string ProcessHtml(string html);
     }
 }

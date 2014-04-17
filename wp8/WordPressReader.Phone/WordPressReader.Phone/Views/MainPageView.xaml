@@ -32,7 +32,7 @@
                     <DataTemplate>
                         <Grid toolkit:TiltEffect.IsTiltEnabled="True"  Margin="12 6 12 6">
                             <StackPanel Margin="3">
-                                <TextBlock Text="{Binding Title}" Foreground="#cc0001" TextWrapping="Wrap" Style="{StaticResource PhoneTextLargeStyle}"/>
+                                <TextBlock Text="{Binding Title}" Foreground="#004c9a" TextWrapping="Wrap" Style="{StaticResource PhoneTextLargeStyle}"/>
                                 <TextBlock Text="{Binding Description}"  Foreground="#444444" TextTrimming="WordEllipsis" Style="{StaticResource PhoneTextNormalStyle}"/>
                             </StackPanel>
                             <i:Interaction.Triggers>
@@ -44,7 +44,7 @@
                     </DataTemplate>
                 </phone:LongListSelector.ItemTemplate>
             </phone:LongListSelector>
-            <ProgressBar Foreground="#cc0001" IsIndeterminate="{Binding IsLoading, Mode=OneWay}"></ProgressBar>
+            <ProgressBar Foreground="#004c9a" IsIndeterminate="{Binding IsLoading, Mode=OneWay}"></ProgressBar>
         </Grid>
     </Grid>
 

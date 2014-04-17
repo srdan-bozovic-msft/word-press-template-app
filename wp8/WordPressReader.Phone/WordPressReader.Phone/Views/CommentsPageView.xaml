@@ -44,8 +44,9 @@
                     </DataTemplate>
                 </phone:LongListSelector.ItemTemplate>
             </phone:LongListSelector>
+            <Rectangle Fill="Transparent" VerticalAlignment="Stretch" Grid.Row="2"/>
         </Grid>
-        <ProgressBar Grid.Row="1" Foreground="#cc0001" IsIndeterminate="{Binding IsLoading, Mode=OneWay}"></ProgressBar>
+        <ProgressBar Grid.Row="1" Foreground="#004c9a" IsIndeterminate="{Binding IsLoading, Mode=OneWay}"></ProgressBar>
     </Grid>
     
 </phone:PhoneApplicationPage>

@@ -134,9 +134,9 @@ namespace WordPressReader.Phone.Controls
             if (e.NewValue != null)
             {
                 var rawHtml = e.NewValue.ToString();
-                var htmlBytes = Encoding.Convert(Encoding.Unicode, Encoding.UTF8, Encoding.Unicode.GetBytes(rawHtml));
-                var html = Encoding.Unicode.GetString(htmlBytes, 0, htmlBytes.Length);
-                htmlView.WebBrowser.NavigateToString(html);
+                //var htmlBytes = Encoding.Convert(Encoding.Unicode, Encoding.UTF8, Encoding.Unicode.GetBytes(rawHtml));
+                //var html = Encoding.Unicode.GetString(htmlBytes, 0, htmlBytes.Length);
+                htmlView.WebBrowser.NavigateToString(rawHtml);
             }
         }
 

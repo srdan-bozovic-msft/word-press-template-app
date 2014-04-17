@@ -171,9 +171,9 @@ namespace WordPressReader.Phone.Repositories
                 {
                     article.Content =
                         string.Format(await _configurationService.GetArticleTemplateAsync(),
-                            HtmlHelper.ExtractContent(
+                            _configurationService.ProcessHtml(HtmlHelper.ExtractContent(
                                 await _httpClientService.GetRawAsync(articleUrl, cancellationToken),
-                                _configurationService.GetContentXPath())
+                                _configurationService.GetContentXPath()))
                         );
                 }
                 return article.Content;
