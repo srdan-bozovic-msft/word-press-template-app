@@ -77,12 +77,12 @@
         <bar:BindableApplicationBar>
             <bar:BindableApplicationBarButton 
                 IconUri="/Assets/AppBar/appbar.send.text.rest.png" 
-                Text="komentari"
+                Text="{Binding Path=LocalizedResources.AppBarButtonComments, Source={StaticResource LocalizedStrings}}"
                 Command="{Binding GoToCommentsCommand}"
                 />
             <bar:BindableApplicationBarButton 
                 IconUri="/Assets/AppBar/appbar.share.rest.png" 
-                Text="podeli"
+                Text="{Binding Path=LocalizedResources.AppBarButtonShare, Source={StaticResource LocalizedStrings}}"
                 Command="{Binding ShareCommand}"
                 />
         </bar:BindableApplicationBar>

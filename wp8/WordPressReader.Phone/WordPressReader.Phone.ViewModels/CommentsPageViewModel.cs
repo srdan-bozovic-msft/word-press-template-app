@@ -110,8 +110,8 @@ namespace WordPressReader.Phone.ViewModels
                     var comments = await _blogRepository.GetCommentsAsync(article.CommentLink, cts.Token);
                     if (!comments.IsError)
                     {
-                        if (comments.Value.Count() > 0)
-                            _comments.Clear();
+                        //if (comments.Value.Count() > 0)
+                        _comments.Clear();
                         foreach (var comment in comments.Value)
                         {
                             comment.Content = Utility.HtmlDecode(comment.Content);
