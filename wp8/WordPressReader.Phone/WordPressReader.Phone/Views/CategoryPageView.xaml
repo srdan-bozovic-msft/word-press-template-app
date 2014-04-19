@@ -28,7 +28,7 @@
 
         <StackPanel Grid.Row="0" Margin="12,17,0,6">
             <TextBlock Text="NOKIAMOB" Style="{StaticResource PhoneTextNormalStyle}"/>
-            <TextBlock Text="Windows Phone" Margin="9,-7,0,0" Style="{StaticResource PhoneTextExtraLargeStyle}"/>
+            <TextBlock Text="{Binding PageTitle}" Margin="9,-7,0,0" Style="{StaticResource PhoneTextExtraLargeStyle}"/>
         </StackPanel>
 
         <!--ContentPanel - place additional content here-->
