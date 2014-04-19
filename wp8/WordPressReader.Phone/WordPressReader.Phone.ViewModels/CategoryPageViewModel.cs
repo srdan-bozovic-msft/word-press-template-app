@@ -113,7 +113,7 @@ namespace WordPressReader.Phone.ViewModels
 
         public async Task GetMoreArticlesAsync()
         {
-            IsLoading = true;
+            //IsLoading = true;
             var cts = new CancellationTokenSource();
             var articles = await _blogRepository.GetMoreArticlesAsync(_category, cts.Token);
             if (!articles.IsError)
@@ -128,7 +128,7 @@ namespace WordPressReader.Phone.ViewModels
                     }
                 }
             }
-            IsLoading = false;
+            //IsLoading = false;
         }
 
         public ICommand SelectArticleCommand { get; set; }
