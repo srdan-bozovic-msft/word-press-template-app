@@ -28,46 +28,81 @@
 
         <!--ContentPanel - place additional content here-->
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
-            <phone:LongListSelector x:Name="ArticleList" ItemRealized="ArticleList_ItemRealized"  ItemsSource="{Binding Articles}" >
-                <phone:LongListSelector.ItemTemplate>
-                    <DataTemplate>
-                        <Grid toolkit:TiltEffect.IsTiltEnabled="True"  Margin="12 18">
-                            <StackPanel Margin="3">
-                                <Border VerticalAlignment="Center" HorizontalAlignment="Center" Background="#00000000" Height="300">
-                                    <Image Source="{Binding ImageUrl}" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,0" Stretch="UniformToFill" >
-                                        <Image.OpacityMask>
-                                            <LinearGradientBrush 
+            <phone:Panorama>
+                <phone:PanoramaItem>
+                    <Grid>
+                    <phone:LongListSelector x:Name="ArticleList" ItemRealized="ArticleList_ItemRealized"  ItemsSource="{Binding Articles}" >
+                        <phone:LongListSelector.ItemTemplate>
+                            <DataTemplate>
+                                <Grid toolkit:TiltEffect.IsTiltEnabled="True"  Margin="12 18">
+                                    <StackPanel Margin="3">
+                                        <Border VerticalAlignment="Center" HorizontalAlignment="Center" Background="#00000000" Height="300">
+                                            <Image Source="{Binding ImageUrl}" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,0" Stretch="UniformToFill" >
+                                                <Image.OpacityMask>
+                                                    <LinearGradientBrush 
                                                 ColorInterpolationMode="SRgbLinearInterpolation"  
                                                 StartPoint="0,0.3" EndPoint="0,1">
-                                                <!-- This gradient stop is partially transparent. -->
-                                                <GradientStop Color="#00000000" Offset="1" />
-                                                <!-- This gradient stop is partially transparent. -->
-                                                <GradientStop Color="#20000000" Offset="0.8" />
-                                                <!-- This gradient stop is fully opaque. -->
-                                                <GradientStop Color="#FF000000" Offset="0" />
-                                            </LinearGradientBrush>
-                                        </Image.OpacityMask>
-                                    </Image>
-                                </Border>
-                                <StackPanel Margin="0 -90 0 0">
-                                    <TextBlock Text="{Binding Title}" FontWeight="Normal"  Foreground="#004c9a" TextWrapping="Wrap" Style="{StaticResource PhoneTextLargeStyle}"/>
-                                    <TextBlock Text="{Binding Creator}" Style="{StaticResource PhoneTextNormalStyle}"/>
-                                    <TextBlock Text="{Binding PublishingDate}" Style="{StaticResource PhoneTextNormalStyle}"/>
-                                    <TextBlock Text="{Binding Description}"  Foreground="#444444" TextTrimming="WordEllipsis" Style="{StaticResource PhoneTextNormalStyle}"/>
-                                </StackPanel>
-                            </StackPanel>
-                            <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="Tap">
-                                    <i:InvokeCommandAction Command="{Binding Path=DataContext.SelectArticleCommand, ElementName=ArticleList}" CommandParameter="{Binding}"/>
-                                </i:EventTrigger>
-                            </i:Interaction.Triggers>
-                        </Grid>
-                    </DataTemplate>
-                </phone:LongListSelector.ItemTemplate>
-            </phone:LongListSelector>
-            <!--<ProgressBar Foreground="#004c9a" Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityConverter}}" IsIndeterminate="{Binding IsLoading, Mode=OneWay}"></ProgressBar>-->
-            <controls:ProgressControl Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityConverter}}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
-        </Grid>
+                                                        <!-- This gradient stop is partially transparent. -->
+                                                        <GradientStop Color="#00000000" Offset="1" />
+                                                        <!-- This gradient stop is partially transparent. -->
+                                                        <GradientStop Color="#20000000" Offset="0.8" />
+                                                        <!-- This gradient stop is fully opaque. -->
+                                                        <GradientStop Color="#FF000000" Offset="0" />
+                                                    </LinearGradientBrush>
+                                                </Image.OpacityMask>
+                                            </Image>
+                                        </Border>
+                                        <StackPanel Margin="0 -90 0 0">
+                                            <TextBlock Text="{Binding Title}" FontWeight="Normal"  Foreground="#004c9a" TextWrapping="Wrap" Style="{StaticResource PhoneTextLargeStyle}"/>
+                                            <TextBlock Text="{Binding Creator}" Style="{StaticResource PhoneTextNormalStyle}"/>
+                                            <TextBlock Text="{Binding PublishingDate}" Style="{StaticResource PhoneTextNormalStyle}"/>
+                                            <TextBlock Text="{Binding Description}"  Foreground="#444444" TextTrimming="WordEllipsis" Style="{StaticResource PhoneTextNormalStyle}"/>
+                                        </StackPanel>
+                                    </StackPanel>
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="Tap">
+                                            <i:InvokeCommandAction Command="{Binding Path=DataContext.SelectArticleCommand, ElementName=ArticleList}" CommandParameter="{Binding}"/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </Grid>
+                            </DataTemplate>
+                        </phone:LongListSelector.ItemTemplate>
+                    </phone:LongListSelector>
+                    <!--<ProgressBar Foreground="#004c9a" Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityConverter}}" IsIndeterminate="{Binding IsLoading, Mode=OneWay}"></ProgressBar>-->
+                    <controls:ProgressControl Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityConverter}}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                    </Grid>
+                </phone:PanoramaItem>
+                <phone:PanoramaItem>
+                    <ItemsControl x:Name="CategoryItemsControl" Margin="0 15" ItemsSource="{Binding Categories}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <toolkit:WrapPanel Orientation="Horizontal" toolkit:TiltEffect.IsTiltEnabled="True"></toolkit:WrapPanel>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Button toolkit:TiltEffect.IsTiltEnabled="True" Grid.Column="1"  Margin="5">
+                                    <Button.Template>
+                                        <ControlTemplate>
+                                            <Grid  Width="180" Height="180"
+                                            Background="{Binding BackColor}">
+                                                <!--<Image Stretch="UniformToFill" Source="{Binding IconUrl}"/>-->
+                                                <TextBlock Foreground="{Binding ForeColor}" VerticalAlignment="Bottom" Text="{Binding Title}" Margin="5"></TextBlock>
+                                            </Grid>
+                                        </ControlTemplate>
+                                    </Button.Template>
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="Tap">
+                                            <cmd:EventToCommand  Command="{Binding ElementName=CategoryItemsControl, Path=DataContext.SelectCategoryCommand, Mode=OneWay}" CommandParameter="{Binding}" />
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </Button>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </phone:PanoramaItem>
+            </phone:Panorama>
+        </Grid>            
     </Grid>
 
     <bar:Bindable.ApplicationBar>

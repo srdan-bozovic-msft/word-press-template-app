@@ -65,7 +65,6 @@ namespace WordPressReader.Phone.ViewModels
         {
             _blogRepository = blogRepository;
             _navigationService = navigationService;
-            PageTitle = "";
             _articles = new ObservableCollection<Article>();
             SelectArticleCommand = new RelayCommand<Article>(
                 article => 
@@ -84,7 +83,9 @@ namespace WordPressReader.Phone.ViewModels
 
         protected virtual async Task InitializeInternalAsync(string category)
         {
-            _category = category;
+            var parts = category.Split(new []{";;"},StringSplitOptions.None);
+            PageTitle = parts[0];
+            _category = parts[1];
             await ReloadArticlesAsync();
         }
 

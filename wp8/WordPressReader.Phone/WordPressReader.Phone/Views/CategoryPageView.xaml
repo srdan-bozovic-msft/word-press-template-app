@@ -26,6 +26,11 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
+        <StackPanel Grid.Row="0" Margin="12,17,0,6">
+            <TextBlock Text="NOKIAMOB" Style="{StaticResource PhoneTextNormalStyle}"/>
+            <TextBlock Text="Windows Phone" Margin="9,-7,0,0" Style="{StaticResource PhoneTextExtraLargeStyle}"/>
+        </StackPanel>
+
         <!--ContentPanel - place additional content here-->
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
             <phone:LongListSelector x:Name="ArticleList" ItemRealized="ArticleList_ItemRealized"  ItemsSource="{Binding Articles}" >

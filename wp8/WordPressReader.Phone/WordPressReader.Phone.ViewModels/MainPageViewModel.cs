@@ -35,13 +35,13 @@ namespace WordPressReader.Phone.ViewModels
             _categories = new ObservableCollection<Category>();
             SelectCategoryCommand = new RelayCommand<Category>(
                 category => 
-                    _navigationService.Navigate("Category", category.Tag)
+                    _navigationService.Navigate("Category", category.Title +";;"+ category.Tag)
                 );
         }
 
         public override async Task InitializeAsync(dynamic parameter)
         {
-            await InitializeInternalAsync("<default>");
+            await InitializeInternalAsync(";;<default>");
         }
 
         protected override async Task InitializeInternalAsync(string category)
@@ -54,6 +54,38 @@ namespace WordPressReader.Phone.ViewModels
         {
             IsLoading = true;
             var cts = new CancellationTokenSource();
+            _categories.Clear();
+            _categories.Add(new Category
+            {
+                BackColor = "#8cbd34",
+                Tag="nokia",
+                Title="Nokia",
+                ForeColor="#FFFFFF",
+                Wide= false
+            });
+            _categories.Add(new Category
+            {
+                BackColor = "#bd01f6",
+                Tag = "windows-phone-2",
+                Title = "Windows Phone",
+                ForeColor = "#FFFFFF",
+                Wide = false
+            });
+            _categories.Add(new Category
+            {
+                BackColor = "#3191c7",
+                Tag = "aplikacije",
+                Title = "Aplikacije",
+                ForeColor = "#FFFFFF",
+                Wide = false
+            }); _categories.Add(new Category
+            {
+                BackColor = "#ff6600",
+                Tag = "recenzije",
+                Title = "Recenzije",
+                ForeColor = "#FFFFFF",
+                Wide = false
+            });
             IsLoading = false;
         }
 
