@@ -9,6 +9,7 @@
     Foreground="{StaticResource PhoneForegroundBrush}"
     d:DesignHeight="480" d:DesignWidth="480">
     
+    
     <Grid x:Name="LayoutRoot" Background="Transparent">
         <Grid VerticalAlignment="Center" HorizontalAlignment="Center">
             <StackPanel Margin="0 -100 0 0">
