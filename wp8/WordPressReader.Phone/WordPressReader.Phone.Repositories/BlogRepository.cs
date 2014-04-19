@@ -186,6 +186,17 @@ namespace WordPressReader.Phone.Repositories
                                 await _httpClientService.GetRawAsync(articleUrl, cancellationToken).ConfigureAwait(false),
                                 _configurationService.GetContentXPath());
 
+                    var match = Regex.Match(extractedContent, "http:\\\\/\\\\/static.polldaddy.com\\\\/p\\\\/(\\d+).js", RegexOptions.IgnoreCase);
+
+                    if (match.Success)
+                    {
+                        extractedContent += "<script type='text/javascript' charset='UTF-8' src='http://i0.poll.fm/js/rating/rating.js'></script>";
+                        extractedContent += string.Format(
+                            "<script type='text/javascript' charset='UTF-8' src='http://static.polldaddy.com/p/{0}.js'></script>",
+                            match.Groups[1].Value
+                            );
+                    }
+
                     var matches = Regex.Matches(extractedContent, "href=\"" + baseArticleUrl + "(\\d+)" + "/\"", RegexOptions.IgnoreCase);
                     if(matches.Count>0)
                     {

@@ -135,16 +135,11 @@ namespace WordPressReader.Phone.Controls
             if (e.NewValue != null)
             {
                 var rawHtml = e.NewValue.ToString();
-                var match = Regex.Match(rawHtml, "http:\\\\/\\\\/static.polldaddy.com\\\\/p\\\\/(\\d+).js", RegexOptions.IgnoreCase);
-                if(match.Success)
+                if(string.IsNullOrEmpty(rawHtml))
                 {
-                    rawHtml+="<script type='text/javascript' charset='UTF-8' src='http://i0.poll.fm/js/rating/rating.js'></script>";
-                    rawHtml += string.Format(
-                        "<script type='text/javascript' charset='UTF-8' src='http://static.polldaddy.com/p/{0}.js'></script>",
-                        match.Groups[1].Value
-                        );
+                    htmlView.WebBrowser.NavigateToString("");
+                    return;
                 }
-
 
                 var htmlBytes = Encoding.Convert(Encoding.Unicode, Encoding.UTF8, Encoding.Unicode.GetBytes(rawHtml));
                 var html = Encoding.Unicode.GetString(htmlBytes, 0, htmlBytes.Length);
