@@ -61,6 +61,7 @@ namespace WordPressReader.Phone.Common
             ioc.RegisterType<IConfigurationService, ConfigurationService>();
             ioc.RegisterType<IBlogRepository, BlogRepository>();
             ioc.RegisterType<IMainPageViewModel, MainPageViewModel>();
+            ioc.RegisterType<ICategoryPageViewModel, CategoryPageViewModel>();
             ioc.RegisterType<IArticlePageViewModel, ArticlePageViewModel>();
             ioc.RegisterType<ICommentsPageViewModel, CommentsPageViewModel>();
         }
@@ -72,6 +73,15 @@ namespace WordPressReader.Phone.Common
                 return InstanceFactory.GetInstance<IMainPageViewModel>();
             }
         }
+
+        public ICategoryPageViewModel CategoryPageViewModel
+        {
+            get
+            {
+                return InstanceFactory.GetInstance<ICategoryPageViewModel>();
+            }
+        }
+
         public IArticlePageViewModel ArticlePageViewModel
         {
             get

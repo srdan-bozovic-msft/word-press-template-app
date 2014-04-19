@@ -18,112 +18,45 @@ using WordPressReader.Phone.Contracts.ViewModels;
 
 namespace WordPressReader.Phone.ViewModels
 {
-    public class MainPageViewModel : ViewModelBase, IMainPageViewModel
+    public class MainPageViewModel : CategoryPageViewModel, IMainPageViewModel
     {
-        private IBlogRepository _blogRepository;
-        private INavigationService _navigationService;
-
-        private bool _isLoading;
-        public bool IsLoading
+        private readonly ObservableCollection<Category> _categories;
+        public ObservableCollection<Category> Categories
         {
             get
             {
-                return _isLoading;
-            }
-            set
-            {
-                _isLoading = value;
-                RaisePropertyChanged(() => IsLoading);
-            }
-        }
-
-        private string _pageTitle;
-        public string PageTitle
-        {
-            get
-            {
-                return _pageTitle;
-            }
-            set
-            {
-                _pageTitle = value;
-                RaisePropertyChanged(() => PageTitle);
-            }
-        }
-
-        private readonly ObservableCollection<Article> _articles;
-        public ObservableCollection<Article> Articles
-        {
-            get
-            {
-                return _articles;
+                return _categories;
             }
         }
 
         public MainPageViewModel(IBlogRepository blogRepository, INavigationService navigationService)
+            :base(blogRepository, navigationService)
         {
-            _blogRepository = blogRepository;
-            _navigationService = navigationService;
-            PageTitle = "Vitki Gurman";
-            _articles = new ObservableCollection<Article>();
-            SelectArticleCommand = new RelayCommand<Article>(
-                article => 
-                    _navigationService.Navigate("Article", article.Link)
+            _categories = new ObservableCollection<Category>();
+            SelectCategoryCommand = new RelayCommand<Category>(
+                category => 
+                    _navigationService.Navigate("Category", category.Tag)
                 );
-            ReloadCommand = new RelayCommand(async () =>
-                {
-                    await ReloadArticlesAsync();
-                });
         }
 
-        public async Task InitializeAsync(dynamic parameter)
+        public override async Task InitializeAsync(dynamic parameter)
         {
-            await ReloadArticlesAsync();
+            await InitializeInternalAsync("<default>");
         }
 
-        private async Task ReloadArticlesAsync()
+        protected override async Task InitializeInternalAsync(string category)
         {
-            IsLoading = true;
-            var cts = new CancellationTokenSource();
-            _articles.Clear();
-            var articles = await _blogRepository.GetArticlesAsync(true, cts.Token);
-            if (!articles.IsError)
-            {
-                foreach (var article in articles.Value)
-                {
-                    article.Title = Utility.HtmlDecode(article.Title);
-                    article.Description = Utility.HtmlDecode(article.Description);
-                    _articles.Add(article);
-                }
-            }
-            else
-            {
-                _navigationService.Navigate("Error");
-            }
-            IsLoading = false;
+            await ReloadCategoriesAsync(); 
+            await base.InitializeInternalAsync(category);
         }
 
-        public async Task GetMoreArticlesAsync()
+        private async Task ReloadCategoriesAsync()
         {
             IsLoading = true;
             var cts = new CancellationTokenSource();
-            var articles = await _blogRepository.GetMoreArticlesAsync(cts.Token);
-            if (!articles.IsError)
-            {
-                foreach (var article in articles.Value)
-                {
-                    if (!_articles.Contains(article))
-                    {
-                        article.Title = Utility.HtmlDecode(article.Title);
-                        article.Description = Utility.HtmlDecode(article.Description);
-                        _articles.Add(article);
-                    }
-                }
-            }
             IsLoading = false;
         }
 
-        public ICommand SelectArticleCommand { get; set; }
-        public ICommand ReloadCommand { get; set; }
+        public ICommand SelectCategoryCommand { get; set; }
     }
 }

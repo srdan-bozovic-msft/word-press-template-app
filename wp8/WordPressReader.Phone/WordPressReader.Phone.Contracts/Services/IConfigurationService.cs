@@ -8,7 +8,7 @@ namespace WordPressReader.Phone.Contracts.Services
 {
     public interface IConfigurationService
     {
-        string GetFeedUrl();
+        string GetFeedUrl(string category);
         string GetContentXPath();
         string GetCategoryFilter();
         Task<string> GetArticleTemplateAsync();

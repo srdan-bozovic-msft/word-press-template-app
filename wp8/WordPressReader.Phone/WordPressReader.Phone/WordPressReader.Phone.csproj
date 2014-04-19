@@ -113,6 +113,9 @@
     <Compile Include="Views\ErrorPageView.xaml.cs">
       <DependentUpon>ErrorPageView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\CategoryPageView.xaml.cs">
+      <DependentUpon>CategoryPageView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\MainPageView.xaml.cs">
       <DependentUpon>MainPageView.xaml</DependentUpon>
     </Compile>
@@ -238,6 +241,10 @@
     <Page Include="Views\ErrorPageView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CategoryPageView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\MainPageView.xaml">
       <SubType>Designer</SubType>

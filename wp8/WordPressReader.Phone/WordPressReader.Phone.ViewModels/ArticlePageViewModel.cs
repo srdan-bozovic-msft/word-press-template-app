@@ -22,6 +22,7 @@ namespace WordPressReader.Phone.ViewModels
         private INavigationService _navigationService;
         private ISocialShare _socialShare;
         private Article[] _articles;
+        private string _category;
 
         private bool _isLoading;
         public bool IsLoading
@@ -237,7 +238,7 @@ namespace WordPressReader.Phone.ViewModels
             _blogRepository = blogRepository;
             _navigationService = navigationService;
             _socialShare = socialShare;
-            PageTitle = "Vitki Gurman";
+            PageTitle = "";
             FlipArticleHorizontalCommand = new RelayCommand<double>(async velocity => {
                 IsLoading = true;
                 try
@@ -255,7 +256,7 @@ namespace WordPressReader.Phone.ViewModels
                 IsLoading = false;
             });
             GoToCommentsCommand = new RelayCommand(
-                ()=>_navigationService.Navigate("Comments",_articles[_current].Link));
+                () => _navigationService.Navigate("Comments", _category + ";;" + _articles[_current].Link));
             ShareCommand = new RelayCommand(
                 () => {
                     var article = _articles[_current];
@@ -265,12 +266,14 @@ namespace WordPressReader.Phone.ViewModels
 
         public async Task InitializeAsync(dynamic parameter)
         {
+            var parameters = ((string)parameter).Split(new[] { ";;" }, 2, StringSplitOptions.RemoveEmptyEntries);
+            _category = parameters[0];
             var cts = new CancellationTokenSource();
-            _articles = await _blogRepository.GetArticlesAsync(false, cts.Token);
+            _articles = await _blogRepository.GetArticlesAsync(_category, false, cts.Token);
             _current = -1;
             for (int i = 0; i < _articles.Length; i++)
             {
-                if(_articles[i].Link == parameter)
+                if (_articles[i].Link == parameters[1])
                 {
                     _current = i;
                     break;

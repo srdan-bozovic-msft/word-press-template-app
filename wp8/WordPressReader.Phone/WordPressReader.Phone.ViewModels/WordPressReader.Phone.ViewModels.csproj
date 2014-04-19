@@ -84,8 +84,11 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="CommentsPageViewModel.cs" />
-    <Compile Include="MainPageViewModel.cs" />
+    <Compile Include="CategoryPageViewModel.cs" />
     <Compile Include="ArticlePageViewModel.cs" />
+    <Compile Include="MainPageViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utility.cs" />
   </ItemGroup>

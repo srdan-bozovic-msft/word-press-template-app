@@ -25,11 +25,15 @@ namespace WordPressReader.Phone.Services
             return null;
         }
 
-        public string GetFeedUrl()
+        public string GetFeedUrl(string category)
         {
             //return "http://www.lepotaizdravlje.rs/category/extra/blog/feed";
             //return "http://www.vitkigurman.com/feed/";
-            return "http://nokiamob.me/feed/";
+            if (category == "<default>")
+            {
+                return "http://nokiamob.me/feed/";
+            }
+            return string.Format("http://nokiamob.me/category/{0}/feed/", category);
             //return "http://www.vecnidecak.com/feed/";
         }
 

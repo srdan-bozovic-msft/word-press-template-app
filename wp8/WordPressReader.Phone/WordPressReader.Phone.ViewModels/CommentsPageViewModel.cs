@@ -21,6 +21,7 @@ namespace WordPressReader.Phone.ViewModels
     {
         private IBlogRepository _blogRepository;
         private INavigationService _navigationService;
+        private string _category;
 
         private readonly ObservableCollection<Comment> _comments;
         public ObservableCollection<Comment> Comments
@@ -99,10 +100,12 @@ namespace WordPressReader.Phone.ViewModels
             IsLoading = true;
             HasComments = true;
             var cts = new CancellationTokenSource();
-            var articles = await _blogRepository.GetArticlesAsync(false, cts.Token);
+            var parameters = ((string)parameter).Split(new[] { ";;" }, 2, StringSplitOptions.RemoveEmptyEntries);
+            _category = parameters[0];
+            var articles = await _blogRepository.GetArticlesAsync(_category, false, cts.Token);
             if (!articles.IsError)
             {
-                var article = articles.Value.FirstOrDefault(a => a.Link == parameter);
+                var article = articles.Value.FirstOrDefault(a => a.Link == parameters[1]);
                 if (article != null)
                 {
                     Title = article.Title;

@@ -11,10 +11,14 @@ using WordPressReader.Phone.Contracts.Models;
 
 namespace WordPressReader.Phone.Contracts.ViewModels
 {
-    public interface IMainPageViewModel : ICategoryPageViewModel
+    public interface ICategoryPageViewModel : IPageViewModel
     {
-        ObservableCollection<Category> Categories { get; }
+        string PageTitle { get; }
 
-        ICommand SelectCategoryCommand { get; }
+        ObservableCollection<Article> Articles { get; }
+
+        ICommand SelectArticleCommand { get; }
+
+        Task GetMoreArticlesAsync();
     }
 }

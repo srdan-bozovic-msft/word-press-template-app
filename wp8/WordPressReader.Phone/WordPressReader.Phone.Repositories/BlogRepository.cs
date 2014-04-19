@@ -25,28 +25,30 @@ namespace WordPressReader.Phone.Repositories
     {
         private IHttpClientService _httpClientService;
         private IConfigurationService _configurationService;
-        private readonly List<Article> _articles;
+        private readonly Dictionary<string, List<Article>> _articles;
         private readonly List<Comment> _comments;
         private int _nextPage = 0;
         public BlogRepository(IHttpClientService httpClientService, IConfigurationService configurationService)
         {
             _httpClientService = httpClientService;
             _configurationService = configurationService;
-            _articles = new List<Article>();
+            _articles = new Dictionary<string, List<Article>>();
             _comments = new List<Comment>();
         }
-        public async Task<RepositoryResult<Article[]>> GetArticlesAsync(bool update, CancellationToken cancellationToken)
+        public async Task<RepositoryResult<Article[]>> GetArticlesAsync(string category, bool update, CancellationToken cancellationToken)
         {
             try
             {
-                var feedUrl = _configurationService.GetFeedUrl();
-                if (update || _articles.Count == 0)
+                var feedUrl = _configurationService.GetFeedUrl(category);
+                if (!_articles.ContainsKey(category))
+                    _articles.Add(category, new List<Article>());
+                if (update || _articles[category].Count == 0)
                 {
-                    _articles.Clear();
+                    _articles[category].Clear();
                     _nextPage = 1;
-                    await FetchAsync(cancellationToken, feedUrl);
+                    await FetchAsync(category, cancellationToken, feedUrl);
                 }
-                return _articles.ToArray();
+                return _articles[category].ToArray();
             }
             catch (Exception xcp)
             {
@@ -54,13 +56,13 @@ namespace WordPressReader.Phone.Repositories
             }
         }
 
-        public async Task<RepositoryResult<Article[]>> GetMoreArticlesAsync(CancellationToken cancellationToken)
+        public async Task<RepositoryResult<Article[]>> GetMoreArticlesAsync(string category, CancellationToken cancellationToken)
         {
             try
             {
-                var feedUrl = _configurationService.GetFeedUrl();
-                await FetchAsync(cancellationToken, feedUrl);
-                return _articles.ToArray();
+                var feedUrl = _configurationService.GetFeedUrl(category);
+                await FetchAsync(category, cancellationToken, feedUrl);
+                return _articles[category].ToArray();
             }
             catch (Exception xcp)
             {
@@ -106,7 +108,7 @@ namespace WordPressReader.Phone.Repositories
         //    return cancellationToken;
         //}
 
-        private async Task<CancellationToken> FetchAsync(CancellationToken cancellationToken, string feedUrl)
+        private async Task<CancellationToken> FetchAsync(string category, CancellationToken cancellationToken, string feedUrl)
         {
             var feed = await _httpClientService.GetXmlAsync<RssFeed>(feedUrl + "?paged=" + _nextPage, cancellationToken);
             var categoryFilter = _configurationService.GetCategoryFilter();
@@ -118,7 +120,7 @@ namespace WordPressReader.Phone.Repositories
                 items = items.Where(i => string.Join("", i.Categories).Contains(_configurationService.GetCategoryFilter())).ToArray();
             }
 
-            _articles.AddRange(
+            _articles[category].AddRange(
                 items.Select(
                 item => new Article
                 {
@@ -164,7 +166,13 @@ namespace WordPressReader.Phone.Repositories
         {
             try
             {
-                var article = _articles.FirstOrDefault(a => a.Link == articleUrl);
+                Article article = null;
+                foreach (var category in _articles.Keys)
+                {
+                    article = _articles[category].FirstOrDefault(a => a.Link == articleUrl);
+                    if (article != null)
+                        break;
+                }
                 if (article == null)
                 {
                     return null;
