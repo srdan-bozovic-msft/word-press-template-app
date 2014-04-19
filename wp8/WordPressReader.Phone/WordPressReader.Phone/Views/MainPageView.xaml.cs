@@ -20,6 +20,12 @@ namespace WordPressReader.Phone.Views
             InitializeComponent();
         }
 
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            SystemTray.SetIsVisible(this, true);
+            base.OnNavigatedTo(e);
+        }
+
         public IPageViewModel ViewModel
         {
             get { return DataContext as IPageViewModel; }

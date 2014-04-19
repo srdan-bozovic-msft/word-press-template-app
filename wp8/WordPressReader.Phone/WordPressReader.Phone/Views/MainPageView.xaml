@@ -16,7 +16,7 @@
     mc:Ignorable="d"
     xmlns:bar="clr-namespace:BindableApplicationBar;assembly=BindableApplicationBar"
     DataContext="{Binding Source={StaticResource Locator}, Path=MainPageViewModel}"
-    shell:SystemTray.IsVisible="True">
+    >
 
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot" Background="Transparent">
