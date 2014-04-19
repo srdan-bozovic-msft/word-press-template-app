@@ -83,7 +83,7 @@ namespace WordPressReader.Phone.Controls
         void WebBrowser_ScriptNotify(object sender, NotifyEventArgs e)
         {
             var value = e.Value.Replace("#amp#", "'");
-            if (ScriptNotifyCommand.CanExecute(value))
+            if (ScriptNotifyCommand != null && ScriptNotifyCommand.CanExecute(value))
             {
                 ScriptNotifyCommand.Execute(value);
             }

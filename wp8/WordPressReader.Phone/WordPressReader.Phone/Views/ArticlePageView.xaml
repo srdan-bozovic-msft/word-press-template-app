@@ -32,7 +32,7 @@
                     </Grid.RowDefinitions>
                     <TextBlock Text="{Binding TitleOne}" Style="{StaticResource PhoneTextLargeStyle}" FontWeight="Bold" TextWrapping="Wrap" />
                     <TextBlock Grid.Row="1" Text="{Binding LeadOne}" Style="{StaticResource PhoneTextSubtleStyle}" TextWrapping="Wrap" />
-                    <controls:HtmlView Grid.Row="2" Html="{Binding Path=HtmlOne}" FlipHorizontalCommand="{Binding FlipArticleHorizontalCommand}">
+                    <controls:HtmlView Grid.Row="2" Html="{Binding Path=HtmlOne}" ScriptNotifyCommand="{Binding Path=ChangePageCommand}"  FlipHorizontalCommand="{Binding FlipArticleHorizontalCommand}">
 
                     </controls:HtmlView>
                 </Grid>
@@ -48,7 +48,7 @@
                     </Grid.RowDefinitions>
                     <TextBlock Text="{Binding TitleTwo}" Style="{StaticResource PhoneTextLargeStyle}" FontWeight="Bold" TextWrapping="Wrap" />
                     <TextBlock Grid.Row="1" Text="{Binding LeadTwo}" Style="{StaticResource PhoneTextSubtleStyle}" TextWrapping="Wrap" />
-                    <controls:HtmlView Grid.Row="2" Html="{Binding Path=HtmlTwo}" FlipHorizontalCommand="{Binding FlipArticleHorizontalCommand}">
+                    <controls:HtmlView Grid.Row="2" Html="{Binding Path=HtmlTwo}" ScriptNotifyCommand="{Binding Path=ChangePageCommand}" FlipHorizontalCommand="{Binding FlipArticleHorizontalCommand}">
 
                     </controls:HtmlView>
                 </Grid>
@@ -63,8 +63,8 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
                     <TextBlock Text="{Binding TitleThree}" Style="{StaticResource PhoneTextLargeStyle}" FontWeight="Bold"  TextWrapping="Wrap" />
-                    <TextBlock Grid.Row="1" Text="{Binding LeadThree}" Style="{StaticResource PhoneTextSubtleStyle}" TextWrapping="Wrap" />                    
-                    <controls:HtmlView Grid.Row="2" Html="{Binding Path=HtmlThree}" FlipHorizontalCommand="{Binding FlipArticleHorizontalCommand}">
+                    <TextBlock Grid.Row="1" Text="{Binding LeadThree}" Style="{StaticResource PhoneTextSubtleStyle}" TextWrapping="Wrap" />
+                    <controls:HtmlView Grid.Row="2" Html="{Binding Path=HtmlThree}" ScriptNotifyCommand="{Binding Path=ChangePageCommand}" FlipHorizontalCommand="{Binding FlipArticleHorizontalCommand}">
 
                     </controls:HtmlView>
                 </Grid>

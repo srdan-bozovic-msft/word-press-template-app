@@ -18,6 +18,7 @@ using WordPressReader.Phone.Contracts.Repositories;
 using System.Linq;
 using WordPressReader.Phone.Contracts.Services;
 using MSC.Phone.Shared.Contracts.Repositories;
+using System.Text.RegularExpressions;
 
 namespace WordPressReader.Phone.Repositories
 {
@@ -173,18 +174,36 @@ namespace WordPressReader.Phone.Repositories
                     if (article != null)
                         break;
                 }
-                if (article == null)
+                if (article ==null || string.IsNullOrEmpty(article.Content))
                 {
-                    return null;
-                }
-                if (string.IsNullOrEmpty(article.Content))
-                {
-                    article.Content =
-                        string.Format(await _configurationService.GetArticleTemplateAsync(),
-                            _configurationService.ProcessHtml(HtmlHelper.ExtractContent(
-                                await _httpClientService.GetRawAsync(articleUrl, cancellationToken),
-                                _configurationService.GetContentXPath()))
-                        );
+                    var baseArticleUrl = articleUrl;
+                    if(article==null)
+                    {
+                        baseArticleUrl = baseArticleUrl.TrimEnd('/');
+                        baseArticleUrl = baseArticleUrl.Remove(baseArticleUrl.LastIndexOf('/') + 1);
+                    }
+                    var extractedContent = HtmlHelper.ExtractContent(
+                                await _httpClientService.GetRawAsync(articleUrl, cancellationToken).ConfigureAwait(false),
+                                _configurationService.GetContentXPath());
+
+                    var matches = Regex.Matches(extractedContent, "href=\"" + baseArticleUrl + "(\\d+)" + "/\"", RegexOptions.IgnoreCase);
+                    if(matches.Count>0)
+                    {
+                        foreach (Match item in matches)
+                        {
+                            //extractedContent = extractedContent.Replace(item.Value, string.Format("javascript:void(window.external.Notify('reload:{0}'));",item.Value));
+                            extractedContent = extractedContent.Replace(item.Value, string.Format("href=\"#\" onclick=\"window.external.Notify('reload:{0}{1}/');return false;\"", baseArticleUrl, item.Groups[1].Value));
+
+                        } 
+                    }
+
+                    var content = string.Format(await _configurationService.GetArticleTemplateAsync(),
+                            _configurationService.ProcessHtml(extractedContent));
+
+                    if(article==null)
+                        return content;
+
+                    article.Content = content;
                 }
                 return article.Content;
             }

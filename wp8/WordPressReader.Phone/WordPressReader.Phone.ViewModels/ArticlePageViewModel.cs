@@ -262,6 +262,28 @@ namespace WordPressReader.Phone.ViewModels
                     var article = _articles[_current];
                     _socialShare.ShareLink(article.Title, new Uri(article.Link, UriKind.RelativeOrAbsolute));
                 });
+            ChangePageCommand = new RelayCommand<string>(
+                async p =>
+                {
+                    var cts = new CancellationTokenSource();
+                    var url = p.Split(new char[] { ':' }, 2)[1];
+                    var content = await _blogRepository.GetArticleContentAsync(url, cts.Token);
+                    switch (_current)
+                    {
+                        case 0:
+                            HtmlOne = content;
+                            break;
+                        case 1:
+                            HtmlTwo = content;
+                            break;
+                        case 2:
+                            HtmlThree = content;
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                );
         }
 
         public async Task InitializeAsync(dynamic parameter)
@@ -383,5 +405,7 @@ namespace WordPressReader.Phone.ViewModels
         public ICommand GoToCommentsCommand { get; set; }
 
         public ICommand ShareCommand { get; set; }
+
+        public ICommand ChangePageCommand { get; set; }
     }
 }
