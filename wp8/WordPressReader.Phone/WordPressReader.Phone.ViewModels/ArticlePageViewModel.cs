@@ -265,6 +265,7 @@ namespace WordPressReader.Phone.ViewModels
             ChangePageCommand = new RelayCommand<string>(
                 async p =>
                 {
+                    IsLoading = true;
                     var cts = new CancellationTokenSource();
                     var url = p.Split(new char[] { ':' }, 2)[1];
                     var content = await _blogRepository.GetArticleContentAsync(url, cts.Token);
@@ -282,6 +283,7 @@ namespace WordPressReader.Phone.ViewModels
                         default:
                             break;
                     }
+                    IsLoading = false;
                 }
                 );
         }

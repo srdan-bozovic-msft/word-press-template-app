@@ -19,7 +19,7 @@
                             <DoubleAnimation
                             Storyboard.TargetName="InnerAnimatedScaleTransform"
                             Storyboard.TargetProperty="(ScaleTransform.ScaleX)"
-                            To="0.85" Duration="0:0:0.7" AutoReverse="True"
+                            To="0.85" Duration="0:0:0.6" AutoReverse="True"
                             RepeatBehavior="Forever">
                                 <DoubleAnimation.EasingFunction>
                                     <ExponentialEase/>
@@ -28,7 +28,7 @@
                             <DoubleAnimation
                             Storyboard.TargetName="InnerAnimatedScaleTransform"
                             Storyboard.TargetProperty="(ScaleTransform.ScaleY)"
-                            To="0.85" Duration="0:0:0.7" AutoReverse="True"
+                            To="0.85" Duration="0:0:0.6" AutoReverse="True"
                             RepeatBehavior="Forever">
                                 <DoubleAnimation.EasingFunction>
                                     <ExponentialEase/>
@@ -37,7 +37,7 @@
                             <DoubleAnimation
                             Storyboard.TargetName="OuterAnimatedScaleTransform"
                             Storyboard.TargetProperty="(ScaleTransform.ScaleX)"
-                            To="1.0" Duration="0:0:0.7" AutoReverse="True"
+                            To="1.0" Duration="0:0:0.6" AutoReverse="True"
                             RepeatBehavior="Forever" >
                                 <DoubleAnimation.EasingFunction>
                                     <ExponentialEase/>
@@ -46,7 +46,7 @@
                             <DoubleAnimation
                             Storyboard.TargetName="OuterAnimatedScaleTransform"
                             Storyboard.TargetProperty="(ScaleTransform.ScaleY)"
-                            To="1.0" Duration="0:0:0.7" AutoReverse="True"
+                            To="1.0" Duration="0:0:0.6" AutoReverse="True"
                             RepeatBehavior="Forever" >
                                 <DoubleAnimation.EasingFunction>
                                     <ExponentialEase/>
