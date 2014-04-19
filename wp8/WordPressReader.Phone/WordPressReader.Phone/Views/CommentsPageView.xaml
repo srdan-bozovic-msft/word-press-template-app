@@ -6,6 +6,7 @@
     xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="clr-namespace:WordPressReader.Phone.Controls"
 
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
@@ -46,7 +47,7 @@
             </phone:LongListSelector>
             <Rectangle Fill="Transparent" VerticalAlignment="Stretch" Grid.Row="2"/>
         </Grid>
-        <ProgressBar Grid.Row="1" Foreground="#004c9a" IsIndeterminate="{Binding IsLoading, Mode=OneWay}"></ProgressBar>
+        <ProgressBar Foreground="#004c9a" Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityConverter}}" IsIndeterminate="{Binding IsLoading, Mode=OneWay}"></ProgressBar>
     </Grid>
     
 </phone:PhoneApplicationPage>
