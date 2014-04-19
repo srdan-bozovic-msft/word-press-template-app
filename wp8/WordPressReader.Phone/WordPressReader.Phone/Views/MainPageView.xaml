@@ -35,7 +35,9 @@
                                 <Border VerticalAlignment="Center" HorizontalAlignment="Center" Background="#00000000" Height="300">
                                     <Image Source="{Binding ImageUrl}" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,0" Stretch="UniformToFill" >
                                         <Image.OpacityMask>
-                                            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                            <LinearGradientBrush 
+                                                ColorInterpolationMode="SRgbLinearInterpolation"  
+                                                StartPoint="0,0.3" EndPoint="0,1">
                                                 <!-- This gradient stop is partially transparent. -->
                                                 <GradientStop Color="#00000000" Offset="1" />
                                                 <!-- This gradient stop is partially transparent. -->
@@ -46,8 +48,8 @@
                                         </Image.OpacityMask>
                                     </Image>
                                 </Border>
-                                <StackPanel Margin="0 -90 0 0">
-                                    <TextBlock Text="{Binding Title}" FontWeight="Bold"  Foreground="#004c9a" TextWrapping="Wrap" Style="{StaticResource PhoneTextLargeStyle}"/>
+                                <StackPanel Margin="0 -132 0 0">
+                                    <TextBlock Text="{Binding Title}" FontWeight="Normal"  Foreground="#004c9a" TextWrapping="Wrap" Style="{StaticResource PhoneTextLargeStyle}"/>
                                     <TextBlock Text="{Binding Creator}" Style="{StaticResource PhoneTextNormalStyle}"/>
                                     <TextBlock Text="{Binding PublishingDate}" Style="{StaticResource PhoneTextNormalStyle}"/>
                                     <TextBlock Text="{Binding Description}"  Foreground="#444444" TextTrimming="WordEllipsis" Style="{StaticResource PhoneTextNormalStyle}"/>
