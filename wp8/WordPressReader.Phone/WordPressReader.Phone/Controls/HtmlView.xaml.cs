@@ -14,6 +14,7 @@ using Microsoft.Phone.Controls;
 using Microsoft.Phone.Reactive;
 using System.Text;
 using Microsoft.Phone.Tasks;
+using System.Text.RegularExpressions;
 
 namespace WordPressReader.Phone.Controls
 {
@@ -134,6 +135,17 @@ namespace WordPressReader.Phone.Controls
             if (e.NewValue != null)
             {
                 var rawHtml = e.NewValue.ToString();
+                var match = Regex.Match(rawHtml, "http:\\\\/\\\\/static.polldaddy.com\\\\/p\\\\/(\\d+).js", RegexOptions.IgnoreCase);
+                if(match.Success)
+                {
+                    rawHtml+="<script type='text/javascript' charset='UTF-8' src='http://i0.poll.fm/js/rating/rating.js'></script>";
+                    rawHtml += string.Format(
+                        "<script type='text/javascript' charset='UTF-8' src='http://static.polldaddy.com/p/{0}.js'></script>",
+                        match.Groups[1].Value
+                        );
+                }
+
+
                 var htmlBytes = Encoding.Convert(Encoding.Unicode, Encoding.UTF8, Encoding.Unicode.GetBytes(rawHtml));
                 var html = Encoding.Unicode.GetString(htmlBytes, 0, htmlBytes.Length);
                 htmlView.WebBrowser.NavigateToString(html.Trim((char)65533));
