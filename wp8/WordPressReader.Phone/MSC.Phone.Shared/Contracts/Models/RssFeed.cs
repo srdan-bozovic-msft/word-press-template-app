@@ -20,8 +20,14 @@ namespace MSC.Phone.Shared.Contracts.Models
                 [XmlElement("description")]
                 public string Description { get; set; }
 
+                [XmlElement(ElementName="encoded", Namespace = "http://purl.org/rss/1.0/modules/content/")]
+                public string EncodedContent { get; set; }
+
                 [XmlElement("pubDate")]
                 public string pubDate { get; set; }
+
+                [XmlElement(ElementName = "creator", Namespace = "http://purl.org/dc/elements/1.1/")]
+                public string Creator { get; set; }
 
                 [XmlElement("link")]
                 public string Link { get; set; }

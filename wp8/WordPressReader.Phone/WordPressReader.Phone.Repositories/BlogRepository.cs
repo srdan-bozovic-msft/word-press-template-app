@@ -124,8 +124,10 @@ namespace WordPressReader.Phone.Repositories
                 {
                     Title = item.Title,
                     Description = item.Description,
+                    EncodedContent = item.EncodedContent,
                     Link = item.Link,
                     PublishingDate = item.Date,
+                    Creator = item.Creator,
                     CommentLink = item.CommentRss,
                     Category = item.Categories.FirstOrDefault()
                 }));

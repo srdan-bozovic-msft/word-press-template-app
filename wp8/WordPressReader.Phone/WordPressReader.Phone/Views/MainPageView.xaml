@@ -30,10 +30,28 @@
             <phone:LongListSelector x:Name="ArticleList" ItemRealized="ArticleList_ItemRealized"  ItemsSource="{Binding Articles}" >
                 <phone:LongListSelector.ItemTemplate>
                     <DataTemplate>
-                        <Grid toolkit:TiltEffect.IsTiltEnabled="True"  Margin="12 6 12 6">
+                        <Grid toolkit:TiltEffect.IsTiltEnabled="True"  Margin="12 18">
                             <StackPanel Margin="3">
-                                <TextBlock Text="{Binding Title}" Foreground="#004c9a" TextWrapping="Wrap" Style="{StaticResource PhoneTextLargeStyle}"/>
-                                <TextBlock Text="{Binding Description}"  Foreground="#444444" TextTrimming="WordEllipsis" Style="{StaticResource PhoneTextNormalStyle}"/>
+                                <Border VerticalAlignment="Center" HorizontalAlignment="Center" Background="#00000000" Height="300">
+                                    <Image Source="{Binding ImageUrl}" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,0" Stretch="UniformToFill" >
+                                        <Image.OpacityMask>
+                                            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                                <!-- This gradient stop is partially transparent. -->
+                                                <GradientStop Color="#00000000" Offset="1" />
+                                                <!-- This gradient stop is partially transparent. -->
+                                                <GradientStop Color="#20000000" Offset="0.8" />
+                                                <!-- This gradient stop is fully opaque. -->
+                                                <GradientStop Color="#FF000000" Offset="0" />
+                                            </LinearGradientBrush>
+                                        </Image.OpacityMask>
+                                    </Image>
+                                </Border>
+                                <StackPanel Margin="0 -90 0 0">
+                                    <TextBlock Text="{Binding Title}" FontWeight="Bold"  Foreground="#004c9a" TextWrapping="Wrap" Style="{StaticResource PhoneTextLargeStyle}"/>
+                                    <TextBlock Text="{Binding Creator}" Style="{StaticResource PhoneTextNormalStyle}"/>
+                                    <TextBlock Text="{Binding PublishingDate}" Style="{StaticResource PhoneTextNormalStyle}"/>
+                                    <TextBlock Text="{Binding Description}"  Foreground="#444444" TextTrimming="WordEllipsis" Style="{StaticResource PhoneTextNormalStyle}"/>
+                                </StackPanel>
                             </StackPanel>
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="Tap">
@@ -44,7 +62,7 @@
                     </DataTemplate>
                 </phone:LongListSelector.ItemTemplate>
             </phone:LongListSelector>
-            <ProgressBar Foreground="#004c9a" IsIndeterminate="{Binding IsLoading, Mode=OneWay}"></ProgressBar>
+            <ProgressBar Foreground="#004c9a" Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityConverter}}" IsIndeterminate="{Binding IsLoading, Mode=OneWay}"></ProgressBar>
         </Grid>
     </Grid>
 
