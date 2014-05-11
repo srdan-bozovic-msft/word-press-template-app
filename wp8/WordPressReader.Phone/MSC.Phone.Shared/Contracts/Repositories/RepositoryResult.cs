@@ -44,6 +44,5 @@ namespace MSC.Phone.Shared.Contracts.Repositories
             Exception = xcp;
             IsError = true;
         }
-
     }
 }

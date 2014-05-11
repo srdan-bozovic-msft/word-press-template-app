@@ -91,17 +91,30 @@ namespace WordPressReader.Phone.ViewModels
 
         private async Task ReloadArticlesAsync()
         {
-            IsLoading = true;
+            if(_articles.Count==0)
+                IsLoading = true;
             var cts = new CancellationTokenSource();
-            _articles.Clear();
+            //_articles.Clear();
             var articles = await _blogRepository.GetArticlesAsync(_category, true, cts.Token);
             if (!articles.IsError)
             {
-                foreach (var article in articles.Value)
+                if (_articles.Count == 0)
                 {
-                    article.Title = Utility.HtmlDecode(article.Title);
-                    article.Description = Utility.HtmlDecode(article.Description);
-                    _articles.Add(article);
+                    foreach (var article in articles.Value)
+                    {
+                        article.Title = Utility.HtmlDecode(article.Title);
+                        article.Description = Utility.HtmlDecode(article.Description);
+                        _articles.Add(article);
+                    }
+                }
+                else
+                {
+                    var first = _articles.First();
+                    var newArticles = articles.Value.Where(a => a.PublishingDate > first.PublishingDate).OrderBy(a => a.PublishingDate);
+                    foreach (var article in newArticles)
+                    {
+                        _articles.Insert(0, article);
+                    }
                 }
             }
             else
