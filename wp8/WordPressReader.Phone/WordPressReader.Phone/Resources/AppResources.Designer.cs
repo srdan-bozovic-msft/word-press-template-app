@@ -61,7 +61,7 @@ namespace WordPressReader.Phone.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to komentari.
+        ///   Looks up a localized string similar to comments.
         /// </summary>
         public static string AppBarButtonComments {
             get {
@@ -70,7 +70,7 @@ namespace WordPressReader.Phone.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to osvježi.
+        ///   Looks up a localized string similar to reload.
         /// </summary>
         public static string AppBarButtonReload {
             get {
@@ -79,7 +79,7 @@ namespace WordPressReader.Phone.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to podijeli.
+        ///   Looks up a localized string similar to share.
         /// </summary>
         public static string AppBarButtonShare {
             get {
@@ -111,6 +111,33 @@ namespace WordPressReader.Phone.Resources {
         public static string ApplicationTitle {
             get {
                 return ResourceManager.GetString("ApplicationTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unable to reach server.\nPlease try again later..
+        /// </summary>
+        public static string ErrorMessage {
+            get {
+                return ResourceManager.GetString("ErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to please wait.
+        /// </summary>
+        public static string ProgressControlPleaseWait {
+            get {
+                return ResourceManager.GetString("ProgressControlPleaseWait", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reloading….
+        /// </summary>
+        public static string ProgressControlReloading {
+            get {
+                return ResourceManager.GetString("ProgressControlReloading", resourceCulture);
             }
         }
         

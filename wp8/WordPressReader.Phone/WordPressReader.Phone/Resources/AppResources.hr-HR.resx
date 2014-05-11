@@ -118,25 +118,25 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ResourceLanguage" xml:space="preserve">
-    <value>sr-Latn</value>
+    <value>hr-HR</value>
     <comment>Controls the Language and ensures that the font for all elements in the RootFrame aligns with the app's language. Set to the language code of this resource file's language.</comment>
   </data>
   <data name="AppBarButtonComments" xml:space="preserve">
     <value>komentari</value>
   </data>
   <data name="AppBarButtonReload" xml:space="preserve">
-    <value>osveži</value>
+    <value>osvježi</value>
   </data>
   <data name="AppBarButtonShare" xml:space="preserve">
-    <value>podeli</value>
+    <value>podijeli</value>
   </data>
   <data name="ErrorMessage" xml:space="preserve">
-    <value>Došlo je do problema prilikom preuzimanja podataka.\nMolimo Vas pokušajte kasnije.</value>
+    <value>Unable to reach server.\nPlease try again later.</value>
   </data>
   <data name="ProgressControlPleaseWait" xml:space="preserve">
-    <value>molim sačekajte</value>
+    <value>molim pričekajte</value>
   </data>
   <data name="ProgressControlReloading" xml:space="preserve">
-    <value>Osvežavam…</value>
+    <value>Osvježavam…</value>
   </data>
 </root>

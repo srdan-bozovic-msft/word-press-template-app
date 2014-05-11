@@ -135,12 +135,21 @@
     <value>Menu Item</value>
   </data>
   <data name="AppBarButtonComments" xml:space="preserve">
-    <value>komentari</value>
+    <value>comments</value>
   </data>
   <data name="AppBarButtonReload" xml:space="preserve">
-    <value>osvježi</value>
+    <value>reload</value>
   </data>
   <data name="AppBarButtonShare" xml:space="preserve">
-    <value>podijeli</value>
+    <value>share</value>
+  </data>
+  <data name="ErrorMessage" xml:space="preserve">
+    <value>Unable to reach server.\nPlease try again later.</value>
+  </data>
+  <data name="ProgressControlPleaseWait" xml:space="preserve">
+    <value>please wait</value>
+  </data>
+  <data name="ProgressControlReloading" xml:space="preserve">
+    <value>Reloading…</value>
   </data>
 </root>

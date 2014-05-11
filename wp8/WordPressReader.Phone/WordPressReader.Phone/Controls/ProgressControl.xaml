@@ -19,7 +19,7 @@
                             <DoubleAnimation
                             Storyboard.TargetName="InnerAnimatedScaleTransform"
                             Storyboard.TargetProperty="(ScaleTransform.ScaleX)"
-                            To="0.85" Duration="0:0:0.6" AutoReverse="True"
+                            To="0.80" Duration="0:0:0.6" AutoReverse="True"
                             RepeatBehavior="Forever">
                                 <DoubleAnimation.EasingFunction>
                                     <ExponentialEase/>
@@ -28,7 +28,7 @@
                             <DoubleAnimation
                             Storyboard.TargetName="InnerAnimatedScaleTransform"
                             Storyboard.TargetProperty="(ScaleTransform.ScaleY)"
-                            To="0.85" Duration="0:0:0.6" AutoReverse="True"
+                            To="0.80" Duration="0:0:0.6" AutoReverse="True"
                             RepeatBehavior="Forever">
                                 <DoubleAnimation.EasingFunction>
                                     <ExponentialEase/>
@@ -65,8 +65,8 @@
                         </Ellipse.RenderTransform>
                     </Ellipse>
                 </Grid>
-                <TextBlock Text="Osvježavam&#x2026;" Margin="0 30 0 0" TextAlignment="Center" Foreground="#3E65FF" Style="{StaticResource PhoneTextExtraLargeStyle}"/>
-                <TextBlock Text="molim pričekajte" Margin="0 18 0 0" TextAlignment="Center" Foreground="#444444" Style="{StaticResource PhoneTextNormalStyle}"/>
+                <TextBlock Text="{Binding Path=LocalizedResources.ProgressControlReloading, Source={StaticResource LocalizedStrings}}" Margin="0 30 0 0" TextAlignment="Center" Foreground="#3E65FF" Style="{StaticResource PhoneTextExtraLargeStyle}"/>
+                <TextBlock Text="{Binding Path=LocalizedResources.ProgressControlPleaseWait, Source={StaticResource LocalizedStrings}}" Margin="0 18 0 0" TextAlignment="Center" Foreground="#444444" Style="{StaticResource PhoneTextNormalStyle}"/>
             </StackPanel>
         </Grid>
     </Grid>
