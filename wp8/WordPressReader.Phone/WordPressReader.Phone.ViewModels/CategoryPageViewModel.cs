@@ -72,7 +72,7 @@ namespace WordPressReader.Phone.ViewModels
                 );
             ReloadCommand = new RelayCommand(async () =>
                 {
-                    await ReloadArticlesAsync();
+                    await ReloadArticlesAsync(true);
                 });
         }
 
@@ -86,19 +86,21 @@ namespace WordPressReader.Phone.ViewModels
             var parts = category.Split(new []{";;"},StringSplitOptions.None);
             PageTitle = parts[0];
             _category = parts[1];
-            await ReloadArticlesAsync();
+            await ReloadArticlesAsync(false);
         }
 
-        private async Task ReloadArticlesAsync()
+        private async Task ReloadArticlesAsync(bool force)
         {
-            if(_articles.Count==0)
+            if (_articles.Count == 0 || force)
+            {
+                _articles.Clear();
                 IsLoading = true;
+            }
             var cts = new CancellationTokenSource();
-            //_articles.Clear();
             var articles = await _blogRepository.GetArticlesAsync(_category, true, cts.Token);
             if (!articles.IsError)
             {
-                if (_articles.Count == 0)
+                if (_articles.Count == 0 || force)
                 {
                     foreach (var article in articles.Value)
                     {
@@ -133,7 +135,7 @@ namespace WordPressReader.Phone.ViewModels
             {
                 foreach (var article in articles.Value)
                 {
-                    if (!_articles.Contains(article))
+                    if (_articles.FirstOrDefault(a=>a.Link == article.Link)==null)
                     {
                         article.Title = Utility.HtmlDecode(article.Title);
                         article.Description = Utility.HtmlDecode(article.Description);

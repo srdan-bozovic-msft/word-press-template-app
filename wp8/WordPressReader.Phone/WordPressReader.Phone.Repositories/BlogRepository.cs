@@ -28,12 +28,13 @@ namespace WordPressReader.Phone.Repositories
         private IConfigurationService _configurationService;
         private readonly Dictionary<string, List<Article>> _articles;
         private readonly List<Comment> _comments;
-        private int _nextPage = 0;
+         private readonly Dictionary<string, int> _nextPages;
         public BlogRepository(IHttpClientService httpClientService, IConfigurationService configurationService)
         {
             _httpClientService = httpClientService;
             _configurationService = configurationService;
             _articles = new Dictionary<string, List<Article>>();
+            _nextPages = new Dictionary<string, int>();
             _comments = new List<Comment>();
         }
         public async Task<RepositoryResult<Article[]>> GetArticlesAsync(string category, bool update, CancellationToken cancellationToken)
@@ -42,11 +43,16 @@ namespace WordPressReader.Phone.Repositories
             {
                 var feedUrl = _configurationService.GetFeedUrl(category);
                 if (!_articles.ContainsKey(category))
+                {
                     _articles.Add(category, new List<Article>());
-                if (update || _articles[category].Count == 0)
+                    _nextPages.Add(category, 1);
+                }
+                if (
+                    //update || 
+                    _articles[category].Count == 0)
                 {
                     _articles[category].Clear();
-                    _nextPage = 1;
+                    _nextPages[category] = 1;
                     await FetchAsync(category, cancellationToken, feedUrl);
                 }
                 return _articles[category].ToArray();
@@ -111,7 +117,7 @@ namespace WordPressReader.Phone.Repositories
 
         private async Task<CancellationToken> FetchAsync(string category, CancellationToken cancellationToken, string feedUrl)
         {
-            var feed = await _httpClientService.GetXmlAsync<RssFeed>(feedUrl + "?paged=" + _nextPage, cancellationToken);
+            var feed = await _httpClientService.GetXmlAsync<RssFeed>(feedUrl + "?paged=" + _nextPages[category], cancellationToken);
             var categoryFilter = _configurationService.GetCategoryFilter();
 
             var items = feed.Channel.Items;
@@ -135,7 +141,7 @@ namespace WordPressReader.Phone.Repositories
                     Category = item.Categories.FirstOrDefault()
                 }));
 
-            _nextPage++;
+            _nextPages[category]++;
             return cancellationToken;
         }
 
