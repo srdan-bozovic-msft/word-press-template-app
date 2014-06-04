@@ -52,7 +52,7 @@ namespace MSC.Phone.Disqus.Data
         public bool IsDeleted { get; set; }
 
         [JsonProperty("isEdited")]
-        public int IsEdited { get; set; }
+        public bool IsEdited { get; set; }
 
         [JsonProperty("message")]
         public string Message { get; set; }

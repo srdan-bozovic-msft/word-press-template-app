@@ -84,9 +84,19 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="ConfigurationService.cs" />
+    <Compile Include="DisqusCommentsService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RssCommentsService.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\MSC.Phone.Disqus\MSC.Phone.Disqus.csproj">
+      <Project>{3ff09adf-539e-430f-a743-91fb3b929cf6}</Project>
+      <Name>MSC.Phone.Disqus</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MSC.Phone.Shared\MSC.Phone.Shared.csproj">
+      <Project>{05ce307f-f924-4270-a7dc-b849b835dd47}</Project>
+      <Name>MSC.Phone.Shared</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WordPressReader.Phone.Contracts\WordPressReader.Phone.Contracts.csproj">
       <Project>{CEACEDAA-C99D-4DED-AACB-28C981BC456F}</Project>
       <Name>WordPressReader.Phone.Contracts</Name>

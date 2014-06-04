@@ -26,16 +26,16 @@ namespace WordPressReader.Phone.Repositories
     {
         private IHttpClientService _httpClientService;
         private IConfigurationService _configurationService;
+        private ICommentsService _commentsService;
         private readonly Dictionary<string, List<Article>> _articles;
-        private readonly List<Comment> _comments;
          private readonly Dictionary<string, int> _nextPages;
-        public BlogRepository(IHttpClientService httpClientService, IConfigurationService configurationService)
+        public BlogRepository(IHttpClientService httpClientService, IConfigurationService configurationService, ICommentsService commentsService)
         {
             _httpClientService = httpClientService;
             _configurationService = configurationService;
+            _commentsService = commentsService;
             _articles = new Dictionary<string, List<Article>>();
             _nextPages = new Dictionary<string, int>();
-            _comments = new List<Comment>();
         }
         public async Task<RepositoryResult<Article[]>> GetArticlesAsync(string category, bool update, CancellationToken cancellationToken)
         {
@@ -145,23 +145,11 @@ namespace WordPressReader.Phone.Repositories
             return cancellationToken;
         }
 
-        public async Task<RepositoryResult<Comment[]>> GetCommentsAsync(string url, CancellationToken cancellationToken)
+        public async Task<RepositoryResult<Comment[]>> GetCommentsAsync(Article article, CancellationToken cancellationToken)
         {
             try
             {
-                _comments.Clear();
-                var feed = await _httpClientService.GetXmlAsync<RssFeed>(url, cancellationToken);
-                if (feed != null && feed.Channel.Items != null)
-                {
-                    _comments.AddRange(
-                        feed.Channel.Items.Select(
-                        item => new Comment
-                        {
-                            Content = item.Description,
-                        })
-                    );
-                }
-                return _comments.ToArray();
+                return await _commentsService.GetCommentsAsync(article, cancellationToken);
             }
             catch (Exception xcp)
             {

@@ -13,7 +13,7 @@ namespace WordPressReader.Phone.Contracts.Repositories
     {
         Task<RepositoryResult<Article[]>> GetArticlesAsync(string category, bool update, CancellationToken cancellationToken);
         Task<RepositoryResult<Article[]>> GetMoreArticlesAsync(string category, CancellationToken cancellationToken);
-        Task<RepositoryResult<Comment[]>> GetCommentsAsync(string url, CancellationToken cancellationToken); 
+        Task<RepositoryResult<Comment[]>> GetCommentsAsync(Article article, CancellationToken cancellationToken); 
         Task<RepositoryResult<string>> GetArticleContentAsync(string articleUrl, CancellationToken cancellationToken);
 
     }

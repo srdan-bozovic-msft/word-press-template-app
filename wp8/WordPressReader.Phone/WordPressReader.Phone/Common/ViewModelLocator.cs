@@ -59,6 +59,8 @@ namespace WordPressReader.Phone.Common
             ioc.RegisterType<INavigationService, NavigationService>();
             ioc.RegisterType<ISocialShare, SocialShare>();
             ioc.RegisterType<IConfigurationService, ConfigurationService>();
+            //ioc.RegisterType<ICommentsService, RssCommentsService>();
+            ioc.RegisterType<ICommentsService, DisqusCommentsService>();
             ioc.RegisterType<IBlogRepository, BlogRepository>();
             ioc.RegisterType<IMainPageViewModel, MainPageViewModel>();
             ioc.RegisterType<ICategoryPageViewModel, CategoryPageViewModel>();

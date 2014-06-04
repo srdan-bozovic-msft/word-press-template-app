@@ -38,9 +38,18 @@ namespace MSC.Phone.Shared
             var response = await client.GetAsync(url, cancellationToken).ConfigureAwait(false);
             if (response != null && (
                 response.StatusCode == System.Net.HttpStatusCode.OK))
-                return JsonConvert.DeserializeObject<T>(await response.Content.ReadAsStringAsync().ConfigureAwait(false));
-            else
-                return default(T);
+            {
+                var responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    return JsonConvert.DeserializeObject<T>(responseContent);
+                }
+                catch(Exception xcp)
+                {
+
+                }
+            }
+            return default(T);
         }
 
         public async Task<T> GetXmlAsync<T>(string url, CancellationToken cancellationToken)

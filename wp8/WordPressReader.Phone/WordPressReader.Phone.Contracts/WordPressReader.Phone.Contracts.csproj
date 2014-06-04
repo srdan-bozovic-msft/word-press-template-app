@@ -88,6 +88,7 @@
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\IBlogRepository.cs" />
+    <Compile Include="Services\ICommentsService.cs" />
     <Compile Include="Services\IConfigurationService.cs" />
     <Compile Include="ViewModels\ICommentsPageViewModel.cs" />
     <Compile Include="ViewModels\ICategoryPageViewModel.cs" />

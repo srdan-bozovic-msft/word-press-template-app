@@ -110,7 +110,7 @@ namespace WordPressReader.Phone.ViewModels
                 {
                     Title = article.Title;
                     Lead = string.Format("{0:00}.{1:00}.{2:0000} | {3}", article.PublishingDate.Day, article.PublishingDate.Month, article.PublishingDate.Year, article.Category);
-                    var comments = await _blogRepository.GetCommentsAsync(article.CommentLink, cts.Token);
+                    var comments = await _blogRepository.GetCommentsAsync(article, cts.Token);
                     if (!comments.IsError)
                     {
                         //if (comments.Value.Count() > 0)

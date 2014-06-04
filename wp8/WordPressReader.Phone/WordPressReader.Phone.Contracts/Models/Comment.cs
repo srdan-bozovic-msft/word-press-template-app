@@ -9,6 +9,18 @@ namespace WordPressReader.Phone.Contracts.Models
 {
     public class Comment
     {
+        public string Id { get; set; }
+
+        public string Parent { get; set; }
+
+        public int Likes { get; set; }
+
+        public int Dislikes { get; set; }
+
+        public DateTime CreatedAt { get; set; }
+
+        public bool IsHighlighted { get; set; }
+
         private string _content;
         public string Content
         {
