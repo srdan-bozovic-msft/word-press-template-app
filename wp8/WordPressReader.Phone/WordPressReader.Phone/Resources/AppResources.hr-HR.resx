@@ -139,4 +139,7 @@
   <data name="ProgressControlReloading" xml:space="preserve">
     <value>Osvježavam…</value>
   </data>
+  <data name="Lead_Comments" xml:space="preserve">
+    <value>komentara</value>
+  </data>
 </root>

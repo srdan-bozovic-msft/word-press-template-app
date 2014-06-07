@@ -217,5 +217,28 @@ namespace WordPressReader.Phone.Repositories
                 return RepositoryResult<string>.CreateError(xcp);
             }
         }
+
+        public async Task<RepositoryResult<int?>> GetCommentsCountAsync(string articleUrl, CancellationToken cancellationToken)
+        {
+            try
+            {
+                Article article = null;
+                foreach (var category in _articles.Keys)
+                {
+                    article = _articles[category].FirstOrDefault(a => a.Link == articleUrl);
+                    if (article != null)
+                        break;
+                }
+                var commentsCount = await _commentsService.GetCommentsCountAsync(article, cancellationToken);
+                if (article != null)
+                    article.CommentsCount = commentsCount;
+                return commentsCount;
+            }
+            catch (Exception xcp)
+            {
+                return RepositoryResult<int?>.CreateError(xcp);
+            }
+        }
+
     }
 }

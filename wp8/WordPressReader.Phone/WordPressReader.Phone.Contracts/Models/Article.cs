@@ -15,6 +15,7 @@ namespace WordPressReader.Phone.Contracts.Models
         public DateTime PublishingDate { get; set; }
         public string Link { get; set; }
         public string CommentLink { get; set; }
+        public int? CommentsCount { get; set; }
         public string EncodedContent { get; set; }
 
         public string ImageUrl

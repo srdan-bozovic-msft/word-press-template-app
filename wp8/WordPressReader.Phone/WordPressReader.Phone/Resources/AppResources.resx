@@ -173,4 +173,7 @@
   <data name="CreatedAt_yesterday" xml:space="preserve">
     <value>a day ago</value>
   </data>
+  <data name="Lead_Comments" xml:space="preserve">
+    <value>comments</value>
+  </data>
 </root>

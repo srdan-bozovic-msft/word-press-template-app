@@ -109,17 +109,25 @@ namespace WordPressReader.Phone.ViewModels
                 if (article != null)
                 {
                     Title = article.Title;
-                    Lead = string.Format("{0:00}.{1:00}.{2:0000} | {3}", article.PublishingDate.Day, article.PublishingDate.Month, article.PublishingDate.Year, article.Category);
+                    Lead = article.CommentsCount == null ?
+                        string.Format("{0:00}.{1:00}.{2:0000} | {3}", article.PublishingDate.Day, article.PublishingDate.Month, article.PublishingDate.Year, article.Category)
+                        :
+                        string.Format("{0:00}.{1:00}.{2:0000} | {3} | {4} {5}", article.PublishingDate.Day, article.PublishingDate.Month, article.PublishingDate.Year, article.Category, article.CommentsCount, Resources.AppResources.Lead_Comments);
+                    
+                    _comments.Clear();
                     var comments = await _blogRepository.GetCommentsAsync(article, cts.Token);
                     if (!comments.IsError)
                     {
                         //if (comments.Value.Count() > 0)
-                        _comments.Clear();
                         foreach (var comment in comments.Value)
                         {
                             _comments.Add(new RichCommentViewModel(comment));
                         }
                         HasComments = _comments.Count > 0;
+                        if (HasComments)
+                        {
+                            Lead = string.Format("{0:00}.{1:00}.{2:0000} | {3} | {4} {5}", article.PublishingDate.Day, article.PublishingDate.Month, article.PublishingDate.Year, article.Category, _comments.Count, Resources.AppResources.Lead_Comments);
+                        }
                     }
                     else
                     {

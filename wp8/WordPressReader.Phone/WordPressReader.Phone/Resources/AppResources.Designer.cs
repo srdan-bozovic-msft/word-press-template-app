@@ -187,6 +187,15 @@ namespace WordPressReader.Phone.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to comments.
+        /// </summary>
+        public static string Lead_Comments {
+            get {
+                return ResourceManager.GetString("Lead_Comments", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to please wait.
         /// </summary>
         public static string ProgressControlPleaseWait {

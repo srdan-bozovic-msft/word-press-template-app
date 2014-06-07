@@ -43,5 +43,20 @@ namespace MSC.Phone.Disqus
             return await _httpClientService.GetJsonAsync<Page<Post>>(url, cancellationToken);
         }
 
+        public async Task<Page<ForumThread>> GetThreadAsync(CancellationToken cancellationToken, string forum, string threadUrl, string cursor = null, int? limit = null)
+        {
+            var url = string.Format("{0}/threads/list.json?forum={1}&thread=link:{2}&api_key={3}",
+                BaseUrl,
+                forum,
+                threadUrl,
+                _apiKey
+                );
+            if (cursor != null)
+                url += "&cursor=" + cursor;
+            if (limit != null)
+                url += "&limit=" + limit;
+            return await _httpClientService.GetJsonAsync<Page<ForumThread>>(url, cancellationToken);
+        }
+
     }
 }

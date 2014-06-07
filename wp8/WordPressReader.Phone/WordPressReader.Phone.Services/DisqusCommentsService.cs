@@ -78,5 +78,16 @@ namespace WordPressReader.Phone.Services
                 Parent = post.Parent
             };
         }
+
+        public async Task<int?> GetCommentsCountAsync(Article article, CancellationToken cancellationToken)
+        {
+            var threads = await _client.GetThreadAsync(
+                cancellationToken,
+                "nokiamob",
+                article.Link);
+            if (threads.Response.Count() == 0)
+                return null;
+            return threads.Response[0].Posts;
+        }
     }
 }

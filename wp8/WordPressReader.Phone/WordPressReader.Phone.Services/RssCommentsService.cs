@@ -33,5 +33,10 @@ namespace WordPressReader.Phone.Services
             }
             return new Comment[0];  
         }
+
+        public async Task<int?> GetCommentsCountAsync(Article article, CancellationToken cancellationToken)
+        {
+            return null;
+        }
     }
 }

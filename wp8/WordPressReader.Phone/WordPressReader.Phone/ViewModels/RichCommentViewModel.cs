@@ -93,7 +93,7 @@ namespace WordPressReader.Phone.ViewModels
                 {
                     return date.ToString("dd MMM");
                 }
-                return date.ToString("dd MMM YYYY");
+                return date.ToString("dd MMM yyyy");
             }
         }
 

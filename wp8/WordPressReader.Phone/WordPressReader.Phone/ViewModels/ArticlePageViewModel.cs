@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using WordPressReader.Phone.Contracts.Models;
 using WordPressReader.Phone.Contracts.Repositories;
+using WordPressReader.Phone.Contracts.Services;
 using WordPressReader.Phone.Contracts.ViewModels;
 
 namespace WordPressReader.Phone.ViewModels
@@ -326,15 +327,32 @@ namespace WordPressReader.Phone.ViewModels
                     HtmlThree = "";
                     HtmlOne = "";
                     TitleTwo = article.Title;
-                    LeadTwo = string.Format("{0:00}.{1:00}.{2:0000} | {3}", article.PublishingDate.Day, article.PublishingDate.Month, article.PublishingDate.Year, article.Category);
+                    if (article.CommentsCount == null)
+                        LeadTwo = string.Format("{0:00}.{1:00}.{2:0000} | {3}", article.PublishingDate.Day, article.PublishingDate.Month, article.PublishingDate.Year, article.Category);
+                    else
+                        LeadTwo = string.Format("{0:00}.{1:00}.{2:0000} | {3} | {4} {5}", article.PublishingDate.Day, article.PublishingDate.Month, article.PublishingDate.Year, article.Category, article.CommentsCount, Resources.AppResources.Lead_Comments);
                     PositionTwo = string.Format("{0}/{1}", _current + 1, count);
                     if (oldValue == 1)
                     {
                         HtmlTwo = "";
-                        var result = await _blogRepository.GetArticleContentAsync(url, cts.Token);
+                        var htmlTask = _blogRepository.GetArticleContentAsync(url, cts.Token);
+                        var commentsCountTask = _blogRepository.GetCommentsCountAsync(url, cts.Token);
+                        var result = await htmlTask;
                         if (result.IsError)
                             _navigationService.Navigate("Error");
                         HtmlTwo = result;
+                        var commentResult = await commentsCountTask;
+                        if (!commentResult.IsError)
+                            article.CommentsCount = commentResult.Value;
+                        LeadTwo = string.Format("{0:00}.{1:00}.{2:0000} | {3} | {4} {5}", article.PublishingDate.Day, article.PublishingDate.Month, article.PublishingDate.Year, article.Category, article.CommentsCount, Resources.AppResources.Lead_Comments);
+                    }
+                    else
+                    {
+                        var commentsCountTask = _blogRepository.GetCommentsCountAsync(url, cts.Token);
+                        var commentResult = await commentsCountTask;
+                        if (!commentResult.IsError)
+                            article.CommentsCount = commentResult.Value;
+                        LeadTwo = string.Format("{0:00}.{1:00}.{2:0000} | {3} | {4} {5}", article.PublishingDate.Day, article.PublishingDate.Month, article.PublishingDate.Year, article.Category, article.CommentsCount, Resources.AppResources.Lead_Comments);
                     }
                     var results = await Task.WhenAll(
                         _blogRepository.GetArticleContentAsync(nextUrl, cts.Token),
@@ -352,15 +370,32 @@ namespace WordPressReader.Phone.ViewModels
                     HtmlTwo = "";
                     HtmlOne = "";
                     TitleThree = article.Title;
-                    LeadThree = string.Format("{0:00}.{1:00}.{2:0000} | {3}", article.PublishingDate.Day, article.PublishingDate.Month, article.PublishingDate.Year, article.Category);
+                    if (article.CommentsCount == null)
+                        LeadThree = string.Format("{0:00}.{1:00}.{2:0000} | {3}", article.PublishingDate.Day, article.PublishingDate.Month, article.PublishingDate.Year, article.Category);
+                    else
+                        LeadThree = string.Format("{0:00}.{1:00}.{2:0000} | {3} | {4} {5}", article.PublishingDate.Day, article.PublishingDate.Month, article.PublishingDate.Year, article.Category, article.CommentsCount, Resources.AppResources.Lead_Comments);
                     PositionThree = string.Format("{0}/{1}", _current + 1, count);
                     if (oldValue == 2)
                     {
                         HtmlThree = "";
-                        var result = await _blogRepository.GetArticleContentAsync(url, cts.Token);
+                        var htmlTask = _blogRepository.GetArticleContentAsync(url, cts.Token);
+                        var commentsCountTask = _blogRepository.GetCommentsCountAsync(url, cts.Token);
+                        var result = await htmlTask; 
                         if (result.IsError)
                             _navigationService.Navigate("Error");
                         HtmlThree = result;
+                        var commentResult = await commentsCountTask;
+                        if (!commentResult.IsError)
+                            article.CommentsCount = commentResult.Value;
+                        LeadThree = string.Format("{0:00}.{1:00}.{2:0000} | {3} | {4} {5}", article.PublishingDate.Day, article.PublishingDate.Month, article.PublishingDate.Year, article.Category, article.CommentsCount, Resources.AppResources.Lead_Comments);
+                    }
+                    else
+                    {
+                        var commentsCountTask = _blogRepository.GetCommentsCountAsync(url, cts.Token);
+                        var commentResult = await commentsCountTask;
+                        if (!commentResult.IsError)
+                            article.CommentsCount = commentResult.Value;
+                        LeadThree = string.Format("{0:00}.{1:00}.{2:0000} | {3} | {4} {5}", article.PublishingDate.Day, article.PublishingDate.Month, article.PublishingDate.Year, article.Category, article.CommentsCount, Resources.AppResources.Lead_Comments);
                     }
                     var results = await Task.WhenAll(
                         _blogRepository.GetArticleContentAsync(nextUrl, cts.Token),
@@ -376,16 +411,34 @@ namespace WordPressReader.Phone.ViewModels
                     HtmlThree = "";
                     HtmlTwo = "";
                     TitleOne = article.Title;
-                    LeadOne = string.Format("{0:00}.{1:00}.{2:0000} | {3}", article.PublishingDate.Day, article.PublishingDate.Month, article.PublishingDate.Year, article.Category);
+                    if (article.CommentsCount == null)
+                        LeadOne = string.Format("{0:00}.{1:00}.{2:0000} | {3}", article.PublishingDate.Day, article.PublishingDate.Month, article.PublishingDate.Year, article.Category);
+                    else
+                        LeadOne = string.Format("{0:00}.{1:00}.{2:0000} | {3} | {4} {5}", article.PublishingDate.Day, article.PublishingDate.Month, article.PublishingDate.Year, article.Category, article.CommentsCount, Resources.AppResources.Lead_Comments);
                     PositionOne = string.Format("{0}/{1}", _current + 1, count);
                     if (oldValue == 0)
                     {
                         HtmlOne = "";
-                        var result = await _blogRepository.GetArticleContentAsync(url, cts.Token);
-                        if(result.IsError)
+                        var htmlTask = _blogRepository.GetArticleContentAsync(url, cts.Token);
+                        var commentsCountTask = _blogRepository.GetCommentsCountAsync(url, cts.Token);
+                        var result = await htmlTask; 
+                        if (result.IsError)
                             _navigationService.Navigate("Error");
                         HtmlOne = result;
+                        var commentResult = await commentsCountTask;
+                        if (!commentResult.IsError)
+                            article.CommentsCount = commentResult.Value;
+                        LeadOne = string.Format("{0:00}.{1:00}.{2:0000} | {3} | {4} {5}", article.PublishingDate.Day, article.PublishingDate.Month, article.PublishingDate.Year, article.Category, article.CommentsCount, Resources.AppResources.Lead_Comments);
                     }
+                    else
+                    {
+                        var commentsCountTask = _blogRepository.GetCommentsCountAsync(url, cts.Token);
+                        var commentResult = await commentsCountTask;
+                        if (!commentResult.IsError)
+                            article.CommentsCount = commentResult.Value;
+                        LeadOne = string.Format("{0:00}.{1:00}.{2:0000} | {3} | {4} {5}", article.PublishingDate.Day, article.PublishingDate.Month, article.PublishingDate.Year, article.Category, article.CommentsCount, Resources.AppResources.Lead_Comments);
+                    }
+
                     var results = await Task.WhenAll(
                         _blogRepository.GetArticleContentAsync(nextUrl, cts.Token),
                         _blogRepository.GetArticleContentAsync(previousUrl, cts.Token));

@@ -10,7 +10,8 @@ namespace WordPressReader.Phone.Contracts.Services
 {
     public interface ICommentsService
     {
-        Task<Comment[]> GetCommentsAsync(Article article, CancellationToken cancellationToken); 
+        Task<Comment[]> GetCommentsAsync(Article article, CancellationToken cancellationToken);
+        Task<int?> GetCommentsCountAsync(Article article, CancellationToken cancellationToken); 
      
     }
 }

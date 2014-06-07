@@ -89,6 +89,7 @@
     <Compile Include="Data\Image.cs" />
     <Compile Include="Data\Page.cs" />
     <Compile Include="Data\Post.cs" />
+    <Compile Include="Data\ForumThread.cs" />
     <Compile Include="DisqusClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

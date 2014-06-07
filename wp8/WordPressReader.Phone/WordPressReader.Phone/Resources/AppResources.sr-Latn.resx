@@ -160,4 +160,7 @@
   <data name="CreatedAt_yesterday" xml:space="preserve">
     <value>juče</value>
   </data>
+  <data name="Lead_Comments" xml:space="preserve">
+    <value>komentara</value>
+  </data>
 </root>
