@@ -171,6 +171,6 @@
     <value>seconds ago</value>
   </data>
   <data name="CreatedAt_yesterday" xml:space="preserve">
-    <value>yesterday</value>
+    <value>a day ago</value>
   </data>
 </root>

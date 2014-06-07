@@ -26,7 +26,7 @@ namespace WordPressReader.Phone.ViewModels
         {
             get
             {
-                return new Thickness(0);
+                return new Thickness(Math.Min(_comment.Level * 25, 100), 0, 0, 0);
             }
         }
 

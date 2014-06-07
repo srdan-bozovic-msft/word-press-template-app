@@ -169,7 +169,7 @@ namespace WordPressReader.Phone.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to yesterday.
+        ///   Looks up a localized string similar to a day ago.
         /// </summary>
         public static string CreatedAt_yesterday {
             get {

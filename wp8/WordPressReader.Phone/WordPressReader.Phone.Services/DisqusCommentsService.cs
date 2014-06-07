@@ -1,4 +1,5 @@
 ﻿using MSC.Phone.Disqus;
+using MSC.Phone.Disqus.Data;
 using MSC.Phone.Shared.Contracts.Services;
 using System;
 using System.Collections.Generic;
@@ -27,18 +28,55 @@ namespace WordPressReader.Phone.Services
                 article.Link,
                 null,
                 100);
-            return posts.Response.Select(p => new Comment {
-                Id = p.Id,
-                Author = p.Author.Name,
-                AuthorAvatarUrl = p.Author.Avatar.Small.Permalink,
-                IsAuthorAnonymous = p.Author.IsAnonymous,
-                Content = p.RawMessage,
-                CreatedAt = p.CreatedAt,
-                Dislikes = p.Dislikes,
-                IsHighlighted = p.IsHighlighted,
-                Likes = p.Likes,
-                Parent = p.Parent
-            }).ToArray();
+            var comments = new List<Comment>();
+            var orphenComments = new Dictionary<string, List<Comment>>();
+            foreach (var post in posts.Response)
+            {
+                var comment = PostToComment(post);
+                if(!string.IsNullOrEmpty(comment.Parent))
+                {
+                    if(!orphenComments.ContainsKey(comment.Parent))
+                    {
+                        orphenComments.Add(comment.Parent, new List<Comment>());
+                    }
+                    orphenComments[comment.Parent].Add(comment);
+                }
+                else
+                {
+                    AddComment(comments, orphenComments, comment);
+                }
+            }
+            return comments.ToArray();
+        }
+
+        private static void AddComment(List<Comment> comments, Dictionary<string, List<Comment>> orphenComments, Comment comment)
+        {
+            comments.Add(comment);
+            if(orphenComments.ContainsKey(comment.Id))
+            {
+                foreach (var orphenComment in orphenComments[comment.Id])
+                {
+                    orphenComment.Level = comment.Level + 1;
+                    AddComment(comments, orphenComments, orphenComment);
+                }
+            }
+        }
+
+        private static Comment PostToComment(Post post)
+        {
+            return new Comment
+            {
+                Id = post.Id,
+                Author = post.Author.Name,
+                AuthorAvatarUrl = post.Author.Avatar.Small.Permalink,
+                IsAuthorAnonymous = post.Author.IsAnonymous,
+                Content = post.RawMessage,
+                CreatedAt = post.CreatedAt,
+                Dislikes = post.Dislikes,
+                IsHighlighted = post.IsHighlighted,
+                Likes = post.Likes,
+                Parent = post.Parent
+            };
         }
     }
 }

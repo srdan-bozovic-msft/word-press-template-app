@@ -19,6 +19,8 @@ namespace WordPressReader.Phone.Contracts.Models
 
         public bool IsAuthorAnonymous { get; set; }
 
+        public int Level { get; set; }
+
         public int Likes { get; set; }
 
         public int Dislikes { get; set; }
