@@ -139,4 +139,25 @@
   <data name="ProgressControlReloading" xml:space="preserve">
     <value>Osvežavam…</value>
   </data>
+  <data name="CreatedAt_a_minute_ago" xml:space="preserve">
+    <value>pre minut</value>
+  </data>
+  <data name="CreatedAt_days_ago" xml:space="preserve">
+    <value>dana ranije</value>
+  </data>
+  <data name="CreatedAt_hours_ago" xml:space="preserve">
+    <value>sati ranije</value>
+  </data>
+  <data name="CreatedAt_Just_a_moment_ago" xml:space="preserve">
+    <value>Pre nekoliko trenutaka</value>
+  </data>
+  <data name="CreatedAt_minutes_ago" xml:space="preserve">
+    <value>minuta ranije</value>
+  </data>
+  <data name="CreatedAt_seconds_ago" xml:space="preserve">
+    <value>sekundi ranije</value>
+  </data>
+  <data name="CreatedAt_yesterday" xml:space="preserve">
+    <value>juče</value>
+  </data>
 </root>

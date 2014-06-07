@@ -152,4 +152,25 @@
   <data name="ProgressControlReloading" xml:space="preserve">
     <value>Reloading…</value>
   </data>
+  <data name="CreatedAt_a_minute_ago" xml:space="preserve">
+    <value>a minute ago</value>
+  </data>
+  <data name="CreatedAt_days_ago" xml:space="preserve">
+    <value>days ago</value>
+  </data>
+  <data name="CreatedAt_hours_ago" xml:space="preserve">
+    <value>hours ago</value>
+  </data>
+  <data name="CreatedAt_Just_a_moment_ago" xml:space="preserve">
+    <value>Just a moment ago</value>
+  </data>
+  <data name="CreatedAt_minutes_ago" xml:space="preserve">
+    <value>minutes ago</value>
+  </data>
+  <data name="CreatedAt_seconds_ago" xml:space="preserve">
+    <value>seconds ago</value>
+  </data>
+  <data name="CreatedAt_yesterday" xml:space="preserve">
+    <value>yesterday</value>
+  </data>
 </root>

@@ -63,23 +63,31 @@ namespace WordPressReader.Phone.ViewModels
                 var now = DateTime.Now;
                 if (date >= now.AddSeconds(-5))
                 {
-                    return "Just a moment ago";
+                    return Resources.AppResources.CreatedAt_Just_a_moment_ago;
                 }
                 if (date >= now.AddSeconds(-60))
                 {
-                    return (int)((now - date).TotalSeconds) + " seconds ago";
+                    return (int)((now - date).TotalSeconds) + " " + Resources.AppResources.CreatedAt_seconds_ago;
                 }
+                if (date >= now.AddSeconds(-120))
+                {
+                    return Resources.AppResources.CreatedAt_a_minute_ago;
+                } 
                 if (date >= now.AddMinutes(-60))
                 {
-                    return (int)((now - date).TotalMinutes) + " minutes ago";
+                    return (int)((now - date).TotalMinutes) + " " + Resources.AppResources.CreatedAt_minutes_ago;
                 }
                 if (date >= now.AddHours(-24))
                 {
-                    return (int)((now - date).TotalHours) + " hours ago";
+                    return (int)((now - date).TotalHours) + " " + Resources.AppResources.CreatedAt_hours_ago;
                 }
+                if (date >= now.AddHours(-48))
+                {
+                    return Resources.AppResources.CreatedAt_yesterday;
+                } 
                 if (date >= now.AddDays(-7))
                 {
-                    return (int)((now - date).TotalDays) + " days ago";
+                    return (int)((now - date).TotalDays) + " " + Resources.AppResources.CreatedAt_days_ago;
                 }
                 if (date.Year == now.Year)
                 {

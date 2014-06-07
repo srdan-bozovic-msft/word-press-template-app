@@ -115,6 +115,69 @@ namespace WordPressReader.Phone.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to a minute ago.
+        /// </summary>
+        public static string CreatedAt_a_minute_ago {
+            get {
+                return ResourceManager.GetString("CreatedAt_a_minute_ago", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to days ago.
+        /// </summary>
+        public static string CreatedAt_days_ago {
+            get {
+                return ResourceManager.GetString("CreatedAt_days_ago", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to hours ago.
+        /// </summary>
+        public static string CreatedAt_hours_ago {
+            get {
+                return ResourceManager.GetString("CreatedAt_hours_ago", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Just a moment ago.
+        /// </summary>
+        public static string CreatedAt_Just_a_moment_ago {
+            get {
+                return ResourceManager.GetString("CreatedAt_Just_a_moment_ago", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to minutes ago.
+        /// </summary>
+        public static string CreatedAt_minutes_ago {
+            get {
+                return ResourceManager.GetString("CreatedAt_minutes_ago", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to seconds ago.
+        /// </summary>
+        public static string CreatedAt_seconds_ago {
+            get {
+                return ResourceManager.GetString("CreatedAt_seconds_ago", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to yesterday.
+        /// </summary>
+        public static string CreatedAt_yesterday {
+            get {
+                return ResourceManager.GetString("CreatedAt_yesterday", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Unable to reach server.\nPlease try again later..
         /// </summary>
         public static string ErrorMessage {
