@@ -13,6 +13,12 @@ namespace WordPressReader.Phone.Contracts.Models
 
         public string Parent { get; set; }
 
+        public string Author { get; set; }
+        
+        public string AuthorAvatarUrl { get; set; }
+
+        public bool IsAuthorAnonymous { get; set; }
+
         public int Likes { get; set; }
 
         public int Dislikes { get; set; }
@@ -22,6 +28,15 @@ namespace WordPressReader.Phone.Contracts.Models
         public bool IsHighlighted { get; set; }
 
         private string _content;
+
+        public string RawContent
+        {
+            get
+            {
+                return _content;
+            }
+        }
+
         public string Content
         {
             get

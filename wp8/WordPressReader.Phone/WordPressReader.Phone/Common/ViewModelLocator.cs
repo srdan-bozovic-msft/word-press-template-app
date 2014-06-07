@@ -66,6 +66,7 @@ namespace WordPressReader.Phone.Common
             ioc.RegisterType<ICategoryPageViewModel, CategoryPageViewModel>();
             ioc.RegisterType<IArticlePageViewModel, ArticlePageViewModel>();
             ioc.RegisterType<ICommentsPageViewModel, CommentsPageViewModel>();
+            ioc.RegisterType<IRichCommentsPageViewModel, RichCommentsPageViewModel>();
         }
 
         public IMainPageViewModel MainPageViewModel
@@ -97,6 +98,14 @@ namespace WordPressReader.Phone.Common
             get
             {
                 return InstanceFactory.GetInstance<ICommentsPageViewModel>();
+            }
+        }
+
+        public IRichCommentsPageViewModel RichCommentsPageViewModel
+        {
+            get
+            {
+                return InstanceFactory.GetInstance<IRichCommentsPageViewModel>();
             }
         }
     }

@@ -90,10 +90,12 @@
     <Compile Include="Repositories\IBlogRepository.cs" />
     <Compile Include="Services\ICommentsService.cs" />
     <Compile Include="Services\IConfigurationService.cs" />
+    <Compile Include="ViewModels\IRichCommentsPageViewModel.cs" />
     <Compile Include="ViewModels\ICommentsPageViewModel.cs" />
     <Compile Include="ViewModels\ICategoryPageViewModel.cs" />
     <Compile Include="ViewModels\IMainPageViewModel.cs" />
     <Compile Include="ViewModels\IArticlePageViewModel.cs" />
+    <Compile Include="ViewModels\IRichCommentViewModel.cs" />
     <Compile Include="Views\ICommentsPageView.cs" />
     <Compile Include="Views\ICategoryPageView.cs" />
     <Compile Include="Views\IMainPageView.cs" />

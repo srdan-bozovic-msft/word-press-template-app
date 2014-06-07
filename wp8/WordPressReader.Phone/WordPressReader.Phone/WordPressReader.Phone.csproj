@@ -113,6 +113,9 @@
     <Compile Include="Views\CategoryPageView.xaml.cs">
       <DependentUpon>CategoryPageView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\RichCommentsPageView.xaml.cs">
+      <DependentUpon>RichCommentsPageView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\CommentsPageView.xaml.cs">
       <DependentUpon>CommentsPageView.xaml</DependentUpon>
     </Compile>
@@ -245,6 +248,10 @@
     <Page Include="Views\CategoryPageView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\RichCommentsPageView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\CommentsPageView.xaml">
       <SubType>Designer</SubType>

@@ -256,7 +256,7 @@ namespace WordPressReader.Phone.ViewModels
                 IsLoading = false;
             });
             GoToCommentsCommand = new RelayCommand(
-                () => _navigationService.Navigate("Comments", _category + ";;" + _articles[_current].Link));
+                () => _navigationService.Navigate("RichComments", _category + ";;" + _articles[_current].Link));
             ShareCommand = new RelayCommand(
                 () => {
                     var article = _articles[_current];

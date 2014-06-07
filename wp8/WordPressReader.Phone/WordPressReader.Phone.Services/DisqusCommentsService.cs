@@ -29,6 +29,9 @@ namespace WordPressReader.Phone.Services
                 100);
             return posts.Response.Select(p => new Comment {
                 Id = p.Id,
+                Author = p.Author.Name,
+                AuthorAvatarUrl = p.Author.Avatar.Small.Permalink,
+                IsAuthorAnonymous = p.Author.IsAnonymous,
                 Content = p.RawMessage,
                 CreatedAt = p.CreatedAt,
                 Dislikes = p.Dislikes,
