@@ -4,8 +4,8 @@
     <ResourceDictionary>
       <local:LocalizedStrings xmlns:local="clr-namespace:WordPressReader.Phone" x:Key="LocalizedStrings" />
       <vm:ViewModelLocator x:Key="Locator" d:IsDataSource="True" xmlns:vm="clr-namespace:WordPressReader.Phone.Common" />
-      <converter:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" xmlns:converter="clr-namespace:MSC.Phone.Shared.Converters;assembly=MSC.Phone.Shared"></converter:BooleanToVisibilityConverter>
-      <converter:InvertableBooleanToVisibilityConverter x:Key="InvertableBooleanToVisibilityConverter" xmlns:converter="clr-namespace:MSC.Phone.Shared.Converters;assembly=MSC.Phone.Shared"></converter:InvertableBooleanToVisibilityConverter>
+      <converter:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" xmlns:converter="clr-namespace:MSC.Phone.Shared.Converters;assembly=MSC.Phone.Shared.UI"></converter:BooleanToVisibilityConverter>
+      <converter:InvertableBooleanToVisibilityConverter x:Key="InvertableBooleanToVisibilityConverter" xmlns:converter="clr-namespace:MSC.Phone.Shared.Converters;assembly=MSC.Phone.Shared.UI"></converter:InvertableBooleanToVisibilityConverter>
       <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary>
           <ai:ApplicationInsightsModule x:Key="ApplicationInsightsModule" xmlns:ai="clr-namespace:Microsoft.ApplicationInsights.Telemetry.WindowsStore;assembly=Microsoft.ApplicationInsights.Telemetry.WindowsStore" />
