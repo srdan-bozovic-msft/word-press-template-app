@@ -176,4 +176,31 @@
   <data name="Lead_Comments" xml:space="preserve">
     <value>comments</value>
   </data>
+  <data name="Account_NoCredentials_Message" xml:space="preserve">
+    <value>We need your username and email before you can comment on an article, tap OK below if you want to set them now.</value>
+  </data>
+  <data name="Account_NoCredentials_Title" xml:space="preserve">
+    <value>No Credentials</value>
+  </data>
+  <data name="Account_Settings_Text" xml:space="preserve">
+    <value>To comment on articles you must have your user name and email address set.</value>
+  </data>
+  <data name="Account_Settings_Title" xml:space="preserve">
+    <value>account</value>
+  </data>
+  <data name="Account_Settings_ClearData" xml:space="preserve">
+    <value>Clear data</value>
+  </data>
+  <data name="Account_Settings_Email" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="Account_Settings_UserName" xml:space="preserve">
+    <value>User name</value>
+  </data>
+  <data name="AppBarButtonSettings" xml:space="preserve">
+    <value>settings</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>SETTINGS</value>
+  </data>
 </root>

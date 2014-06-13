@@ -57,16 +57,19 @@ namespace WordPressReader.Phone.Common
             ioc.RegisterType<IHttpClientService, HttpClientService>();
             ioc.RegisterType<ICacheService, PhoneStorageCacheService>();
             ioc.RegisterType<INavigationService, NavigationService>();
+            ioc.RegisterType<ISettingsService, SettingsService>(); 
             ioc.RegisterType<ISocialShare, SocialShare>();
             ioc.RegisterType<IConfigurationService, ConfigurationService>();
             //ioc.RegisterType<ICommentsService, RssCommentsService>();
             ioc.RegisterType<ICommentsService, DisqusCommentsService>();
             ioc.RegisterType<IBlogRepository, BlogRepository>();
+            ioc.RegisterType<ISettingsRepository, SettingsRepository>();
             ioc.RegisterType<IMainPageViewModel, MainPageViewModel>();
             ioc.RegisterType<ICategoryPageViewModel, CategoryPageViewModel>();
             ioc.RegisterType<IArticlePageViewModel, ArticlePageViewModel>();
             ioc.RegisterType<ICommentsPageViewModel, CommentsPageViewModel>();
             ioc.RegisterType<IRichCommentsPageViewModel, RichCommentsPageViewModel>();
+            ioc.RegisterType<IAccountSettingsPageViewModel, AccountSettingsPageViewModel>();
         }
 
         public IMainPageViewModel MainPageViewModel
@@ -106,6 +109,14 @@ namespace WordPressReader.Phone.Common
             get
             {
                 return InstanceFactory.GetInstance<IRichCommentsPageViewModel>();
+            }
+        }
+
+        public IAccountSettingsPageViewModel AccountSettingsPageViewModel
+        {
+            get
+            {
+                return InstanceFactory.GetInstance<IAccountSettingsPageViewModel>();
             }
         }
     }

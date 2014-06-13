@@ -30,12 +30,16 @@ namespace WordPressReader.Phone.ViewModels
         }
 
         public MainPageViewModel(IBlogRepository blogRepository, INavigationService navigationService)
-            :base(blogRepository, navigationService)
+            : base(blogRepository, navigationService)
         {
             _categories = new ObservableCollection<Category>();
             SelectCategoryCommand = new RelayCommand<Category>(
-                category => 
-                    _navigationService.Navigate("Category", category.Title +";;"+ category.Tag)
+                category =>
+                    _navigationService.Navigate("Category", category.Title + ";;" + category.Tag)
+                );
+            GoToSettingsCommand = new RelayCommand(
+                () =>
+                    _navigationService.Navigate("AccountSettings", "")
                 );
         }
 
@@ -90,5 +94,7 @@ namespace WordPressReader.Phone.ViewModels
         }
 
         public ICommand SelectCategoryCommand { get; set; }
+
+        public ICommand GoToSettingsCommand { get; set; }
     }
 }

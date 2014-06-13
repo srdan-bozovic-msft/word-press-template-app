@@ -61,6 +61,69 @@ namespace WordPressReader.Phone.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to We need your username and email before you can comment on an article, tap OK below if you want to set them now..
+        /// </summary>
+        public static string Account_NoCredentials_Message {
+            get {
+                return ResourceManager.GetString("Account_NoCredentials_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No Credentials.
+        /// </summary>
+        public static string Account_NoCredentials_Title {
+            get {
+                return ResourceManager.GetString("Account_NoCredentials_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Clear data.
+        /// </summary>
+        public static string Account_Settings_ClearData {
+            get {
+                return ResourceManager.GetString("Account_Settings_ClearData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Email.
+        /// </summary>
+        public static string Account_Settings_Email {
+            get {
+                return ResourceManager.GetString("Account_Settings_Email", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to To comment on articles you must have your user name and email address set..
+        /// </summary>
+        public static string Account_Settings_Text {
+            get {
+                return ResourceManager.GetString("Account_Settings_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to account.
+        /// </summary>
+        public static string Account_Settings_Title {
+            get {
+                return ResourceManager.GetString("Account_Settings_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User name.
+        /// </summary>
+        public static string Account_Settings_UserName {
+            get {
+                return ResourceManager.GetString("Account_Settings_UserName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to comments.
         /// </summary>
         public static string AppBarButtonComments {
@@ -75,6 +138,15 @@ namespace WordPressReader.Phone.Resources {
         public static string AppBarButtonReload {
             get {
                 return ResourceManager.GetString("AppBarButtonReload", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to settings.
+        /// </summary>
+        public static string AppBarButtonSettings {
+            get {
+                return ResourceManager.GetString("AppBarButtonSettings", resourceCulture);
             }
         }
         
@@ -228,6 +300,15 @@ namespace WordPressReader.Phone.Resources {
         public static string ResourceLanguage {
             get {
                 return ResourceManager.GetString("ResourceLanguage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SETTINGS.
+        /// </summary>
+        public static string Settings {
+            get {
+                return ResourceManager.GetString("Settings", resourceCulture);
             }
         }
     }

@@ -163,4 +163,31 @@
   <data name="Lead_Comments" xml:space="preserve">
     <value>komentara</value>
   </data>
+  <data name="Account_NoCredentials_Message" xml:space="preserve">
+    <value>Potrebno je da unesete korisničko ime i adresu e-pošte da biste mogli komentarisati članak, dodirnite "u redu" dugme ispod da bi ih uneli.</value>
+  </data>
+  <data name="Account_NoCredentials_Title" xml:space="preserve">
+    <value>Nemate nalog</value>
+  </data>
+  <data name="Account_Settings_ClearData" xml:space="preserve">
+    <value>Obrišite podatke</value>
+  </data>
+  <data name="Account_Settings_Email" xml:space="preserve">
+    <value>Adresa e-pošte</value>
+  </data>
+  <data name="Account_Settings_Text" xml:space="preserve">
+    <value>Da biste komentarisali članke potrebno je da unesete korisničko ime i adresu e-pošte.</value>
+  </data>
+  <data name="Account_Settings_Title" xml:space="preserve">
+    <value>nalog</value>
+  </data>
+  <data name="Account_Settings_UserName" xml:space="preserve">
+    <value>Korisničko ime</value>
+  </data>
+  <data name="AppBarButtonSettings" xml:space="preserve">
+    <value>podesite</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>PODEŠAVANJA</value>
+  </data>
 </root>

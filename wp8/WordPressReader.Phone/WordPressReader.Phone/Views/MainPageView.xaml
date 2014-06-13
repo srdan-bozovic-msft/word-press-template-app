@@ -112,6 +112,11 @@
                 Text="{Binding Path=LocalizedResources.AppBarButtonReload, Source={StaticResource LocalizedStrings}}"
                 Command="{Binding ReloadCommand}"
                 />
+            <bar:BindableApplicationBarButton 
+                IconUri="/Assets/AppBar/feature.settings.png" 
+                Text="{Binding Path=LocalizedResources.AppBarButtonSettings, Source={StaticResource LocalizedStrings}}"
+                Command="{Binding GoToSettingsCommand}"
+                />
         </bar:BindableApplicationBar>
     </bar:Bindable.ApplicationBar>
     
