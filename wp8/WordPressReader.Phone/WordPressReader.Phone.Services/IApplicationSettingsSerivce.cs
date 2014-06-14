@@ -7,22 +7,23 @@ using System.Text;
 using System.Threading.Tasks;
 using WordPressReader.Phone.Contracts.Models;
 using WordPressReader.Phone.Contracts.Repositories;
+using WordPressReader.Phone.Contracts.Services;
 
-namespace WordPressReader.Phone.Repositories
+namespace WordPressReader.Phone.Services
 {
-    public class SettingsRepository : ISettingsRepository
+    public class ApplicationSettingsService : IApplicationSettingsService
     {
         private const string SettingsAccountUserName = "SettingsAccountUserName";
         private const string SettingsAccountEmail = "SettingsAccountEmail";
 
         private ISettingsService _settingsService;
 
-        public SettingsRepository(ISettingsService settingsService)
+        public ApplicationSettingsService(ISettingsService settingsService)
         {
             _settingsService = settingsService;
         }
 
-        public RepositoryResult<GuestUserAccount> GetGuestUserAccount()
+        public GuestUserAccount GetGuestUserAccount()
         {
             var userName = _settingsService.Get<string>(SettingsAccountUserName);
             var email = _settingsService.Get<string>(SettingsAccountEmail);

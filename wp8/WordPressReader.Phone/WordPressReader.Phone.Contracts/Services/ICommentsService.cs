@@ -12,6 +12,7 @@ namespace WordPressReader.Phone.Contracts.Services
     {
         Task<Comment[]> GetCommentsAsync(Article article, CancellationToken cancellationToken);
         Task<int?> GetCommentsCountAsync(Article article, CancellationToken cancellationToken); 
+        Task<Comment> CreateCommentAsync(Article article,  string authorName, string authorEmail, string message, string parent, CancellationToken cancellationToken);
      
     }
 }

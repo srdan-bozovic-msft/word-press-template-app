@@ -7,15 +7,22 @@ using System.Threading.Tasks;
 
 namespace MSC.Phone.Disqus.Data
 {
-    public class Page<T>
+    public class Result<T>
     {
-        [JsonProperty("cursor")]
-        public Cursor Cursor { get; set; }
-
         [JsonProperty("code")]
         public int Code { get; set; }
 
         [JsonProperty("response")]
-        public T[] Response { get; set; }
+        public T Response { get; set; }
+
+        public bool IsSuccessful
+        {
+            get
+            {
+                return Code == 0;
+            }
+        }
+
+        public string ErrorMessage { get; set; }
     }
 }

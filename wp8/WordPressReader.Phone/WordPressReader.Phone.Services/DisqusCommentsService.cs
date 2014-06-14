@@ -89,5 +89,11 @@ namespace WordPressReader.Phone.Services
                 return null;
             return threads.Response[0].Posts;
         }
+
+
+        public async Task<Comment> CreateCommentAsync(Article article, string authorName, string authorEmail, string message, string parent, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

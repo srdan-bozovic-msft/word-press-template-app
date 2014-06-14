@@ -87,6 +87,7 @@
     <Compile Include="DisqusCommentsService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RssCommentsService.cs" />
+    <Compile Include="IApplicationSettingsSerivce.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MSC.Phone.Disqus\MSC.Phone.Disqus.csproj">

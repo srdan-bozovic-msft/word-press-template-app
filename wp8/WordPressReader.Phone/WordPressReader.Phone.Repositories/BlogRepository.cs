@@ -27,13 +27,19 @@ namespace WordPressReader.Phone.Repositories
         private IHttpClientService _httpClientService;
         private IConfigurationService _configurationService;
         private ICommentsService _commentsService;
+        private IApplicationSettingsService _applicationSettingsService;
         private readonly Dictionary<string, List<Article>> _articles;
          private readonly Dictionary<string, int> _nextPages;
-        public BlogRepository(IHttpClientService httpClientService, IConfigurationService configurationService, ICommentsService commentsService)
+        public BlogRepository(
+            IHttpClientService httpClientService, 
+            IConfigurationService configurationService, 
+            ICommentsService commentsService,
+            IApplicationSettingsService applicationSettingsService)
         {
             _httpClientService = httpClientService;
             _configurationService = configurationService;
             _commentsService = commentsService;
+            _applicationSettingsService = applicationSettingsService;
             _articles = new Dictionary<string, List<Article>>();
             _nextPages = new Dictionary<string, int>();
         }
@@ -240,5 +246,19 @@ namespace WordPressReader.Phone.Repositories
             }
         }
 
+
+
+        public async Task<RepositoryResult<Comment>> CreateCommentAsync(Article article, string message, string parent, CancellationToken cancellationToken)
+        {
+            try
+            {
+                var guestUser = _applicationSettingsService.GetGuestUserAccount();
+                return await _commentsService.CreateCommentAsync(article, guestUser.UserName, guestUser.Email, message, parent, cancellationToken);
+            }
+            catch (Exception xcp)
+            {
+                return RepositoryResult<Comment>.CreateError(xcp);
+            }
+        }
     }
 }

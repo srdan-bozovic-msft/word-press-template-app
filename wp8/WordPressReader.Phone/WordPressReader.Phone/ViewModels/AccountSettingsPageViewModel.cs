@@ -19,7 +19,7 @@ namespace WordPressReader.Phone.ViewModels
 {
     public class AccountSettingsPageViewModel : ViewModelBase, IAccountSettingsPageViewModel
     {
-        private ISettingsRepository _settingsRepository;
+        private IApplicationSettingsRepository _settingsRepository;
         private INavigationService _navigationService;
  
         private bool _isLoading;
@@ -92,7 +92,7 @@ namespace WordPressReader.Phone.ViewModels
 
         public ICommand ClearDataCommand { get; set; }
 
-        public AccountSettingsPageViewModel(ISettingsRepository settingsRepository, INavigationService navigationService)
+        public AccountSettingsPageViewModel(IApplicationSettingsRepository settingsRepository, INavigationService navigationService)
         {
             _settingsRepository = settingsRepository;
             _navigationService = navigationService;

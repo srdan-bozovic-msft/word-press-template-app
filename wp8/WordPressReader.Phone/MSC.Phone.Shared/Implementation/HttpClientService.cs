@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Runtime.Serialization;
 using System.Text;
@@ -73,6 +74,40 @@ namespace MSC.Phone.Shared
             {
                 return default(T);
             }
+        }
+
+        public async Task<Tuple<HttpStatusCode, string>> CallAsync(string verb,
+            string url,
+            IEnumerable<KeyValuePair<string, string>> headers,
+            IEnumerable<KeyValuePair<string, string>> content,
+            CancellationToken cancellationToken)
+        {
+            return await CallAsync(verb, url, headers, new FormUrlEncodedContent(content), cancellationToken);
+        }
+
+        public async Task<Tuple<HttpStatusCode, string>> CallAsync(string verb,
+            string url,
+            IEnumerable<KeyValuePair<string, string>> headers,
+            HttpContent content,
+            CancellationToken cancellationToken)
+        {
+            var httpClientHandler = new HttpClientHandler();
+            httpClientHandler.AutomaticDecompression = System.Net.DecompressionMethods.GZip;
+            var client = new HttpClient(httpClientHandler);
+            var request = new HttpRequestMessage(new HttpMethod(verb), url);
+            if (content != null)
+                request.Content = content;
+            foreach (var header in headers)
+            {
+                request.Headers.Add(header.Key, header.Value);
+            }
+            var response = await client.SendAsync(request, cancellationToken).ConfigureAwait(false);
+            if (response != null)
+            {
+                var responseContent = await response.Content.ReadAsStringAsync();
+                return new Tuple<HttpStatusCode, string>(response.StatusCode, responseContent);
+            }
+            return null;
         }
     }
 }

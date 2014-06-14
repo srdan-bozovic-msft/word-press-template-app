@@ -9,7 +9,7 @@ using WordPressReader.Phone.Contracts.Models;
 
 namespace WordPressReader.Phone.Contracts.Repositories
 {
-    public interface ISettingsRepository
+    public interface IApplicationSettingsRepository
     {
         RepositoryResult<GuestUserAccount> GetGuestUserAccount();
         void SetGuestUserAccount(GuestUserAccount guestUser);

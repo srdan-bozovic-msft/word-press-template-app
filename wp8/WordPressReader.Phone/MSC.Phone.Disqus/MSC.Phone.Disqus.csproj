@@ -87,7 +87,9 @@
     <Compile Include="Data\Avatar.cs" />
     <Compile Include="Data\Cursor.cs" />
     <Compile Include="Data\Image.cs" />
-    <Compile Include="Data\Page.cs" />
+    <Compile Include="Data\ErrorResult.cs" />
+    <Compile Include="Data\Result.cs" />
+    <Compile Include="Data\PageResult.cs" />
     <Compile Include="Data\Post.cs" />
     <Compile Include="Data\ForumThread.cs" />
     <Compile Include="DisqusClient.cs" />
