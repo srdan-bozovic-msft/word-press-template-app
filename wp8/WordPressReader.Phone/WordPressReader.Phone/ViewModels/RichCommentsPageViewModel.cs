@@ -115,7 +115,10 @@ namespace WordPressReader.Phone.ViewModels
                         string.Format("{0:00}.{1:00}.{2:0000} | {3} | {4} {5}", article.PublishingDate.Day, article.PublishingDate.Month, article.PublishingDate.Year, article.Category, article.CommentsCount, Resources.AppResources.Lead_Comments);
                     
                     _comments.Clear();
-                    var comments = await _blogRepository.GetCommentsAsync(article, cts.Token);
+                    var commentsTask = _blogRepository.GetCommentsAsync(article, cts.Token);
+                    var commentsInfoTask = string.IsNullOrEmpty(article.Id) ? _blogRepository.GetCommentsInfoAsync(article.Link, cts.Token) : null;
+                    var comments = await commentsTask;
+
                     if (comments.Successful)
                     {
                         //if (comments.Value.Count() > 0)
@@ -132,6 +135,15 @@ namespace WordPressReader.Phone.ViewModels
                     else
                     {
                         _navigationService.Navigate("Error");
+                    }
+
+                    if(commentsInfoTask != null)
+                    {
+                        var commentsInfo = await commentsInfoTask;
+                        if(commentsInfo.Successful)
+                        {
+                            article.Id = commentsInfo.Value.Id;
+                        }
                     }
                 }
             }

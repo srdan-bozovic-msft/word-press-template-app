@@ -224,7 +224,7 @@ namespace WordPressReader.Phone.Repositories
             }
         }
 
-        public async Task<RepositoryResult<int?>> GetCommentsCountAsync(string articleUrl, CancellationToken cancellationToken)
+        public async Task<RepositoryResult<CommentsInfo>> GetCommentsInfoAsync(string articleUrl, CancellationToken cancellationToken)
         {
             try
             {
@@ -235,14 +235,21 @@ namespace WordPressReader.Phone.Repositories
                     if (article != null)
                         break;
                 }
-                var commentsCount = await _commentsService.GetCommentsCountAsync(article, cancellationToken);
-                if (article != null)
-                    article.CommentsCount = commentsCount;
-                return commentsCount;
+                var commentsInfo = await _commentsService.GetCommentsInfoAsync(article, cancellationToken);
+                if (commentsInfo != null)
+                {
+                    if (commentsInfo.Successful && article != null)
+                    {
+                        article.Id = commentsInfo.Value.Id;
+                        article.CommentsCount = commentsInfo.Value.Count;
+                    }
+                    return commentsInfo;
+                }
+                return RepositoryResult<CommentsInfo>.CreateError(new NotImplementedException());
             }
             catch (Exception xcp)
             {
-                return RepositoryResult<int?>.CreateError(xcp);
+                return RepositoryResult<CommentsInfo>.CreateError(xcp);
             }
         }
 

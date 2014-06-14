@@ -15,7 +15,7 @@ namespace WordPressReader.Phone.Contracts.Repositories
         Task<RepositoryResult<Article[]>> GetMoreArticlesAsync(string category, CancellationToken cancellationToken);
         Task<RepositoryResult<Comment[]>> GetCommentsAsync(Article article, CancellationToken cancellationToken); 
         Task<RepositoryResult<string>> GetArticleContentAsync(string articleUrl, CancellationToken cancellationToken);
-        Task<RepositoryResult<int?>> GetCommentsCountAsync(string articleUrl, CancellationToken cancellationToken);
+        Task<RepositoryResult<CommentsInfo>> GetCommentsInfoAsync(string articleUrl, CancellationToken cancellationToken);
         Task<RepositoryResult<Comment>> CreateCommentAsync(Article article, string message, string parent, CancellationToken cancellationToken);
 
     }

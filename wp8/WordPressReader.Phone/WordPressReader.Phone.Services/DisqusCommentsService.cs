@@ -79,15 +79,15 @@ namespace WordPressReader.Phone.Services
             };
         }
 
-        public async Task<int?> GetCommentsCountAsync(Article article, CancellationToken cancellationToken)
+        public async Task<ServiceResult<CommentsInfo>> GetCommentsInfoAsync(Article article, CancellationToken cancellationToken)
         {
             var threads = await _client.GetThreadAsync(
                 cancellationToken,
                 "nokiamob",
                 article.Link);
             if (threads.Response.Count() == 0)
-                return null;
-            return threads.Response[0].Posts;
+                return ServiceResult<CommentsInfo>.Create(null, false, 404, "Thread not found");
+            return new CommentsInfo { Id = threads.Response[0].Id, Count = threads.Response[0].Posts };
         }
 
 
