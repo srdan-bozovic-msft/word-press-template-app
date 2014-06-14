@@ -98,7 +98,7 @@ namespace WordPressReader.Phone.ViewModels
             }
             var cts = new CancellationTokenSource();
             var articles = await _blogRepository.GetArticlesAsync(_category, true, cts.Token);
-            if (!articles.IsError)
+            if (articles.Successful)
             {
                 if (_articles.Count == 0 || force)
                 {
@@ -131,7 +131,7 @@ namespace WordPressReader.Phone.ViewModels
             //IsLoading = true;
             var cts = new CancellationTokenSource();
             var articles = await _blogRepository.GetMoreArticlesAsync(_category, cts.Token);
-            if (!articles.IsError)
+            if (articles.Successful)
             {
                 foreach (var article in articles.Value)
                 {

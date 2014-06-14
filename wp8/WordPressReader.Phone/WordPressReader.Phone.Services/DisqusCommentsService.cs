@@ -91,9 +91,17 @@ namespace WordPressReader.Phone.Services
         }
 
 
-        public async Task<Comment> CreateCommentAsync(Article article, string authorName, string authorEmail, string message, string parent, CancellationToken cancellationToken)
+        public async Task<ServiceResult<Comment>> CreateCommentAsync(Article article, string authorName, string authorEmail, string message, string parent, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var result = await _client.CreatePostAsync(cancellationToken, article.Id, authorEmail, authorEmail, message, parent);
+            if(result.IsSuccessful)
+            {
+                return PostToComment(result.Response);
+            }
+            else
+            {
+                return ServiceResult<Comment>.Create(null, false, result.Code, result.ErrorMessage);
+            }
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MSC.Phone.Shared.Contracts.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,9 +19,20 @@ namespace MSC.Phone.Shared.Contracts.Repositories
             return result.Value;
         }
 
-        public static RepositoryResult<T> Create(T value, bool isCurrent=true)
+        public static implicit operator RepositoryResult<T>(ServiceResult<T> serviceResult)
         {
-            return new RepositoryResult<T>(value, isCurrent);
+            return RepositoryResult<T>.Create(
+                serviceResult.Value,
+                true,
+                serviceResult.Successful,
+                serviceResult.ErrorCode,
+                serviceResult.ErrorMessage
+                );
+        }
+
+        public static RepositoryResult<T> Create(T value, bool isCurrent = true, bool successful = true, int errorCode = 0, string errorMessage = null)
+        {
+            return new RepositoryResult<T>(value, isCurrent, successful, errorCode, errorMessage);
         }
 
         public static RepositoryResult<T> CreateError(Exception xcp)
@@ -29,20 +41,26 @@ namespace MSC.Phone.Shared.Contracts.Repositories
         }
 
         public bool IsCurrent { get; protected set; }
-        public bool IsError { get; protected set; }
         public Exception Exception { get; protected set; }
-        public T Value { get;  protected set; }
 
-        protected RepositoryResult(T value, bool isCurrent)
+        public T Value { get; protected set; }
+        public bool Successful { get; protected set; }
+        public int ErrorCode { get; protected set; }
+        public string ErrorMessage { get; protected set; }
+
+        protected RepositoryResult(T value, bool isCurrent, bool successful, int errorCode, string errorMessage)
         {
             Value = value;
             IsCurrent = isCurrent;
+            Successful = successful;
+            ErrorCode = errorCode;
+            ErrorMessage = errorMessage;
         }
 
         protected RepositoryResult(Exception xcp)
         {
             Exception = xcp;
-            IsError = true;
+            Successful = false;
         }
     }
 }

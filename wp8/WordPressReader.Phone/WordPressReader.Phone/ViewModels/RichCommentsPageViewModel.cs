@@ -103,7 +103,7 @@ namespace WordPressReader.Phone.ViewModels
             var parameters = ((string)parameter).Split(new[] { ";;" }, 2, StringSplitOptions.RemoveEmptyEntries);
             _category = parameters[0];
             var articles = await _blogRepository.GetArticlesAsync(_category, false, cts.Token);
-            if (!articles.IsError)
+            if (articles.Successful)
             {
                 var article = articles.Value.FirstOrDefault(a => a.Link == parameters[1]);
                 if (article != null)
@@ -116,7 +116,7 @@ namespace WordPressReader.Phone.ViewModels
                     
                     _comments.Clear();
                     var comments = await _blogRepository.GetCommentsAsync(article, cts.Token);
-                    if (!comments.IsError)
+                    if (comments.Successful)
                     {
                         //if (comments.Value.Count() > 0)
                         foreach (var comment in comments.Value)

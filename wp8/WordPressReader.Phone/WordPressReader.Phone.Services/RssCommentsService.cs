@@ -40,7 +40,7 @@ namespace WordPressReader.Phone.Services
         }
 
 
-        public async Task<Comment> CreateCommentAsync(Article article, string authorName, string authorEmail, string message, string parent, CancellationToken cancellationToken)
+        public async Task<ServiceResult<Comment>> CreateCommentAsync(Article article, string authorName, string authorEmail, string message, string parent, CancellationToken cancellationToken)
         {
             return null;
         }

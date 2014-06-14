@@ -90,6 +90,7 @@
     <Compile Include="Contracts\Services\ICacheService.cs" />
     <Compile Include="Contracts\Services\IHttpClientService.cs" />
     <Compile Include="Contracts\Services\ISettingsService.cs" />
+    <Compile Include="Contracts\Services\ServiceResult.cs" />
     <Compile Include="Implementation\CacheItem.cs" />
     <Compile Include="Implementation\HttpClientService.cs" />
     <Compile Include="Implementation\PhoneStorageCacheService.cs" />

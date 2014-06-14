@@ -85,12 +85,14 @@
   <ItemGroup>
     <Compile Include="Contracts\PhoneServices\ISocialShare.cs" />
     <Compile Include="Contracts\PhoneServices\ITileService.cs" />
+    <Compile Include="Contracts\Services\IDialogService.cs" />
     <Compile Include="Contracts\Services\INavigationService.cs" />
     <Compile Include="Contracts\ViewModels\IPageViewModel.cs" />
     <Compile Include="Contracts\ViewModels\IStatefullPageViewModel.cs" />
     <Compile Include="Contracts\Views\IPageView.cs" />
     <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
     <Compile Include="Converters\InvertableBooleanToVisibilityConverter .cs" />
+    <Compile Include="Implementation\DialogService.cs" />
     <Compile Include="Implementation\NavigationService.cs" />
     <Compile Include="Implementation\SocialShare.cs" />
     <Compile Include="Implementation\StatefullPhoneApplicationPage.cs" />

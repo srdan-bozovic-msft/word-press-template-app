@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MSC.Phone.Shared.Contracts.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,7 +13,7 @@ namespace WordPressReader.Phone.Contracts.Services
     {
         Task<Comment[]> GetCommentsAsync(Article article, CancellationToken cancellationToken);
         Task<int?> GetCommentsCountAsync(Article article, CancellationToken cancellationToken); 
-        Task<Comment> CreateCommentAsync(Article article,  string authorName, string authorEmail, string message, string parent, CancellationToken cancellationToken);
+        Task<ServiceResult<Comment>> CreateCommentAsync(Article article,  string authorName, string authorEmail, string message, string parent, CancellationToken cancellationToken);
      
     }
 }

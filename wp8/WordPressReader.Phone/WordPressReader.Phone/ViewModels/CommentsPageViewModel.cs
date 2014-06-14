@@ -103,7 +103,7 @@ namespace WordPressReader.Phone.ViewModels
             var parameters = ((string)parameter).Split(new[] { ";;" }, 2, StringSplitOptions.RemoveEmptyEntries);
             _category = parameters[0];
             var articles = await _blogRepository.GetArticlesAsync(_category, false, cts.Token);
-            if (!articles.IsError)
+            if (articles.Successful)
             {
                 var article = articles.Value.FirstOrDefault(a => a.Link == parameters[1]);
                 if (article != null)
@@ -111,7 +111,7 @@ namespace WordPressReader.Phone.ViewModels
                     Title = article.Title;
                     Lead = string.Format("{0:00}.{1:00}.{2:0000} | {3}", article.PublishingDate.Day, article.PublishingDate.Month, article.PublishingDate.Year, article.Category);
                     var comments = await _blogRepository.GetCommentsAsync(article, cts.Token);
-                    if (!comments.IsError)
+                    if (comments.Successful)
                     {
                         //if (comments.Value.Count() > 0)
                         _comments.Clear();
