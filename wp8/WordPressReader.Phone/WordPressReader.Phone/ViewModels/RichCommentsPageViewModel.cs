@@ -249,31 +249,29 @@ namespace WordPressReader.Phone.ViewModels
             }
         }
 
-        private async Task SendMessageAsync()
+        public async Task SendMessageAsync()
         {
             var cts = new CancellationTokenSource();
 
             var parent = ReplyTo != null ? ReplyTo.Comment.Id : null;
 
-            var comment = new RichCommentViewModel(
-                new Comment { 
-                    Author = "Srki",
-                    AuthorAvatarUrl = "//a.disquscdn.com/1402432716/images/noavatar32.png",
-                    Content = "test", 
-                    CreatedAt = DateTime.Now });
-
-
-            InsertComment(comment, parent);
+            //var comment = new RichCommentViewModel(
+            //    new Comment { 
+            //        Author = "Srki",
+            //        AuthorAvatarUrl = "//a.disquscdn.com/1402432716/images/noavatar32.png",
+            //        Content = "test", 
+            //        CreatedAt = DateTime.Now });
+            //InsertComment(comment, parent);
      
-            //var result = await _blogRepository.CreateCommentAsync(Article, Message, null, cts.Token);
-            //if(result.Successful)
-            //{
-            //    InsertComment(comment, parent);
-            //}
-            //else
-            //{
-            //    _dialogService.ShowMessage(result.ErrorMessage);
-            //}
+            var result = await _blogRepository.CreateCommentAsync(Article, Message, parent, cts.Token);
+            if(result.Successful)
+            {
+                InsertComment(new RichCommentViewModel(result.Value), parent);
+            }
+            else
+            {
+                _dialogService.ShowMessage(result.ErrorMessage);
+            }
         }
 
         private void InsertComment(RichCommentViewModel comment, string parent)

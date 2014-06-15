@@ -80,12 +80,12 @@ namespace WordPressReader.Phone.Views
         }
 
 
-        private void SendButton_Click(object sender, EventArgs e)
+        private async void SendButton_Click(object sender, EventArgs e)
         {
             var viewModel = ViewModel as RichCommentsPageViewModel;
             viewModel.Message = TextBoxMessage.Text;
             SendButton.IsEnabled = false;
-            viewModel.SendCommand.Execute(null);
+            await viewModel.SendMessageAsync();
             this.Focus();
             SendButton.IsEnabled = true;
         }
