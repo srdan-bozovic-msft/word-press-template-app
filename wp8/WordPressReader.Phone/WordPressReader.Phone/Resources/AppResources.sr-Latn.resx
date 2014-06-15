@@ -191,6 +191,12 @@
     <value>PODEŠAVANJA</value>
   </data>
   <data name="AppBarButtonSend" xml:space="preserve">
-    <value>pošaljite</value>
+    <value>pošalji</value>
+  </data>
+  <data name="Comments_Hint" xml:space="preserve">
+    <value>unesite komentar</value>
+  </data>
+  <data name="Comments_NoArticles" xml:space="preserve">
+    <value>Ne postoje komentari za ovaj članak.</value>
   </data>
 </root>

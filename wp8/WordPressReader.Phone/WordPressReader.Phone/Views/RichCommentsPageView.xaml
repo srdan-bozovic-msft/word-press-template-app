@@ -38,7 +38,7 @@
             </Grid.RowDefinitions>
             <TextBlock Text="{Binding Title}" Style="{StaticResource PhoneTextLargeStyle}" FontWeight="Bold" TextWrapping="Wrap" />
             <TextBlock Grid.Row="1" Text="{Binding Lead}" Style="{StaticResource PhoneTextSubtleStyle}" TextWrapping="Wrap" />
-            <TextBlock Grid.Row="2" Margin="12" Style="{StaticResource PhoneTextSubtleStyle}" Visibility="{Binding HasComments, Converter={StaticResource InvertableBooleanToVisibilityConverter}}" Text="Ne postoje komentari za ovaj članak."/>
+            <TextBlock Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="12" Style="{StaticResource PhoneTextSubtleStyle}" Visibility="{Binding HasComments, Converter={StaticResource InvertableBooleanToVisibilityConverter}}" Text="{Binding Path=LocalizedResources.Comments_NoArticles, Source={StaticResource LocalizedStrings}}"/>
             <phone:LongListSelector Grid.Row="2" x:Name="ArticleList" Margin="6 6" ItemsSource="{Binding Comments}" >
                 <phone:LongListSelector.ItemTemplate>
                     <DataTemplate>
@@ -106,7 +106,7 @@
                         Foreground="Black"
                         Margin="0"
                         Padding="-6"
-                        Hint="type a message"                             
+                        Hint="{Binding Path=LocalizedResources.Comments_Hint, Source={StaticResource LocalizedStrings}}"                             
                      >
                             <toolkit:PhoneTextBox.HintStyle>
                                 <Style TargetType="ContentControl">
@@ -134,19 +134,22 @@
         </Grid>
         <ProgressBar Foreground="#004c9a" Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityConverter}}" IsIndeterminate="{Binding IsLoading, Mode=OneWay}"></ProgressBar>
     </Grid>
-    <bar:Bindable.ApplicationBar>
-        <bar:BindableApplicationBar>
-            <bar:BindableApplicationBarButton 
-                IconUri="/Assets/AppBar/send.text.png" 
-                Text="{Binding Path=LocalizedResources.AppBarButtonSend, Source={StaticResource LocalizedStrings}}"
-                Command="{Binding SendCommand}"
-                />
-            <bar:BindableApplicationBarButton 
-                IconUri="/Assets/AppBar/appbar.sync.rest.png" 
-                Text="{Binding Path=LocalizedResources.AppBarButtonReload, Source={StaticResource LocalizedStrings}}"
-                Command="{Binding ReloadCommand}"
-                />
-        </bar:BindableApplicationBar>
-    </bar:Bindable.ApplicationBar>
+
+    <phone:PhoneApplicationPage.ApplicationBar>
+        <shell:ApplicationBar>
+            <shell:ApplicationBar.Buttons>
+                <shell:ApplicationBarIconButton
+                    Click="SendButton_Click"
+                    IconUri="/Assets/AppBar/send.text.png" 
+                    Text="send"         
+                    />
+                <shell:ApplicationBarIconButton
+                    Click="ReloadButton_Click"
+                    IconUri="/Assets/AppBar/appbar.sync.rest.png" 
+                    Text="reload"
+                    />
+            </shell:ApplicationBar.Buttons>
+        </shell:ApplicationBar>
+    </phone:PhoneApplicationPage.ApplicationBar>
 
 </phone:PhoneApplicationPage>

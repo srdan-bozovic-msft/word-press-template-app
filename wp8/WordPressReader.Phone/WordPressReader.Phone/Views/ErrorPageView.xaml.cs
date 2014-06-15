@@ -7,6 +7,7 @@ using System.Windows.Controls;
 using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
+using WordPressReader.Phone.Resources;
 
 namespace WordPressReader.Phone.Views
 {
@@ -19,7 +20,7 @@ namespace WordPressReader.Phone.Views
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            ErrorMessage.Text = "Došlo je do problema prilikom preuzimanja podataka.\nMolimo Vas pokušajte kasnije.";
+            ErrorMessage.Text = AppResources.ErrorMessage;
         }
 
         private void Image_Tap(object sender, System.Windows.Input.GestureEventArgs e)

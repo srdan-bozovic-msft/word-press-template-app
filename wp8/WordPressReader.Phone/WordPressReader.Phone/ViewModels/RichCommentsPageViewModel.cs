@@ -134,7 +134,6 @@ namespace WordPressReader.Phone.ViewModels
         private Article Article { get; set; }
 
         public ICommand SendCommand { get; set; }
-
         public ICommand ReloadCommand { get; set; }
 
         public RichCommentsPageViewModel(IBlogRepository blogRepository, INavigationService navigationService, IDialogService dialogService)
@@ -143,8 +142,12 @@ namespace WordPressReader.Phone.ViewModels
             _navigationService = navigationService;
             _dialogService = dialogService;
             _comments = new ObservableCollection<IRichCommentViewModel>();
-            SendCommand = new RelayCommand(SendMessage);
-            ReloadCommand = new RelayCommand(async () => {
+            SendCommand = new RelayCommand(async () =>
+            {
+                await SendMessageAsync();
+            }); 
+            ReloadCommand = new RelayCommand(async () =>
+            {
                 var cts = new CancellationTokenSource();
                 await ReloadCommentsAsync(cts);
             });
@@ -214,18 +217,35 @@ namespace WordPressReader.Phone.ViewModels
             }
         }
 
-        private async void SendMessage()
+        private async Task SendMessageAsync()
         {
             var cts = new CancellationTokenSource();
-            var result = await _blogRepository.CreateCommentAsync(Article, Message, null, cts.Token);
-            if(result.Successful)
-            {
-                _comments.Add(new RichCommentViewModel(result.Value));
-            }
-            else
-            {
-                _dialogService.ShowMessage(result.ErrorMessage);
-            }
+            _comments.Insert(0, new RichCommentViewModel(
+                new Comment { 
+                    Author = "Srki",
+                    AuthorAvatarUrl = "//a.disquscdn.com/1402432716/images/noavatar32.png",
+                    Content = "test", 
+                    CreatedAt = DateTime.Now }));
+            OnCommentInserted();
+     
+            //var result = await _blogRepository.CreateCommentAsync(Article, Message, null, cts.Token);
+            //if(result.Successful)
+            //{
+            //    _comments.Insert(0, new RichCommentViewModel(result.Value));
+            //    OnCommentInserted();
+            //}
+            //else
+            //{
+            //    _dialogService.ShowMessage(result.ErrorMessage);
+            //}
+        }
+
+        private void OnCommentInserted()
+        {
+            Message = "";
+            HasComments = true;
+            Article.CommentsCount++;
+            Lead = string.Format("{0:00}.{1:00}.{2:0000} | {3} | {4} {5}", Article.PublishingDate.Day, Article.PublishingDate.Month, Article.PublishingDate.Year, Article.Category, Article.CommentsCount, Resources.AppResources.Lead_Comments);
         }
 
 

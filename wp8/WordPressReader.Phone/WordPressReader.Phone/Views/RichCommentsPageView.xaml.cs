@@ -10,14 +10,25 @@ using Microsoft.Phone.Shell;
 using MSC.Phone.Shared.Contracts.ViewModels;
 using WordPressReader.Phone.Contracts.Views;
 using System.Windows.Media;
+using WordPressReader.Phone.ViewModels;
+using WordPressReader.Phone.Resources;
 
 namespace WordPressReader.Phone.Views
 {
     public partial class RichCommentsPageView : PhoneApplicationPage, ICommentsPageView
     {
+        private ApplicationBarIconButton SendButton;
+        private ApplicationBarIconButton ReloadButton;
         public RichCommentsPageView()
         {
             InitializeComponent();
+
+            SendButton = ApplicationBar.Buttons[0] as ApplicationBarIconButton;
+            ReloadButton = ApplicationBar.Buttons[1] as ApplicationBarIconButton;
+
+            SendButton.IsEnabled = false;
+            SendButton.Text = AppResources.AppBarButtonSend;
+            ReloadButton.Text = AppResources.AppBarButtonReload;
         }
 
         public IPageViewModel ViewModel
@@ -47,12 +58,34 @@ namespace WordPressReader.Phone.Views
 
         private void TextBoxMessage_TextChanged(object sender, TextChangedEventArgs e)
         {
+            CheckSendButtonEnabled();
+        }
+
+        private async void HyperlinkButton_Tap(object sender, System.Windows.Input.GestureEventArgs e)
+        {
 
         }
 
-        private void HyperlinkButton_Tap(object sender, System.Windows.Input.GestureEventArgs e)
+        private void CheckSendButtonEnabled()
         {
+            SendButton.IsEnabled = !string.IsNullOrEmpty(TextBoxMessage.Text.Trim());
+        }
 
+
+        private void SendButton_Click(object sender, EventArgs e)
+        {
+            var viewModel = ViewModel as RichCommentsPageViewModel;
+            viewModel.Message = TextBoxMessage.Text;
+            SendButton.IsEnabled = false;
+            viewModel.SendCommand.Execute(null);
+            this.Focus();
+            SendButton.IsEnabled = true;
+        }
+
+        private void ReloadButton_Click(object sender, EventArgs e)
+        {
+            var viewModel = ViewModel as RichCommentsPageViewModel; 
+            viewModel.ReloadCommand.Execute(null);
         }
     }
 }

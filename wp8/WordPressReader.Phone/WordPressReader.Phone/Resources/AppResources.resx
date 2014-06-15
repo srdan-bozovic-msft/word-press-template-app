@@ -206,4 +206,10 @@
   <data name="AppBarButtonSend" xml:space="preserve">
     <value>send</value>
   </data>
+  <data name="Comments_Hint" xml:space="preserve">
+    <value>type a message</value>
+  </data>
+  <data name="Comments_NoArticles" xml:space="preserve">
+    <value>No comments for this article yet...</value>
+  </data>
 </root>

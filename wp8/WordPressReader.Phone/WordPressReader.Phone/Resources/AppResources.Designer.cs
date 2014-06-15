@@ -196,6 +196,24 @@ namespace WordPressReader.Phone.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to type a message.
+        /// </summary>
+        public static string Comments_Hint {
+            get {
+                return ResourceManager.GetString("Comments_Hint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No comments for this article yet....
+        /// </summary>
+        public static string Comments_NoArticles {
+            get {
+                return ResourceManager.GetString("Comments_NoArticles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to a minute ago.
         /// </summary>
         public static string CreatedAt_a_minute_ago {
