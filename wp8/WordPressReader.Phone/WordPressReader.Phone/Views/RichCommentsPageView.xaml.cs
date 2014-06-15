@@ -63,7 +63,8 @@ namespace WordPressReader.Phone.Views
 
         private async void HyperlinkButton_Tap(object sender, System.Windows.Input.GestureEventArgs e)
         {
-
+            var viewModel = ViewModel as RichCommentsPageViewModel;
+            viewModel.ReplyTo = null;
         }
 
         private void CheckSendButtonEnabled()

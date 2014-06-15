@@ -18,7 +18,7 @@
     xmlns:c4f="clr-namespace:Coding4Fun.Toolkit.Controls;assembly=Coding4Fun.Toolkit.Controls"
     xmlns:bar="clr-namespace:BindableApplicationBar;assembly=BindableApplicationBar"
     xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
-
+    xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
     shell:SystemTray.IsVisible="True">
 
     <!--LayoutRoot is the root grid where all page content is placed-->
@@ -39,7 +39,7 @@
             <TextBlock Text="{Binding Title}" Style="{StaticResource PhoneTextLargeStyle}" FontWeight="Bold" TextWrapping="Wrap" />
             <TextBlock Grid.Row="1" Text="{Binding Lead}" Style="{StaticResource PhoneTextSubtleStyle}" TextWrapping="Wrap" />
             <TextBlock Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="12" Style="{StaticResource PhoneTextSubtleStyle}" Visibility="{Binding HasComments, Converter={StaticResource InvertableBooleanToVisibilityConverter}}" Text="{Binding Path=LocalizedResources.Comments_NoArticles, Source={StaticResource LocalizedStrings}}"/>
-            <phone:LongListSelector Grid.Row="2" x:Name="ArticleList" Margin="6 6" ItemsSource="{Binding Comments}" >
+            <phone:LongListSelector Grid.Row="2" x:Name="CommentList" Margin="6 6" ItemsSource="{Binding Comments}" >
                 <phone:LongListSelector.ItemTemplate>
                     <DataTemplate>
                         <Grid Margin="{Binding Margin}">
@@ -47,17 +47,33 @@
                                 <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
-                            <Image 
-                                Margin="0 0 0 12"
-                                Width="70" 
-                                Height="70" 
-                                Stretch="UniformToFill" 
-                                Source="{Binding AuthorAvatarUrl}"
-                                VerticalAlignment="Bottom">
-                                <Image.Clip>
-                                    <EllipseGeometry RadiusX="35" RadiusY="35" Center="35,35"/>
-                                </Image.Clip>
-                            </Image>
+                            <Grid Margin="0 0 0 12" toolkit:TiltEffect.IsTiltEnabled="True">
+                                <Image 
+                                    
+                                    Width="70" 
+                                    Height="70" 
+                                    Stretch="UniformToFill" 
+                                    Source="{Binding AuthorAvatarUrl}"
+                                    VerticalAlignment="Bottom">
+                                    <Image.Clip>
+                                        <EllipseGeometry RadiusX="35" RadiusY="35" Center="35,35"/>
+                                    </Image.Clip>
+                                </Image>
+                                <Image VerticalAlignment="Bottom"
+                                       Width="26" 
+                                       Height="26"                                          
+                                       Source="/Assets/AppBar/reply_icon_active.png"
+                                       >
+                                    <Image.RenderTransform>
+                                        <TranslateTransform X="22" Y="0"/>
+                                    </Image.RenderTransform>
+                                </Image>
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="Tap">
+                                        <i:InvokeCommandAction Command="{Binding Path=DataContext.ReplyToCommand, ElementName=CommentList}" CommandParameter="{Binding}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </Grid>
                             <Grid Margin="10 0 0 0" Grid.Column="1" VerticalAlignment="Bottom">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto"/>
@@ -70,29 +86,20 @@
                                 <TextBlock Text="{Binding Author}" FontSize="20" FontWeight="Bold" Foreground="#9b9b9b"/>
                                 <TextBlock Grid.Column="1" HorizontalAlignment="Left" Margin="12 4 0 0" Text="{Binding CreatedAt}" FontSize="16" FontStyle="Italic" Foreground="#9b9b9b"/>
                                 <c4f:ChatBubble Margin="0 0 0 0" Grid.Row="1" Grid.ColumnSpan="2" BorderBrush="#ebebeb" HorizontalContentAlignment="Stretch" ChatBubbleDirection="UpperLeft" Background="#ebebeb">
-                                    <StackPanel HorizontalAlignment="Stretch">
-                                        <TextBlock Margin="0 10 0 0" Text="{Binding Text}" TextWrapping="Wrap" FontSize="22" Foreground="Black"/>
-                                        <Grid HorizontalAlignment="Stretch">
-                                            <!--<Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="Auto"/>
-                                        </Grid.ColumnDefinitions>-->
-                                            <!--<Image HorizontalAlignment="Right" Tap="Image_Tap" Width="26" Height="26"  toolkit:TiltEffect.IsTiltEnabled="True" Source="{Binding ReplyIconUrl}"/>-->
-                                        </Grid>
-                                    </StackPanel>
+                                    <TextBlock HorizontalAlignment="Stretch" Margin="0 10 0 0" Text="{Binding Text}" TextWrapping="Wrap" FontSize="22" Foreground="Black"/>
                                 </c4f:ChatBubble>
                             </Grid>
                         </Grid>
                     </DataTemplate>
                 </phone:LongListSelector.ItemTemplate>
             </phone:LongListSelector>
-            <Grid Grid.Row="3">
+            <Grid Grid.Row="3" Margin="72 0 0 12">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
                 
-                <c4f:ChatBubble x:Name="InputBubble" Margin="72 0 0 12" BorderThickness="3" Padding="0" HorizontalContentAlignment="Stretch" BorderBrush="#ebebeb" ChatBubbleDirection="LowerRight" Background="White">
+                <c4f:ChatBubble x:Name="InputBubble" Margin="0 0 0 0" BorderThickness="3" Padding="0" HorizontalContentAlignment="Stretch" BorderBrush="#ebebeb" ChatBubbleDirection="LowerRight" Background="White">
                         <toolkit:PhoneTextBox
                         x:Name="TextBoxMessage" 
                         HorizontalAlignment="Stretch"
@@ -124,12 +131,14 @@
                     Fill="White" />
                 <HyperlinkButton
                 Grid.Row="1"
+                Margin="-9 -6 0 0"
+                Padding="0"
                 Content="{Binding ReplyToText}" 
-                FontSize="16"
                 Visibility="{Binding HasReplyTo, Converter={StaticResource BooleanToVisibilityConverter}}"
-                Foreground="Black"
+		        Foreground="Black"
+                FontSize="16"
                 Tap="HyperlinkButton_Tap" 
-                HorizontalAlignment="Right"/>
+                HorizontalAlignment="Left"/>
             </Grid>
         </Grid>
         <ProgressBar Foreground="#004c9a" Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityConverter}}" IsIndeterminate="{Binding IsLoading, Mode=OneWay}"></ProgressBar>

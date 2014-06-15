@@ -14,6 +14,7 @@ using System.Windows.Input;
 using WordPressReader.Phone.Contracts.Models;
 using WordPressReader.Phone.Contracts.Repositories;
 using WordPressReader.Phone.Contracts.ViewModels;
+using WordPressReader.Phone.Resources;
 
 namespace WordPressReader.Phone.ViewModels
 {
@@ -103,39 +104,44 @@ namespace WordPressReader.Phone.ViewModels
             }
         }
 
-        private string _replyToText;
         public string ReplyToText
         {
             get
             {
-                return _replyToText;
-            }
-            set
-            {
-                _replyToText = value;
-                RaisePropertyChanged(() => ReplyToText);
+                return HasReplyTo ? string.Format(AppResources.Comments_ReplyToText, ReplyTo.Author) : "";
             }
         }
 
-        private bool _hasReplyTo;
         public bool HasReplyTo
         {
             get
             {
-                return _hasReplyTo;
+                return ReplyTo != null;
+            }
+        }
+
+        private IRichCommentViewModel _replyTo;
+        public IRichCommentViewModel ReplyTo
+        {
+            get
+            {
+                return _replyTo;
             }
             set
             {
-                _hasReplyTo = value;
-                RaisePropertyChanged(() => HasReplyTo);
+                if (_replyTo != value)
+                {
+                    _replyTo = value;
+                    RaisePropertyChanged(() => HasReplyTo);
+                    RaisePropertyChanged(() => ReplyToText);
+                }
             }
         }
 
         private Article Article { get; set; }
-
         public ICommand SendCommand { get; set; }
         public ICommand ReloadCommand { get; set; }
-
+        public ICommand ReplyToCommand { get; set; }
         public RichCommentsPageViewModel(IBlogRepository blogRepository, INavigationService navigationService, IDialogService dialogService)
         {
             _blogRepository = blogRepository;
@@ -149,7 +155,12 @@ namespace WordPressReader.Phone.ViewModels
             ReloadCommand = new RelayCommand(async () =>
             {
                 var cts = new CancellationTokenSource();
+                IsLoading = true;
                 await ReloadCommentsAsync(cts);
+                IsLoading = false;
+            });
+            ReplyToCommand = new RelayCommand<IRichCommentViewModel>(commentViewModel => {
+                ReplyTo = commentViewModel;        
             });
         }
 
@@ -220,19 +231,23 @@ namespace WordPressReader.Phone.ViewModels
         private async Task SendMessageAsync()
         {
             var cts = new CancellationTokenSource();
-            _comments.Insert(0, new RichCommentViewModel(
+
+            var parent = ReplyTo != null ? ReplyTo.Comment.Id : null;
+
+            var comment = new RichCommentViewModel(
                 new Comment { 
                     Author = "Srki",
                     AuthorAvatarUrl = "//a.disquscdn.com/1402432716/images/noavatar32.png",
                     Content = "test", 
-                    CreatedAt = DateTime.Now }));
-            OnCommentInserted();
+                    CreatedAt = DateTime.Now });
+
+
+            InsertComment(comment, parent);
      
             //var result = await _blogRepository.CreateCommentAsync(Article, Message, null, cts.Token);
             //if(result.Successful)
             //{
-            //    _comments.Insert(0, new RichCommentViewModel(result.Value));
-            //    OnCommentInserted();
+            //    InsertComment(comment, parent);
             //}
             //else
             //{
@@ -240,9 +255,31 @@ namespace WordPressReader.Phone.ViewModels
             //}
         }
 
+        private void InsertComment(RichCommentViewModel comment, string parent)
+        {
+            if (parent == null)
+            {
+                _comments.Insert(0, comment);
+            }
+            else
+            {
+                for (int i = 0; i < _comments.Count; i++)
+                {
+                    if (_comments[i].Comment.Id == parent)
+                    {
+                        comment.Comment.Level = _comments[i].Comment.Level + 1;
+                        _comments.Insert(i + 1, comment);
+                        break;
+                    }
+                }
+            }
+            OnCommentInserted();
+        }
+
         private void OnCommentInserted()
         {
             Message = "";
+            ReplyTo = null;
             HasComments = true;
             Article.CommentsCount++;
             Lead = string.Format("{0:00}.{1:00}.{2:0000} | {3} | {4} {5}", Article.PublishingDate.Day, Article.PublishingDate.Month, Article.PublishingDate.Year, Article.Category, Article.CommentsCount, Resources.AppResources.Lead_Comments);

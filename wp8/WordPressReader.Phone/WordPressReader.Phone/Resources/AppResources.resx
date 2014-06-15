@@ -212,4 +212,7 @@
   <data name="Comments_NoArticles" xml:space="preserve">
     <value>No comments for this article yet...</value>
   </data>
+  <data name="Comments_ReplyToText" xml:space="preserve">
+    <value>Replying to: {0} (tap to cancel)</value>
+  </data>
 </root>

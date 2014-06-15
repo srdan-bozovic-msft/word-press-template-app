@@ -214,6 +214,15 @@ namespace WordPressReader.Phone.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Replying to: {0} (tap to cancel).
+        /// </summary>
+        public static string Comments_ReplyToText {
+            get {
+                return ResourceManager.GetString("Comments_ReplyToText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to a minute ago.
         /// </summary>
         public static string CreatedAt_a_minute_ago {

@@ -161,6 +161,7 @@
     <Content Include="Assets\AppBar\appbar.share.rest.png" />
     <Content Include="Assets\AppBar\appbar.sync.rest.png" />
     <Content Include="Assets\AppBar\feature.settings.png" />
+    <Content Include="Assets\AppBar\reply_icon_active.png" />
     <Content Include="Assets\AppBar\send.text.png" />
     <Content Include="Assets\AppBar\comments.png" />
     <Content Include="Assets\ApplicationIcon.png" />

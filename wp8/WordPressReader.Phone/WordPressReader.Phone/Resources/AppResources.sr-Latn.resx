@@ -199,4 +199,7 @@
   <data name="Comments_NoArticles" xml:space="preserve">
     <value>Ne postoje komentari za ovaj članak.</value>
   </data>
+  <data name="Comments_ReplyToText" xml:space="preserve">
+    <value>Odgovor na: {0} (dodirnite da poništite)</value>
+  </data>
 </root>

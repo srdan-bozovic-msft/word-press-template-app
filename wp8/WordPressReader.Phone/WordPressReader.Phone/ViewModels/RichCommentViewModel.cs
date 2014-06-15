@@ -22,6 +22,14 @@ namespace WordPressReader.Phone.ViewModels
             _comment = comment;
         }
 
+        public Comment Comment
+        {
+            get
+            {
+                return _comment;
+            }
+        }
+
         public Thickness Margin 
         {
             get
