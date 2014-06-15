@@ -190,4 +190,7 @@
   <data name="Settings" xml:space="preserve">
     <value>PODEŠAVANJA</value>
   </data>
+  <data name="AppBarButtonSend" xml:space="preserve">
+    <value>pošaljite</value>
+  </data>
 </root>

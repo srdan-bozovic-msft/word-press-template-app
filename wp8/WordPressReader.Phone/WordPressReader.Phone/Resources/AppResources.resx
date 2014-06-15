@@ -203,4 +203,7 @@
   <data name="Settings" xml:space="preserve">
     <value>SETTINGS</value>
   </data>
+  <data name="AppBarButtonSend" xml:space="preserve">
+    <value>send</value>
+  </data>
 </root>

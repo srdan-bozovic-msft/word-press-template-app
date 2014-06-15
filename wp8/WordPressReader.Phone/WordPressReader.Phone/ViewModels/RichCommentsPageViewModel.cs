@@ -21,6 +21,7 @@ namespace WordPressReader.Phone.ViewModels
     {
         private IBlogRepository _blogRepository;
         private INavigationService _navigationService;
+        private IDialogService _dialogService;
         private string _category;
 
         private readonly ObservableCollection<IRichCommentViewModel> _comments;
@@ -88,11 +89,65 @@ namespace WordPressReader.Phone.ViewModels
             }
         }
 
-        public RichCommentsPageViewModel(IBlogRepository blogRepository, INavigationService navigationService)
+        private string _message;
+        public string Message
+        {
+            get
+            {
+                return _message;
+            }
+            set
+            {
+                _message = value;
+                RaisePropertyChanged(() => Message);
+            }
+        }
+
+        private string _replyToText;
+        public string ReplyToText
+        {
+            get
+            {
+                return _replyToText;
+            }
+            set
+            {
+                _replyToText = value;
+                RaisePropertyChanged(() => ReplyToText);
+            }
+        }
+
+        private bool _hasReplyTo;
+        public bool HasReplyTo
+        {
+            get
+            {
+                return _hasReplyTo;
+            }
+            set
+            {
+                _hasReplyTo = value;
+                RaisePropertyChanged(() => HasReplyTo);
+            }
+        }
+
+        private Article Article { get; set; }
+
+        public ICommand SendCommand { get; set; }
+
+        public ICommand ReloadCommand { get; set; }
+
+        public RichCommentsPageViewModel(IBlogRepository blogRepository, INavigationService navigationService, IDialogService dialogService)
         {
             _blogRepository = blogRepository;
             _navigationService = navigationService;
+            _dialogService = dialogService;
             _comments = new ObservableCollection<IRichCommentViewModel>();
+            SendCommand = new RelayCommand(SendMessage);
+            ReloadCommand = new RelayCommand(async () => {
+                var cts = new CancellationTokenSource();
+                await ReloadCommentsAsync(cts);
+            });
         }
 
         public async Task InitializeAsync(dynamic parameter)
@@ -105,46 +160,16 @@ namespace WordPressReader.Phone.ViewModels
             var articles = await _blogRepository.GetArticlesAsync(_category, false, cts.Token);
             if (articles.Successful)
             {
-                var article = articles.Value.FirstOrDefault(a => a.Link == parameters[1]);
-                if (article != null)
+                Article = articles.Value.FirstOrDefault(a => a.Link == parameters[1]);
+                if (Article != null)
                 {
-                    Title = article.Title;
-                    Lead = article.CommentsCount == null ?
-                        string.Format("{0:00}.{1:00}.{2:0000} | {3}", article.PublishingDate.Day, article.PublishingDate.Month, article.PublishingDate.Year, article.Category)
+                    Title = Article.Title;
+                    Lead = Article.CommentsCount == null ?
+                        string.Format("{0:00}.{1:00}.{2:0000} | {3}", Article.PublishingDate.Day, Article.PublishingDate.Month, Article.PublishingDate.Year, Article.Category)
                         :
-                        string.Format("{0:00}.{1:00}.{2:0000} | {3} | {4} {5}", article.PublishingDate.Day, article.PublishingDate.Month, article.PublishingDate.Year, article.Category, article.CommentsCount, Resources.AppResources.Lead_Comments);
-                    
-                    _comments.Clear();
-                    var commentsTask = _blogRepository.GetCommentsAsync(article, cts.Token);
-                    var commentsInfoTask = string.IsNullOrEmpty(article.Id) ? _blogRepository.GetCommentsInfoAsync(article.Link, cts.Token) : null;
-                    var comments = await commentsTask;
+                        string.Format("{0:00}.{1:00}.{2:0000} | {3} | {4} {5}", Article.PublishingDate.Day, Article.PublishingDate.Month, Article.PublishingDate.Year, Article.Category, Article.CommentsCount, Resources.AppResources.Lead_Comments);
 
-                    if (comments.Successful)
-                    {
-                        //if (comments.Value.Count() > 0)
-                        foreach (var comment in comments.Value)
-                        {
-                            _comments.Add(new RichCommentViewModel(comment));
-                        }
-                        HasComments = _comments.Count > 0;
-                        if (HasComments)
-                        {
-                            Lead = string.Format("{0:00}.{1:00}.{2:0000} | {3} | {4} {5}", article.PublishingDate.Day, article.PublishingDate.Month, article.PublishingDate.Year, article.Category, _comments.Count, Resources.AppResources.Lead_Comments);
-                        }
-                    }
-                    else
-                    {
-                        _navigationService.Navigate("Error");
-                    }
-
-                    if(commentsInfoTask != null)
-                    {
-                        var commentsInfo = await commentsInfoTask;
-                        if(commentsInfo.Successful)
-                        {
-                            article.Id = commentsInfo.Value.Id;
-                        }
-                    }
+                    await ReloadCommentsAsync(cts);
                 }
             }
             else
@@ -153,5 +178,56 @@ namespace WordPressReader.Phone.ViewModels
             }
             IsLoading = false;
         }
+
+        private async Task ReloadCommentsAsync(CancellationTokenSource cts)
+        {
+            _comments.Clear();
+            var commentsTask = _blogRepository.GetCommentsAsync(Article, cts.Token);
+            var commentsInfoTask = string.IsNullOrEmpty(Article.Id) ? _blogRepository.GetCommentsInfoAsync(Article.Link, cts.Token) : null;
+            var comments = await commentsTask;
+
+            if (comments.Successful)
+            {
+                //if (comments.Value.Count() > 0)
+                foreach (var comment in comments.Value)
+                {
+                    _comments.Add(new RichCommentViewModel(comment));
+                }
+                HasComments = _comments.Count > 0;
+                if (HasComments)
+                {
+                    Lead = string.Format("{0:00}.{1:00}.{2:0000} | {3} | {4} {5}", Article.PublishingDate.Day, Article.PublishingDate.Month, Article.PublishingDate.Year, Article.Category, _comments.Count, Resources.AppResources.Lead_Comments);
+                }
+            }
+            else
+            {
+                _navigationService.Navigate("Error");
+            }
+
+            if (commentsInfoTask != null)
+            {
+                var commentsInfo = await commentsInfoTask;
+                if (commentsInfo.Successful)
+                {
+                    Article.Id = commentsInfo.Value.Id;
+                }
+            }
+        }
+
+        private async void SendMessage()
+        {
+            var cts = new CancellationTokenSource();
+            var result = await _blogRepository.CreateCommentAsync(Article, Message, null, cts.Token);
+            if(result.Successful)
+            {
+                _comments.Add(new RichCommentViewModel(result.Value));
+            }
+            else
+            {
+                _dialogService.ShowMessage(result.ErrorMessage);
+            }
+        }
+
+
     }
 }

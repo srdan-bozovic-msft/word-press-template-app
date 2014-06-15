@@ -76,7 +76,7 @@
     <bar:Bindable.ApplicationBar>
         <bar:BindableApplicationBar>
             <bar:BindableApplicationBarButton 
-                IconUri="/Assets/AppBar/appbar.send.text.rest.png" 
+                IconUri="/Assets/AppBar/comments.png" 
                 Text="{Binding Path=LocalizedResources.AppBarButtonComments, Source={StaticResource LocalizedStrings}}"
                 Command="{Binding GoToCommentsCommand}"
                 />

@@ -16,6 +16,7 @@
 
     mc:Ignorable="d"
     xmlns:c4f="clr-namespace:Coding4Fun.Toolkit.Controls;assembly=Coding4Fun.Toolkit.Controls"
+    xmlns:bar="clr-namespace:BindableApplicationBar;assembly=BindableApplicationBar"
     xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
 
     shell:SystemTray.IsVisible="True">
@@ -33,6 +34,7 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <TextBlock Text="{Binding Title}" Style="{StaticResource PhoneTextLargeStyle}" FontWeight="Bold" TextWrapping="Wrap" />
             <TextBlock Grid.Row="1" Text="{Binding Lead}" Style="{StaticResource PhoneTextSubtleStyle}" TextWrapping="Wrap" />
@@ -84,8 +86,67 @@
                     </DataTemplate>
                 </phone:LongListSelector.ItemTemplate>
             </phone:LongListSelector>
+            <Grid Grid.Row="3">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                
+                <c4f:ChatBubble x:Name="InputBubble" Margin="72 0 0 12" BorderThickness="3" Padding="0" HorizontalContentAlignment="Stretch" BorderBrush="#ebebeb" ChatBubbleDirection="LowerRight" Background="White">
+                        <toolkit:PhoneTextBox
+                        x:Name="TextBoxMessage" 
+                        HorizontalAlignment="Stretch"
+                        Background="Transparent"
+                        BorderBrush="Transparent"                            
+                        GotFocus="TextBoxMessage_GotFocus"
+                        LostFocus="TextBoxMessage_LostFocus"
+                        TextChanged="TextBoxMessage_TextChanged"
+                        Text="{Binding Message, Mode=TwoWay}"
+                        TextWrapping="Wrap" 
+                        Foreground="Black"
+                        Margin="0"
+                        Padding="-6"
+                        Hint="type a message"                             
+                     >
+                            <toolkit:PhoneTextBox.HintStyle>
+                                <Style TargetType="ContentControl">
+                                    <Setter Property="Foreground" Value="#999999"/>
+                                </Style>
+                            </toolkit:PhoneTextBox.HintStyle>
+                        </toolkit:PhoneTextBox>
+                </c4f:ChatBubble>
+                <Polygon
+                    VerticalAlignment="Bottom"
+                    HorizontalAlignment="Right"
+                    Margin="0 0 15 18"
+                    Points="-4,0 8,0 8,8" 
+                    Stroke="White" 
+                    Fill="White" />
+                <HyperlinkButton
+                Grid.Row="1"
+                Content="{Binding ReplyToText}" 
+                FontSize="16"
+                Visibility="{Binding HasReplyTo, Converter={StaticResource BooleanToVisibilityConverter}}"
+                Foreground="Black"
+                Tap="HyperlinkButton_Tap" 
+                HorizontalAlignment="Right"/>
+            </Grid>
         </Grid>
         <ProgressBar Foreground="#004c9a" Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityConverter}}" IsIndeterminate="{Binding IsLoading, Mode=OneWay}"></ProgressBar>
     </Grid>
-    
+    <bar:Bindable.ApplicationBar>
+        <bar:BindableApplicationBar>
+            <bar:BindableApplicationBarButton 
+                IconUri="/Assets/AppBar/send.text.png" 
+                Text="{Binding Path=LocalizedResources.AppBarButtonSend, Source={StaticResource LocalizedStrings}}"
+                Command="{Binding SendCommand}"
+                />
+            <bar:BindableApplicationBarButton 
+                IconUri="/Assets/AppBar/appbar.sync.rest.png" 
+                Text="{Binding Path=LocalizedResources.AppBarButtonReload, Source={StaticResource LocalizedStrings}}"
+                Command="{Binding ReloadCommand}"
+                />
+        </bar:BindableApplicationBar>
+    </bar:Bindable.ApplicationBar>
+
 </phone:PhoneApplicationPage>

@@ -142,6 +142,15 @@ namespace WordPressReader.Phone.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to send.
+        /// </summary>
+        public static string AppBarButtonSend {
+            get {
+                return ResourceManager.GetString("AppBarButtonSend", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to settings.
         /// </summary>
         public static string AppBarButtonSettings {
