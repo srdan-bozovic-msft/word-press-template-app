@@ -93,7 +93,7 @@ namespace WordPressReader.Phone.Services
 
         public async Task<ServiceResult<Comment>> CreateCommentAsync(Article article, string authorName, string authorEmail, string message, string parent, CancellationToken cancellationToken)
         {
-            var result = await _client.CreatePostAsync(cancellationToken, article.Id, authorEmail, authorEmail, message, parent);
+            var result = await _client.CreatePostAsync(cancellationToken, article.Id, authorName, authorEmail, message, parent);
             if(result.IsSuccessful)
             {
                 return PostToComment(result.Response);
