@@ -19,5 +19,14 @@ namespace WordPressReader.Phone.Contracts.Models
                     string.IsNullOrEmpty(Email);
             }
         }
+
+        public bool IsValid
+        {
+            get
+            {
+                return !string.IsNullOrEmpty(UserName) &&
+                    !string.IsNullOrEmpty(Email);
+            }
+        }
     }
 }

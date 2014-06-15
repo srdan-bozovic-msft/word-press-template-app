@@ -17,6 +17,6 @@ namespace WordPressReader.Phone.Contracts.Repositories
         Task<RepositoryResult<string>> GetArticleContentAsync(string articleUrl, CancellationToken cancellationToken);
         Task<RepositoryResult<CommentsInfo>> GetCommentsInfoAsync(string articleUrl, CancellationToken cancellationToken);
         Task<RepositoryResult<Comment>> CreateCommentAsync(Article article, string message, string parent, CancellationToken cancellationToken);
-
+        RepositoryResult<bool> IsGuestAccountValid();
     }
 }

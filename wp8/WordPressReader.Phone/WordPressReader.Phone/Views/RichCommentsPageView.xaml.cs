@@ -36,6 +36,13 @@ namespace WordPressReader.Phone.Views
             get { return DataContext as IPageViewModel; }
         }
 
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            var viewModel = ViewModel as RichCommentsPageViewModel;
+            viewModel.VerifyCredentials();
+            base.OnNavigatedTo(e);
+        }
+
         private void TextBoxMessage_GotFocus(object sender, RoutedEventArgs e)
         {
             var tb = (PhoneTextBox)sender;

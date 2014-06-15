@@ -164,7 +164,7 @@
     <value>komentara</value>
   </data>
   <data name="Account_NoCredentials_Message" xml:space="preserve">
-    <value>Potrebno je da unesete korisničko ime i adresu e-pošte da biste mogli komentarisati članak, dodirnite "u redu" dugme ispod da bi ih uneli.</value>
+    <value>Potrebno je da unesete korisničko ime i adresu e-pošte da biste mogli da komentarisati članak. Dodirnite dugme "u redu" da pređete na obrazac za unos.</value>
   </data>
   <data name="Account_NoCredentials_Title" xml:space="preserve">
     <value>Nemate nalog</value>

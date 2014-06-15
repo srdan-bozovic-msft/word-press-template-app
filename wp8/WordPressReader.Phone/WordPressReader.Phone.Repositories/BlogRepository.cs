@@ -253,8 +253,6 @@ namespace WordPressReader.Phone.Repositories
             }
         }
 
-
-
         public async Task<RepositoryResult<Comment>> CreateCommentAsync(Article article, string message, string parent, CancellationToken cancellationToken)
         {
             try
@@ -265,6 +263,20 @@ namespace WordPressReader.Phone.Repositories
             catch (Exception xcp)
             {
                 return RepositoryResult<Comment>.CreateError(xcp);
+            }
+        }
+
+
+        public RepositoryResult<bool> IsGuestAccountValid()
+        {
+            try
+            {
+                return _applicationSettingsService.GetGuestUserAccount().IsValid;
+
+            }
+            catch (Exception xcp)
+            {
+                return RepositoryResult<bool>.CreateError(xcp);
             }
         }
     }

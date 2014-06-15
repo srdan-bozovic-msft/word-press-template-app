@@ -120,6 +120,14 @@ namespace WordPressReader.Phone.ViewModels
             }
         }
 
+        public bool HasCredentials
+        {
+            get
+            {
+                return _blogRepository.IsGuestAccountValid();
+            }
+        }
+
         private IRichCommentViewModel _replyTo;
         public IRichCommentViewModel ReplyTo
         {
@@ -142,6 +150,7 @@ namespace WordPressReader.Phone.ViewModels
         public ICommand SendCommand { get; set; }
         public ICommand ReloadCommand { get; set; }
         public ICommand ReplyToCommand { get; set; }
+        public ICommand GoToAccountSettingsCommand { get; set; }
         public RichCommentsPageViewModel(IBlogRepository blogRepository, INavigationService navigationService, IDialogService dialogService)
         {
             _blogRepository = blogRepository;
@@ -161,6 +170,13 @@ namespace WordPressReader.Phone.ViewModels
             });
             ReplyToCommand = new RelayCommand<IRichCommentViewModel>(commentViewModel => {
                 ReplyTo = commentViewModel;        
+            });
+            GoToAccountSettingsCommand = new RelayCommand(() =>
+            {
+                if (_dialogService.ShowConsent(AppResources.Account_NoCredentials_Message, AppResources.Account_NoCredentials_Title))
+                {
+                    _navigationService.Navigate("AccountSettings");
+                }
             });
         }
 
@@ -191,6 +207,11 @@ namespace WordPressReader.Phone.ViewModels
                 _navigationService.Navigate("Error");
             }
             IsLoading = false;
+        }
+
+        public void VerifyCredentials()
+        {
+            RaisePropertyChanged(() => HasCredentials);
         }
 
         private async Task ReloadCommentsAsync(CancellationTokenSource cts)

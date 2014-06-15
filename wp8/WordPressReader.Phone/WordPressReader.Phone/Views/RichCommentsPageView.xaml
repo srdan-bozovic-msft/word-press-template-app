@@ -140,6 +140,17 @@
                 Tap="HyperlinkButton_Tap" 
                 HorizontalAlignment="Left"/>
             </Grid>
+            <Rectangle Grid.Row="3"
+                       Visibility="{Binding HasCredentials, Converter={StaticResource InvertableBooleanToVisibilityConverter}}"
+                       Fill="Transparent"
+                       HorizontalAlignment="Stretch"
+                       VerticalAlignment="Stretch">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Tap">
+                        <i:InvokeCommandAction Command="{Binding Path=GoToAccountSettingsCommand}" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Rectangle>
         </Grid>
         <ProgressBar Foreground="#004c9a" Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityConverter}}" IsIndeterminate="{Binding IsLoading, Mode=OneWay}"></ProgressBar>
     </Grid>
