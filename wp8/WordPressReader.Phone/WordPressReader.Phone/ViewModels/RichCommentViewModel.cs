@@ -59,7 +59,7 @@ namespace WordPressReader.Phone.ViewModels
         {
             get
             {
-                var date = _comment.CreatedAt;
+                var date = _comment.CreatedAt.ToLocalTime();
                 var now = DateTime.Now;
                 if (date >= now.AddSeconds(-5))
                 {
