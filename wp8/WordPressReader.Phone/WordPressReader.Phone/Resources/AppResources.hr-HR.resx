@@ -121,25 +121,85 @@
     <value>hr-HR</value>
     <comment>Controls the Language and ensures that the font for all elements in the RootFrame aligns with the app's language. Set to the language code of this resource file's language.</comment>
   </data>
+  <data name="Account_NoCredentials_Message" xml:space="preserve">
+    <value>Za ostavljanje komentara potrebno je upisati korisničko ime i adresu e-pošte, pritisnite OK ukoliko to želite uraditi odmah</value>
+  </data>
+  <data name="Account_NoCredentials_Title" xml:space="preserve">
+    <value>Bez osobnih podataka</value>
+  </data>
+  <data name="Account_Settings_ClearData" xml:space="preserve">
+    <value>Obriši uneseno</value>
+  </data>
+  <data name="Account_Settings_Email" xml:space="preserve">
+    <value>E-pošta</value>
+  </data>
+  <data name="Account_Settings_Text" xml:space="preserve">
+    <value>Za komentiranje morate unijeti korisničko ime i adresu e-pošte</value>
+  </data>
+  <data name="Account_Settings_Title" xml:space="preserve">
+    <value>Račun</value>
+  </data>
+  <data name="Account_Settings_UserName" xml:space="preserve">
+    <value>Korisničko ime</value>
+  </data>
   <data name="AppBarButtonComments" xml:space="preserve">
     <value>komentari</value>
   </data>
   <data name="AppBarButtonReload" xml:space="preserve">
-    <value>osvježi</value>
+    <value>učitavanje</value>
+  </data>
+  <data name="AppBarButtonSend" xml:space="preserve">
+    <value>pošalji</value>
+  </data>
+  <data name="AppBarButtonSettings" xml:space="preserve">
+    <value>postavke</value>
   </data>
   <data name="AppBarButtonShare" xml:space="preserve">
     <value>podijeli</value>
   </data>
+  <data name="Comments_Hint" xml:space="preserve">
+    <value>unesi poruku</value>
+  </data>
+  <data name="Comments_NoArticles" xml:space="preserve">
+    <value>Još ne postoje komentari za ovaj članak...</value>
+  </data>
+  <data name="Comments_ReplyToText" xml:space="preserve">
+    <value>Odgovori: {0} (dodirni za prekid)</value>
+  </data>
+  <data name="CreatedAt_a_minute_ago" xml:space="preserve">
+    <value>prije minutu</value>
+  </data>
+  <data name="CreatedAt_days_ago" xml:space="preserve">
+    <value>prije nekoliko dana</value>
+  </data>
+  <data name="CreatedAt_hours_ago" xml:space="preserve">
+    <value>prije nekoliko sati</value>
+  </data>
+  <data name="CreatedAt_Just_a_moment_ago" xml:space="preserve">
+    <value>Prije koji trenutak</value>
+  </data>
+  <data name="CreatedAt_minutes_ago" xml:space="preserve">
+    <value>prije nekoliko minuta</value>
+  </data>
+  <data name="CreatedAt_seconds_ago" xml:space="preserve">
+    <value>prije nekoliko sekundi</value>
+  </data>
+  <data name="CreatedAt_yesterday" xml:space="preserve">
+    <value>prije jedan dan</value>
+  </data>
   <data name="ErrorMessage" xml:space="preserve">
-    <value>Unable to reach server.\nPlease try again later.</value>
+    <value>Nije se moguće povezati sa serverom. \nMolimo pokušajte ponovno kasnije.</value>
+  </data>
+  <data name="Lead_Comments" xml:space="preserve">
+    <value>komentari</value>
   </data>
   <data name="ProgressControlPleaseWait" xml:space="preserve">
-    <value>molim pričekajte</value>
+    <value>molimo pričekajte</value>
   </data>
   <data name="ProgressControlReloading" xml:space="preserve">
     <value>Osvježavam…</value>
   </data>
-  <data name="Lead_Comments" xml:space="preserve">
-    <value>komentara</value>
+  <data name="Settings" xml:space="preserve">
+    <value>POSTAVKE</value>
   </data>
 </root>
