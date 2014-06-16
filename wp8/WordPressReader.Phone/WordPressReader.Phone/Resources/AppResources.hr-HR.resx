@@ -122,7 +122,7 @@
     <comment>Controls the Language and ensures that the font for all elements in the RootFrame aligns with the app's language. Set to the language code of this resource file's language.</comment>
   </data>
   <data name="Account_NoCredentials_Message" xml:space="preserve">
-    <value>Za ostavljanje komentara potrebno je upisati korisničko ime i adresu e-pošte, pritisnite OK ukoliko to želite uraditi odmah</value>
+    <value>Za ostavljanje komentara potrebno je upisati korisničko ime i adresu e-pošte, pritisnite "u redu" ukoliko to želite uraditi odmah</value>
   </data>
   <data name="Account_NoCredentials_Title" xml:space="preserve">
     <value>Bez osobnih podataka</value>
@@ -170,28 +170,28 @@
     <value>prije minutu</value>
   </data>
   <data name="CreatedAt_days_ago" xml:space="preserve">
-    <value>prije nekoliko dana</value>
+    <value>dana prije</value>
   </data>
   <data name="CreatedAt_hours_ago" xml:space="preserve">
-    <value>prije nekoliko sati</value>
+    <value>sati prije</value>
   </data>
   <data name="CreatedAt_Just_a_moment_ago" xml:space="preserve">
     <value>Prije koji trenutak</value>
   </data>
   <data name="CreatedAt_minutes_ago" xml:space="preserve">
-    <value>prije nekoliko minuta</value>
+    <value>minuta prije</value>
   </data>
   <data name="CreatedAt_seconds_ago" xml:space="preserve">
-    <value>prije nekoliko sekundi</value>
+    <value>sekundi prije</value>
   </data>
   <data name="CreatedAt_yesterday" xml:space="preserve">
     <value>prije jedan dan</value>
   </data>
   <data name="ErrorMessage" xml:space="preserve">
-    <value>Nije se moguće povezati sa serverom. \nMolimo pokušajte ponovno kasnije.</value>
+    <value>Nije se moguće povezati sa serverom.\nMolimo pokušajte ponovno kasnije.</value>
   </data>
   <data name="Lead_Comments" xml:space="preserve">
-    <value>komentari</value>
+    <value>komentara</value>
   </data>
   <data name="ProgressControlPleaseWait" xml:space="preserve">
     <value>molimo pričekajte</value>
