@@ -86,9 +86,6 @@
     <Compile Include="Contracts\PhoneServices\ISocialShare.cs" />
     <Compile Include="Contracts\Services\IDialogService.cs" />
     <Compile Include="Contracts\Services\INavigationService.cs" />
-    <Compile Include="Contracts\ViewModels\IPageViewModel.cs" />
-    <Compile Include="Contracts\ViewModels\IStatefullPageViewModel.cs" />
-    <Compile Include="Contracts\Views\IPageView.cs" />
     <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
     <Compile Include="Converters\InvertableBooleanToVisibilityConverter .cs" />
     <Compile Include="Implementation\DialogService.cs" />
@@ -96,6 +93,12 @@
     <Compile Include="Implementation\SocialShare.cs" />
     <Compile Include="Implementation\StatefullPhoneApplicationPage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MSC.Phone.Shared\MSC.Phone.Shared.csproj">
+      <Project>{05ce307f-f924-4270-a7dc-b849b835dd47}</Project>
+      <Name>MSC.Phone.Shared</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).$(TargetFrameworkVersion).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).CSharp.targets" />

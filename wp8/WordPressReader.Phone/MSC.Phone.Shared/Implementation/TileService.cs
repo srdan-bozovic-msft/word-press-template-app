@@ -10,24 +10,24 @@ namespace MSC.Phone.Shared
 {
     public class TileService : ITileService
     {
-        public void CreateTile(string url, ShellTileData tileData, bool supportsWideTile)
-        {
-            ShellTile.Create(new Uri(url, UriKind.Relative), tileData, supportsWideTile);
-        }
+        //public void CreateTile(string url, ShellTileData tileData, bool supportsWideTile)
+        //{
+        //    ShellTile.Create(new Uri(url, UriKind.Relative), tileData, supportsWideTile);
+        //}
 
-        public bool TileExists(string url)
-        {
-            ShellTile tile = ShellTile.ActiveTiles.FirstOrDefault(o => o.NavigationUri.ToString().Contains(url));
-            return tile == null ? false : true;
-        }
+        //public bool TileExists(string url)
+        //{
+        //    ShellTile tile = ShellTile.ActiveTiles.FirstOrDefault(o => o.NavigationUri.ToString().Contains(url));
+        //    return tile == null ? false : true;
+        //}
 
-        public void DeleteTile(string url)
-        {
-            ShellTile tile = ShellTile.ActiveTiles.FirstOrDefault(o => o.NavigationUri.ToString().Contains(url));
-            if (tile == null) return;
+        //public void DeleteTile(string url)
+        //{
+        //    ShellTile tile = ShellTile.ActiveTiles.FirstOrDefault(o => o.NavigationUri.ToString().Contains(url));
+        //    if (tile == null) return;
 
-            tile.Delete();
-        }
+        //    tile.Delete();
+        //}
 
         public void UpdateTile(ShellTileData tileData, string url)
         {

@@ -9,10 +9,9 @@ namespace MSC.Phone.Shared.Contracts.PhoneServices
 {
     public interface ITileService
     {
-        void CreateTile(string url, 
-            ShellTileData tileData, bool supportsWideTile);
-        bool TileExists(string url);
-        void DeleteTile(string url);
+        //void CreateTile(string url, ShellTileData tileData, bool supportsWideTile);
+        //bool TileExists(string url);
+        //void DeleteTile(string url);
         void UpdateTile(ShellTileData tileData, string url = null);
     }
 }
