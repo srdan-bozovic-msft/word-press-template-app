@@ -1,5 +1,6 @@
 ﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using Microsoft.ApplicationInsights.Telemetry.WindowsStore;
 using MSC.Phone.Shared.Contracts.Models;
 using MSC.Phone.Shared.Contracts.Services;
 using System;
@@ -182,6 +183,7 @@ namespace WordPressReader.Phone.ViewModels
 
         public async Task InitializeAsync(dynamic parameter)
         {
+            ClientAnalyticsChannel.Default.LogPageView("Phone/Comments");
             IsLoading = true;
             HasComments = true;
             var cts = new CancellationTokenSource();
@@ -216,41 +218,47 @@ namespace WordPressReader.Phone.ViewModels
 
         private async Task ReloadCommentsAsync(CancellationTokenSource cts)
         {
-            _comments.Clear();
-            var commentsTask = _blogRepository.GetCommentsAsync(Article, cts.Token);
-            var commentsInfoTask = string.IsNullOrEmpty(Article.Id) ? _blogRepository.GetCommentsInfoAsync(Article.Link, cts.Token) : null;
-            var comments = await commentsTask;
+            using (TimedAnalyticsEvent token = ClientAnalyticsChannel.Default.StartTimedEvent("Phone/Comments/Reload"))
+            {
+                _comments.Clear();
+                var commentsTask = _blogRepository.GetCommentsAsync(Article, cts.Token);
+                var commentsInfoTask = string.IsNullOrEmpty(Article.Id) ? _blogRepository.GetCommentsInfoAsync(Article.Link, cts.Token) : null;
+                var comments = await commentsTask;
 
-            if (comments.Successful)
-            {
-                //if (comments.Value.Count() > 0)
-                foreach (var comment in comments.Value)
+                if (comments.Successful)
                 {
-                    _comments.Add(new RichCommentViewModel(comment));
+                    //if (comments.Value.Count() > 0)
+                    foreach (var comment in comments.Value)
+                    {
+                        _comments.Add(new RichCommentViewModel(comment));
+                    }
+                    HasComments = _comments.Count > 0;
+                    if (HasComments)
+                    {
+                        Lead = string.Format("{0:00}.{1:00}.{2:0000} | {3} | {4} {5}", Article.PublishingDate.Day, Article.PublishingDate.Month, Article.PublishingDate.Year, Article.Category, _comments.Count, Resources.AppResources.Lead_Comments);
+                    }
                 }
-                HasComments = _comments.Count > 0;
-                if (HasComments)
+                else
                 {
-                    Lead = string.Format("{0:00}.{1:00}.{2:0000} | {3} | {4} {5}", Article.PublishingDate.Day, Article.PublishingDate.Month, Article.PublishingDate.Year, Article.Category, _comments.Count, Resources.AppResources.Lead_Comments);
+                    token.Cancel();
+                    _navigationService.Navigate("Error");
                 }
-            }
-            else
-            {
-                _navigationService.Navigate("Error");
-            }
 
-            if (commentsInfoTask != null)
-            {
-                var commentsInfo = await commentsInfoTask;
-                if (commentsInfo.Successful)
+                if (commentsInfoTask != null)
                 {
-                    Article.Id = commentsInfo.Value.Id;
+                    var commentsInfo = await commentsInfoTask;
+                    if (commentsInfo.Successful)
+                    {
+                        Article.Id = commentsInfo.Value.Id;
+                    }
                 }
             }
         }
 
         public async Task SendMessageAsync()
         {
+            ClientAnalyticsChannel.Default.LogEvent("Phone/Comments/Create");
+
             var cts = new CancellationTokenSource();
 
             var parent = ReplyTo != null ? ReplyTo.Comment.Id : null;
@@ -262,15 +270,18 @@ namespace WordPressReader.Phone.ViewModels
             //        Content = "test", 
             //        CreatedAt = DateTime.Now });
             //InsertComment(comment, parent);
-     
-            var result = await _blogRepository.CreateCommentAsync(Article, Message, parent, cts.Token);
-            if(result.Successful)
+            using (TimedAnalyticsEvent token = ClientAnalyticsChannel.Default.StartTimedEvent("Phone/Comments/Create"))
             {
-                InsertComment(new RichCommentViewModel(result.Value), parent);
-            }
-            else
-            {
-                _dialogService.ShowMessage(result.ErrorMessage);
+                var result = await _blogRepository.CreateCommentAsync(Article, Message, parent, cts.Token);
+                if (result.Successful)
+                {
+                    InsertComment(new RichCommentViewModel(result.Value), parent);
+                }
+                else
+                {
+                    token.Cancel();
+                    _dialogService.ShowMessage(result.ErrorMessage);
+                }
             }
         }
 

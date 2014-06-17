@@ -1,5 +1,6 @@
 ﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using Microsoft.ApplicationInsights.Telemetry.WindowsStore;
 using MSC.Phone.Shared.Contracts.Models;
 using MSC.Phone.Shared.Contracts.Services;
 using System;
@@ -97,6 +98,7 @@ namespace WordPressReader.Phone.ViewModels
 
         public async Task InitializeAsync(dynamic parameter)
         {
+            ClientAnalyticsChannel.Default.LogPageView("Phone/Comments");
             IsLoading = true;
             HasComments = true;
             var cts = new CancellationTokenSource();

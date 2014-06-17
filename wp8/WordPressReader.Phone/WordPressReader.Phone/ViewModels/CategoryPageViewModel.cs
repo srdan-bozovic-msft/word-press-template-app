@@ -1,5 +1,6 @@
 ﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using Microsoft.ApplicationInsights.Telemetry.WindowsStore;
 using MSC.Phone.Shared.Contracts.Models;
 using MSC.Phone.Shared.Contracts.Services;
 using System;
@@ -83,6 +84,7 @@ namespace WordPressReader.Phone.ViewModels
 
         public virtual async Task InitializeAsync(dynamic parameter)
         {
+            ClientAnalyticsChannel.Default.LogPageView("Phone/Category/" + parameter);
             await InitializeInternalAsync((string)parameter);
         }
 
@@ -96,42 +98,46 @@ namespace WordPressReader.Phone.ViewModels
 
         private async Task ReloadArticlesAsync(bool force)
         {
-            if (_articles.Count == 0 || force)
+            using (TimedAnalyticsEvent token = ClientAnalyticsChannel.Default.StartTimedEvent("Phone/Category/"+_category+"/Reload"))
             {
-                _articles.Clear();
-                IsLoading = true;
-            }
-            var cts = new CancellationTokenSource();
-            var articles = await _blogRepository.GetArticlesAsync(_category, true, cts.Token);
-            if (articles.Successful)
-            {
-                if (_category == "<default>" && articles.Value.Count() > 0)
-                    _notificationRepository.ClearNotifications(articles.Value.Skip(2).First());
-
                 if (_articles.Count == 0 || force)
                 {
-                    foreach (var article in articles.Value)
+                    _articles.Clear();
+                    IsLoading = true;
+                }
+                var cts = new CancellationTokenSource();
+                var articles = await _blogRepository.GetArticlesAsync(_category, true, cts.Token);
+                if (articles.Successful)
+                {
+                    if (_category == "<default>" && articles.Value.Count() > 0)
+                        _notificationRepository.ClearNotifications(articles.Value.First());
+
+                    if (_articles.Count == 0 || force)
                     {
-                        article.Title = Utility.HtmlDecode(article.Title);
-                        article.Description = Utility.HtmlDecode(article.Description);
-                        _articles.Add(article);
+                        foreach (var article in articles.Value)
+                        {
+                            article.Title = Utility.HtmlDecode(article.Title);
+                            article.Description = Utility.HtmlDecode(article.Description);
+                            _articles.Add(article);
+                        }
+                    }
+                    else
+                    {
+                        var first = _articles.First();
+                        var newArticles = articles.Value.Where(a => a.PublishingDate > first.PublishingDate).OrderBy(a => a.PublishingDate);
+                        foreach (var article in newArticles)
+                        {
+                            _articles.Insert(0, article);
+                        }
                     }
                 }
                 else
                 {
-                    var first = _articles.First();
-                    var newArticles = articles.Value.Where(a => a.PublishingDate > first.PublishingDate).OrderBy(a => a.PublishingDate);
-                    foreach (var article in newArticles)
-                    {
-                        _articles.Insert(0, article);
-                    }
+                    token.Cancel();
+                    _navigationService.Navigate("Error");
                 }
+                IsLoading = false;
             }
-            else
-            {
-                _navigationService.Navigate("Error");
-            }
-            IsLoading = false;
         }
 
         public async Task GetMoreArticlesAsync()
