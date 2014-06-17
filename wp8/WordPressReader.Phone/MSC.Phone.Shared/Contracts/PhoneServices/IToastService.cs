@@ -8,5 +8,7 @@ namespace MSC.Phone.Shared.Contracts.PhoneServices
 {
     public interface IToastService
     {
+        void Show(string title, string content);
+        void Show(string title, string content, Uri uri);
     }
 }
