@@ -96,7 +96,7 @@ namespace WordPressReader.Phone.ViewModels
             await ReloadArticlesAsync(true);
         }
 
-        private async Task ReloadArticlesAsync(bool force)
+        protected async Task ReloadArticlesAsync(bool force)
         {
             using (TimedAnalyticsEvent token = ClientAnalyticsChannel.Default.StartTimedEvent("Phone/Category/"+_category+"/Reload"))
             {

@@ -55,8 +55,11 @@ namespace WordPressReader.Phone.ViewModels
 
         protected override async Task InitializeInternalAsync(string category)
         {
-            await ReloadCategoriesAsync(); 
-            await base.InitializeInternalAsync(category);
+            await ReloadCategoriesAsync();
+            var parts = category.Split(new[] { ";;" }, StringSplitOptions.None);
+            PageTitle = parts[0];
+            _category = parts[1];
+            await ReloadArticlesAsync(false);
         }
 
         private async Task ReloadCategoriesAsync()
