@@ -93,7 +93,7 @@ namespace WordPressReader.Phone.ViewModels
             var parts = category.Split(new []{";;"},StringSplitOptions.None);
             PageTitle = parts[0];
             _category = parts[1];
-            await ReloadArticlesAsync(false);
+            await ReloadArticlesAsync(true);
         }
 
         private async Task ReloadArticlesAsync(bool force)
