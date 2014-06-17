@@ -173,7 +173,9 @@
     <Content Include="Assets\Tiles\FlipCycleTileMedium.png" />
     <Content Include="Assets\Tiles\FlipCycleTileSmall.png" />
     <Content Include="Assets\Tiles\IconicTileMediumLarge.png" />
+    <Content Include="Assets\Tiles\IconicTileMediumLargeLeft.png" />
     <Content Include="Assets\Tiles\IconicTileSmall.png" />
+    <Content Include="Assets\Tiles\IconicTileSmallLeft.png" />
     <Content Include="README_FIRST.txt" />
     <Content Include="Toolkit.Content\ApplicationBar.Add.png" />
     <Content Include="Toolkit.Content\ApplicationBar.Cancel.png" />

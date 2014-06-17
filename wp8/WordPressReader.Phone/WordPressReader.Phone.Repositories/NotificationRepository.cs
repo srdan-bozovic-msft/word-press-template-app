@@ -48,7 +48,11 @@ namespace WordPressReader.Phone.Repositories
             {
                 _settingsService.Set(SettingsNotificationsCount,0);
                 _settingsService.Set(SettingsNotificationsLatestUrl, article.Link);
-                _tileService.UpdateTile(new IconicTileData { Count = 0 });
+                _tileService.UpdateTile(new IconicTileData {
+                    Count = 0, 
+                    IconImage = new Uri("/Assets/Tiles/IconicTileMediumLarge.png", UriKind.Relative),
+                    SmallIconImage = new Uri("/Assets/Tiles/IconicTileSmall.png", UriKind.Relative),
+                });
                 return true;
             }
             catch(Exception xcp)
@@ -84,7 +88,15 @@ namespace WordPressReader.Phone.Repositories
                         var newCount = count + newItems.Count;
                         _settingsService.Set(SettingsNotificationsCount,newCount);
                         _settingsService.Set(SettingsNotificationsLatestUrl, newItems.First().Link);
-                        _tileService.UpdateTile(new IconicTileData { Count = newCount });
+                        _tileService.UpdateTile(new IconicTileData
+                        {
+                            Count = newCount,
+                            IconImage = new Uri("/Assets/Tiles/IconicTileMediumLargeLeft.png", UriKind.Relative),
+                            SmallIconImage = new Uri("/Assets/Tiles/IconicTileSmallLeft.png", UriKind.Relative),
+                        }); foreach (var item in newItems)
+                        {
+                            _toastService.Show(item.Creator, item.Title);
+                        }
                     }
                 }
                 return true;

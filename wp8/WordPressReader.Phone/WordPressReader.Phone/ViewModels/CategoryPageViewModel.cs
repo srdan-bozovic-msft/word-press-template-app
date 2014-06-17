@@ -106,7 +106,7 @@ namespace WordPressReader.Phone.ViewModels
             if (articles.Successful)
             {
                 if (_category == "<default>" && articles.Value.Count() > 0)
-                    _notificationRepository.ClearNotifications(articles.Value.First());
+                    _notificationRepository.ClearNotifications(articles.Value.Skip(2).First());
 
                 if (_articles.Count == 0 || force)
                 {
