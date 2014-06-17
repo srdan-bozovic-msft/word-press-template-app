@@ -135,7 +135,7 @@
     <value>share</value>
   </data>
   <data name="ErrorMessage" xml:space="preserve">
-    <value>Unable to reach server.\nPlease try again later.</value>
+    <value>Unable to reach server. Please try again later.</value>
   </data>
   <data name="ProgressControlPleaseWait" xml:space="preserve">
     <value>please wait</value>

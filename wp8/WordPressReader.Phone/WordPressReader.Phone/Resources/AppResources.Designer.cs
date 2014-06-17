@@ -259,7 +259,7 @@ namespace WordPressReader.Phone.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Unable to reach server.\nPlease try again later..
+        ///   Looks up a localized string similar to Unable to reach server. Please try again later..
         /// </summary>
         public static string ErrorMessage {
             get {

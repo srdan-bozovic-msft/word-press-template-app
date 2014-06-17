@@ -13,5 +13,6 @@ namespace MSC.Phone.Shared.Contracts.PhoneServices
             ShellTileData tileData, bool supportsWideTile);
         bool TileExists(string url);
         void DeleteTile(string url);
+        void UpdateTile(ShellTileData tileData, string url = null);
     }
 }

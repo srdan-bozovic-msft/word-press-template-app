@@ -21,6 +21,7 @@ namespace WordPressReader.Phone.ViewModels
     public class CategoryPageViewModel : ViewModelBase, ICategoryPageViewModel
     {
         protected IBlogRepository _blogRepository;
+        protected INotificationRepository _notificationRepository;
         protected INavigationService _navigationService;
         protected string _category;
 
@@ -61,9 +62,13 @@ namespace WordPressReader.Phone.ViewModels
             }
         }
 
-        public CategoryPageViewModel(IBlogRepository blogRepository, INavigationService navigationService)
+        public CategoryPageViewModel(
+            IBlogRepository blogRepository,
+            INotificationRepository notificationRepository, 
+            INavigationService navigationService)
         {
             _blogRepository = blogRepository;
+            _notificationRepository = notificationRepository;
             _navigationService = navigationService;
             _articles = new ObservableCollection<Article>();
             SelectArticleCommand = new RelayCommand<Article>(
@@ -100,6 +105,9 @@ namespace WordPressReader.Phone.ViewModels
             var articles = await _blogRepository.GetArticlesAsync(_category, true, cts.Token);
             if (articles.Successful)
             {
+                if (_category == "<default>" && articles.Value.Count() > 0)
+                    _notificationRepository.ClearNotifications(articles.Value.First());
+
                 if (_articles.Count == 0 || force)
                 {
                     foreach (var article in articles.Value)

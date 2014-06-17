@@ -84,7 +84,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Contracts\PhoneServices\ISocialShare.cs" />
-    <Compile Include="Contracts\PhoneServices\ITileService.cs" />
     <Compile Include="Contracts\Services\IDialogService.cs" />
     <Compile Include="Contracts\Services\INavigationService.cs" />
     <Compile Include="Contracts\ViewModels\IPageViewModel.cs" />
@@ -96,7 +95,6 @@
     <Compile Include="Implementation\NavigationService.cs" />
     <Compile Include="Implementation\SocialShare.cs" />
     <Compile Include="Implementation\StatefullPhoneApplicationPage.cs" />
-    <Compile Include="Implementation\TileService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).$(TargetFrameworkVersion).Overrides.targets" />

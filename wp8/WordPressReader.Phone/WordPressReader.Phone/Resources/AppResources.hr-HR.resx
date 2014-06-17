@@ -188,7 +188,7 @@
     <value>prije jedan dan</value>
   </data>
   <data name="ErrorMessage" xml:space="preserve">
-    <value>Nije se moguće povezati sa serverom.\nMolimo pokušajte ponovno kasnije.</value>
+    <value>Nije se moguće povezati sa serverom. Molimo pokušajte ponovno kasnije.</value>
   </data>
   <data name="Lead_Comments" xml:space="preserve">
     <value>komentara</value>

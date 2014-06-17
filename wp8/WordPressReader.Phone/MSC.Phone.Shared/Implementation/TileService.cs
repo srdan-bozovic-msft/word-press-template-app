@@ -28,5 +28,15 @@ namespace MSC.Phone.Shared
 
             tile.Delete();
         }
+
+        public void UpdateTile(ShellTileData tileData, string url)
+        {
+            ShellTile tile = string.IsNullOrEmpty(url) ?
+                ShellTile.ActiveTiles.FirstOrDefault() :
+                ShellTile.ActiveTiles.FirstOrDefault(o => o.NavigationUri.ToString().Contains(url));
+            if (tile == null)
+                return;
+            tile.Update(tileData);
+        }
     }
 }

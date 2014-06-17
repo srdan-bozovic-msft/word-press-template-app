@@ -172,12 +172,8 @@
     </Content>
     <Content Include="Assets\Tiles\FlipCycleTileMedium.png" />
     <Content Include="Assets\Tiles\FlipCycleTileSmall.png" />
-    <Content Include="Assets\Tiles\IconicTileMediumLarge.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\Tiles\IconicTileSmall.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    <Content Include="Assets\Tiles\IconicTileMediumLarge.png" />
+    <Content Include="Assets\Tiles\IconicTileSmall.png" />
     <Content Include="README_FIRST.txt" />
     <Content Include="Toolkit.Content\ApplicationBar.Add.png" />
     <Content Include="Toolkit.Content\ApplicationBar.Cancel.png" />
@@ -236,6 +232,10 @@
     <ProjectReference Include="..\MSC.Phone.Shared\MSC.Phone.Shared.csproj">
       <Project>{05CE307F-F924-4270-A7DC-B849B835DD47}</Project>
       <Name>MSC.Phone.Shared</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WordPressReader.Phone.Agent\WordPressReader.Phone.Agent.csproj">
+      <Project>{ff272d9c-97d0-4e76-b480-dcde114eade4}</Project>
+      <Name>WordPressReader.Phone.Agent</Name>
     </ProjectReference>
     <ProjectReference Include="..\WordPressReader.Phone.Contracts\WordPressReader.Phone.Contracts.csproj">
       <Project>{CEACEDAA-C99D-4DED-AACB-28C981BC456F}</Project>

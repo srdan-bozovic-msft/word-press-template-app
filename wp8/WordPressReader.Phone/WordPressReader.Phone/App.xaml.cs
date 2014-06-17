@@ -9,6 +9,7 @@ using Microsoft.Phone.Shell;
 using WordPressReader.Phone.Resources;
 using WordPressReader.Phone.Common;
 using MSC.Phone.Shared.Contracts.Services;
+using Microsoft.Phone.Scheduler;
 
 namespace WordPressReader.Phone
 {
@@ -65,6 +66,34 @@ namespace WordPressReader.Phone
         // This code will not execute when the application is reactivated
         private void Application_Launching(object sender, LaunchingEventArgs e)
         {
+            RegisterScheduledTask();
+        }
+
+        private static void RegisterScheduledTask()
+        {
+            var taskName = "Nokiamob";
+
+            PeriodicTask t;
+            t = ScheduledActionService.Find(taskName) as PeriodicTask;
+            bool found = (t != null);
+            if (!found)
+            {
+                t = new PeriodicTask(taskName);
+            }
+            t.Description = "Enables notifications";
+            if (!found)
+            {
+                ScheduledActionService.Add(t);
+            }
+            else
+            {
+                ScheduledActionService.Remove(taskName);
+                ScheduledActionService.Add(t);
+            }
+
+# if DEBUG
+            ScheduledActionService.LaunchForTest(taskName, TimeSpan.FromMilliseconds(5000));
+#endif
         }
 
         // Code to execute when the application is activated (brought to foreground)

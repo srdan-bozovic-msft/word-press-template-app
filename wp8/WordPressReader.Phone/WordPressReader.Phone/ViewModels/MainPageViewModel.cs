@@ -29,8 +29,11 @@ namespace WordPressReader.Phone.ViewModels
             }
         }
 
-        public MainPageViewModel(IBlogRepository blogRepository, INavigationService navigationService)
-            : base(blogRepository, navigationService)
+        public MainPageViewModel(
+            IBlogRepository blogRepository,
+            INotificationRepository notificationRepository, 
+            INavigationService navigationService)
+            : base(blogRepository, notificationRepository, navigationService)
         {
             _categories = new ObservableCollection<Category>();
             SelectCategoryCommand = new RelayCommand<Category>(

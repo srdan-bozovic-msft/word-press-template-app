@@ -131,7 +131,7 @@
     <value>podeli</value>
   </data>
   <data name="ErrorMessage" xml:space="preserve">
-    <value>Došlo je do problema prilikom preuzimanja podataka.\nMolimo Vas pokušajte kasnije.</value>
+    <value>Došlo je do problema prilikom preuzimanja podataka. Molimo Vas pokušajte kasnije.</value>
   </data>
   <data name="ProgressControlPleaseWait" xml:space="preserve">
     <value>molim sačekajte</value>
