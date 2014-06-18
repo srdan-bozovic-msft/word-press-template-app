@@ -84,7 +84,6 @@ namespace WordPressReader.Phone.ViewModels
 
         public virtual async Task InitializeAsync(dynamic parameter)
         {
-            ClientAnalyticsChannel.Default.LogPageView("Phone/Category/" + parameter);
             await InitializeInternalAsync((string)parameter);
         }
 
@@ -93,12 +92,13 @@ namespace WordPressReader.Phone.ViewModels
             var parts = category.Split(new []{";;"},StringSplitOptions.None);
             PageTitle = parts[0];
             _category = parts[1];
+            ClientAnalyticsChannel.Default.LogPageView("Phone/Category/" + _category);
             await ReloadArticlesAsync(true);
         }
 
         protected async Task ReloadArticlesAsync(bool force)
         {
-            using (TimedAnalyticsEvent token = ClientAnalyticsChannel.Default.StartTimedEvent("Phone/Category/"+_category+"/Reload"))
+            using (TimedAnalyticsEvent token = ClientAnalyticsChannel.Default.StartTimedEvent("Phone/Category/"+_category.Replace("<default>","main")+"/Reload"))
             {
                 if (_articles.Count == 0 || force)
                 {

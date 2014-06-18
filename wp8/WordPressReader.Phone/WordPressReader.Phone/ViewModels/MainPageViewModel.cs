@@ -49,7 +49,7 @@ namespace WordPressReader.Phone.ViewModels
 
         public override async Task InitializeAsync(dynamic parameter)
         {
-            ClientAnalyticsChannel.Default.LogPageView("Phone/Category/<default>");
+            ClientAnalyticsChannel.Default.LogPageView("Phone/Category/main");
             await InitializeInternalAsync(";;<default>");
         }
 
