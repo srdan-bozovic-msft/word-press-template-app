@@ -93,7 +93,9 @@ namespace WordPressReader.Phone.Repositories
                             Count = newCount,
                             IconImage = new Uri("/Assets/Tiles/IconicTileMediumLargeLeft.png", UriKind.Relative),
                             SmallIconImage = new Uri("/Assets/Tiles/IconicTileSmallLeft.png", UriKind.Relative),
-                        }); foreach (var item in newItems)
+                        });
+                        newItems.Reverse();
+                        foreach (var item in newItems)
                         {
                             _toastService.Show(item.Creator, item.Title);
                         }
