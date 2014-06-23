@@ -71,29 +71,35 @@ namespace WordPressReader.Phone
 
         private static void RegisterScheduledTask()
         {
-            var taskName = "Nokiamob";
+            try
+            {
+                var taskName = "Nokiamob";
 
-            PeriodicTask t;
-            t = ScheduledActionService.Find(taskName) as PeriodicTask;
-            bool found = (t != null);
-            if (!found)
-            {
-                t = new PeriodicTask(taskName);
-            }
-            t.Description = "Enables notifications";
-            if (!found)
-            {
-                ScheduledActionService.Add(t);
-            }
-            else
-            {
-                ScheduledActionService.Remove(taskName);
-                ScheduledActionService.Add(t);
-            }
+                PeriodicTask t;
+                t = ScheduledActionService.Find(taskName) as PeriodicTask;
+                bool found = (t != null);
+                if (!found)
+                {
+                    t = new PeriodicTask(taskName);
+                }
+                t.Description = "Enables notifications";
+                if (!found)
+                {
+                    ScheduledActionService.Add(t);
+                }
+                else
+                {
+                    ScheduledActionService.Remove(taskName);
+                    ScheduledActionService.Add(t);
+                }
 
 # if DEBUG
-            ScheduledActionService.LaunchForTest(taskName, TimeSpan.FromMilliseconds(5000));
+                ScheduledActionService.LaunchForTest(taskName, TimeSpan.FromMilliseconds(5000));
 #endif
+            }
+            catch
+            {
+            }
         }
 
         // Code to execute when the application is activated (brought to foreground)

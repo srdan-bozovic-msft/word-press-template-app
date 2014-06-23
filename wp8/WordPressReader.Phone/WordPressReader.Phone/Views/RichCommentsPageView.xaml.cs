@@ -12,6 +12,10 @@ using WordPressReader.Phone.Contracts.Views;
 using System.Windows.Media;
 using WordPressReader.Phone.ViewModels;
 using WordPressReader.Phone.Resources;
+using System.Windows.Input;
+using System.Threading.Tasks;
+using Windows.System;
+using System.Threading.Tasks;
 
 namespace WordPressReader.Phone.Views
 {
@@ -76,14 +80,35 @@ namespace WordPressReader.Phone.Views
 
         private void CheckSendButtonEnabled()
         {
+            var text = TextBoxMessage.Text.Trim();
+            if(TextBoxMessage.Text!=text)
+                TextBoxMessage.Text = text;
             SendButton.IsEnabled = !string.IsNullOrEmpty(TextBoxMessage.Text.Trim());
         }
 
 
         private async void SendButton_Click(object sender, EventArgs e)
         {
+            await SendMessage();
+        }
+
+        private async void TextBoxMessage_Key(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                e.Handled = true;
+                await SendMessage();
+            }
+        }
+
+        private async Task SendMessage()
+        {
+            var text = TextBoxMessage.Text.Trim();
+            if (string.IsNullOrEmpty(text))
+                return;
+
             var viewModel = ViewModel as RichCommentsPageViewModel;
-            viewModel.Message = TextBoxMessage.Text;
+            viewModel.Message = text;
             SendButton.IsEnabled = false;
             await viewModel.SendMessageAsync();
             this.Focus();

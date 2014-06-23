@@ -256,7 +256,7 @@ namespace WordPressReader.Phone.ViewModels
         }
 
         public async Task SendMessageAsync()
-        {
+        {            
             ClientAnalyticsChannel.Default.LogEvent("Phone/Comments/Create");
 
             var cts = new CancellationTokenSource();

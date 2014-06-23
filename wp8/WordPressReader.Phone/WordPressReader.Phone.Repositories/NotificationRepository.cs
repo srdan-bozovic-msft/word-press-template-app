@@ -86,19 +86,19 @@ namespace WordPressReader.Phone.Repositories
                     if(newItems.Count > 0)
                     {
                         var newCount = count + newItems.Count;
-                        _settingsService.Set(SettingsNotificationsCount,newCount);
-                        _settingsService.Set(SettingsNotificationsLatestUrl, newItems.First().Link);
                         _tileService.UpdateTile(new IconicTileData
                         {
                             Count = newCount,
                             IconImage = new Uri("/Assets/Tiles/IconicTileMediumLargeLeft.png", UriKind.Relative),
                             SmallIconImage = new Uri("/Assets/Tiles/IconicTileSmallLeft.png", UriKind.Relative),
                         });
+                        _settingsService.Set(SettingsNotificationsCount, newCount);
                         newItems.Reverse();
                         foreach (var item in newItems)
                         {
                             _toastService.Show(item.Creator, item.Title);
                         }
+                        _settingsService.Set(SettingsNotificationsLatestUrl, newItems.First().Link);
                     }
                 }
                 return true;
