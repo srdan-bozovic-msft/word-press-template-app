@@ -80,7 +80,7 @@ namespace WordPressReader.Phone.Views
 
         private void CheckSendButtonEnabled()
         {
-            var text = TextBoxMessage.Text.Trim();
+            var text = TextBoxMessage.Text.Trim('\n');
             if(TextBoxMessage.Text!=text)
                 TextBoxMessage.Text = text;
             SendButton.IsEnabled = !string.IsNullOrEmpty(TextBoxMessage.Text.Trim());
