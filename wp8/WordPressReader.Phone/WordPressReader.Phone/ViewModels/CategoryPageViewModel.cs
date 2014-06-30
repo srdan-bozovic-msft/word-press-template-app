@@ -74,7 +74,7 @@ namespace WordPressReader.Phone.ViewModels
             _articles = new ObservableCollection<Article>();
             SelectArticleCommand = new RelayCommand<Article>(
                 article => 
-                    _navigationService.Navigate("Article", _category + ";;" + article.Link)
+                    _navigationService.Navigate("ArticleList", _category + ";;" + article.Link)
                 );
             ReloadCommand = new RelayCommand(async () =>
                 {
