@@ -269,7 +269,7 @@ namespace WordPressReader.Phone.ViewModels
                 {
                     IsLoading = true;
                     var cts = new CancellationTokenSource();
-                    var url = p.Split(new char[] { ':' }, 2)[1];
+                    var url = p.Split(new char[] { ':' }, 2)[1]; 
                     var content = await _blogRepository.GetArticleContentAsync(url, cts.Token);
                     switch (SelectedIndex)
                     {
