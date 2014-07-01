@@ -120,8 +120,6 @@ namespace WordPressReader.Phone.ViewModels
         }
 
         private bool _isLoading;
-        private ICommand _flipArticleHorizontalCommand;
-
         public bool IsLoading
         {
             get
@@ -203,10 +201,6 @@ namespace WordPressReader.Phone.ViewModels
 
         public ICommand ChangePageCommand { get; set; }
 
-        public ICommand FlipArticleHorizontalCommand
-        {
-            get { return _flipArticleHorizontalCommand; }
-            set { _flipArticleHorizontalCommand = value; }
-        }
+        public ICommand FlipArticleHorizontalCommand { get; set; }
     }
 }

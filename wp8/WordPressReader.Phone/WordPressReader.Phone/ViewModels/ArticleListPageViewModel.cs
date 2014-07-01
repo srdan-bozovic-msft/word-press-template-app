@@ -17,7 +17,6 @@ namespace WordPressReader.Phone.ViewModels
     {
         private readonly IBlogRepository _blogRepository;
         private readonly INavigationService _navigationService;
-        private readonly ISocialShare _socialShare;
         private Article[] _articles;
 
         private bool _isLoading;
@@ -106,8 +105,7 @@ namespace WordPressReader.Phone.ViewModels
         {
             _blogRepository = blogRepository;
             _navigationService = navigationService;
-            _socialShare = socialShare;
-            
+
             FlipArticleHorizontalCommand = new RelayCommand<double>(async velocity => {
                 try
                 {
@@ -171,19 +169,54 @@ namespace WordPressReader.Phone.ViewModels
                 {
                     var count = _articles.Length;
                     var article = _articles[(_current + count) % count];
+                    var nextArticle = _articles[(_current + 1 + count) % count];
+                    var previousArticle = _articles[(_current - 1 + count) % count];
                     ClientAnalyticsChannel.Default.LogPageView("Phone/Article");
                     var cts = new CancellationTokenSource();
                     if (newValue == 1)
                     {
-                        await ArticleTwo.LoadAsync(article, cts.Token);
+                        if (oldValue == 1)
+                        {
+                            await ArticleTwo.LoadAsync(article, cts.Token);
+                        }
+                        else
+                        {
+                            await ArticleTwo.LoadInfoAsync(article, cts.Token);
+                        }
+// ReSharper disable once CSharpWarnings::CS4014
+                        ArticleOne.LoadAsync(previousArticle, cts.Token);
+// ReSharper disable once CSharpWarnings::CS4014
+                        ArticleThree.LoadAsync(nextArticle, cts.Token);
                     }
-                    if (newValue == 2)
+                    else if (newValue == 2)
                     {
-                        await ArticleThree.LoadAsync(article, cts.Token);
+                        if (oldValue == 2)
+                        {
+                            await ArticleThree.LoadAsync(article, cts.Token);
+                        }
+                        else
+                        {
+                            await ArticleThree.LoadInfoAsync(article, cts.Token);
+                        }
+// ReSharper disable once CSharpWarnings::CS4014
+                        ArticleTwo.LoadAsync(previousArticle, cts.Token);
+// ReSharper disable once CSharpWarnings::CS4014
+                        ArticleOne.LoadAsync(nextArticle, cts.Token);
                     }
-                    if (newValue == 0)
+                    else if (newValue == 0)
                     {
-                        await ArticleOne.LoadAsync(article, cts.Token);
+                        if (oldValue == 0)
+                        {
+                            await ArticleOne.LoadAsync(article, cts.Token);
+                        }
+                        else
+                        {
+                            await ArticleOne.LoadInfoAsync(article, cts.Token);
+                        }
+// ReSharper disable once CSharpWarnings::CS4014
+                        ArticleThree.LoadAsync(previousArticle, cts.Token);
+// ReSharper disable once CSharpWarnings::CS4014
+                        ArticleTwo.LoadAsync(nextArticle, cts.Token);
                     }
                 }
                 catch (Exception)
