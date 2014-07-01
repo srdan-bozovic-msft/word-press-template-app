@@ -74,7 +74,7 @@ namespace WordPressReader.Phone.Common
      
             ioc.RegisterType<IMainPageViewModel, MainPageViewModel>();
             ioc.RegisterType<ICategoryPageViewModel, CategoryPageViewModel>();
-            ioc.RegisterType<IArticlePageViewModel, ArticlePageViewModel>();
+            ioc.RegisterType<IArticlePageViewModel, ArticleListPageViewModel>();
             ioc.RegisterType<ICommentsPageViewModel, CommentsPageViewModel>();
             ioc.RegisterType<IRichCommentsPageViewModel, RichCommentsPageViewModel>();
             ioc.RegisterType<IAccountSettingsPageViewModel, AccountSettingsPageViewModel>();

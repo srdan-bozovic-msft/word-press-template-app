@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
@@ -8,6 +9,7 @@ using MSC.Phone.Shared.Contracts.PhoneServices;
 using MSC.Phone.Shared.Contracts.Services;
 using WordPressReader.Phone.Contracts.Models;
 using WordPressReader.Phone.Contracts.Repositories;
+using WordPressReader.Phone.Controls;
 
 namespace WordPressReader.Phone.ViewModels
 {
@@ -118,6 +120,8 @@ namespace WordPressReader.Phone.ViewModels
         }
 
         private bool _isLoading;
+        private ICommand _flipArticleHorizontalCommand;
+
         public bool IsLoading
         {
             get
@@ -137,7 +141,6 @@ namespace WordPressReader.Phone.ViewModels
 
             Title = article.Title;
             Link = article.Link;
-            Category = article.Category;
             
             Html = "";
             if (article.CommentsCount == null)
@@ -172,7 +175,6 @@ namespace WordPressReader.Phone.ViewModels
 
             Title = article.Title;
             Link = article.Link;
-            Category = article.Category;
 
             if (article.CommentsCount == null)
             {
@@ -200,5 +202,11 @@ namespace WordPressReader.Phone.ViewModels
         public ICommand ShareCommand { get; set; }
 
         public ICommand ChangePageCommand { get; set; }
+
+        public ICommand FlipArticleHorizontalCommand
+        {
+            get { return _flipArticleHorizontalCommand; }
+            set { _flipArticleHorizontalCommand = value; }
+        }
     }
 }

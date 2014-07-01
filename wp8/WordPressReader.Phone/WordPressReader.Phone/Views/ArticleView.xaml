@@ -16,8 +16,9 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <TextBlock x:Name="TitleText" Style="{StaticResource PhoneTextLargeStyle}" FontWeight="Bold" TextWrapping="Wrap" />
-        <TextBlock  x:Name="LeadText" Grid.Row="1" Style="{StaticResource PhoneTextSubtleStyle}" TextWrapping="Wrap" />
-        <controls:HtmlView x:Name="HtmlView" Grid.Row="2" ScriptNotifyCommand="{Binding Path=ChangePageCommand}"  FlipHorizontalCommand="{Binding FlipArticleHorizontalCommand}"/>
+        <TextBlock x:Name="TitleText" Text="{Binding Title}" Style="{StaticResource PhoneTextLargeStyle}" FontWeight="Bold" TextWrapping="Wrap" />
+        <TextBlock  x:Name="LeadText" Text="{Binding Lead}" Grid.Row="1" Style="{StaticResource PhoneTextSubtleStyle}" TextWrapping="Wrap" />
+        <controls:HtmlView x:Name="HtmlView" Html="{Binding Html}" Grid.Row="2" ScriptNotifyCommand="{Binding Path=ChangePageCommand}"  FlipHorizontalCommand="{Binding FlipArticleHorizontalCommand}"/>
+        <ProgressBar Grid.RowSpan="3" Foreground="#004c9a" Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityConverter}}" IsIndeterminate="{Binding IsLoading, Mode=OneWay}"></ProgressBar>
     </Grid>
 </UserControl>

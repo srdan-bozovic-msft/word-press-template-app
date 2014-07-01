@@ -26,31 +26,24 @@
             <!--Pivot item one-->
             <phone:PivotItem>
                 <views:ArticleView
-                    Title="{Binding TitleOne}"
-                    Lead="{Binding LeadOne}"
-                    Html="{Binding HtmlOne}"
+                    DataContext="{Binding ArticleOne}"
                     />
             </phone:PivotItem>
 
             <!--Pivot item two-->
             <phone:PivotItem>
                 <views:ArticleView
-                    Title="{Binding TitleTwo}"
-                    Lead="{Binding LeadTwo}"
-                    Html="{Binding HtmlTwo}"
+                    DataContext="{Binding ArticleTwo}"
                     />
             </phone:PivotItem>
 
             <!--Pivot item three-->
             <phone:PivotItem>
                 <views:ArticleView
-                    Title="{Binding TitleThree}"
-                    Lead="{Binding LeadThree}"
-                    Html="{Binding HtmlThree}"
+                    DataContext="{Binding ArticleThree}"
                     />
             </phone:PivotItem>
         </phone:Pivot>
-        <ProgressBar Foreground="#004c9a" Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityConverter}}" IsIndeterminate="{Binding IsLoading, Mode=OneWay}"></ProgressBar>
     </Grid>
 
     <bar:Bindable.ApplicationBar>
