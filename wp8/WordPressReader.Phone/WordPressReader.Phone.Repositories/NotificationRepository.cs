@@ -85,6 +85,7 @@ namespace WordPressReader.Phone.Repositories
                     }
                     if(newItems.Count > 0)
                     {
+                        _settingsService.Set(SettingsNotificationsLatestUrl, newItems.First().Link);
                         var newCount = count + newItems.Count;
                         _tileService.UpdateTile(new IconicTileData
                         {
@@ -98,7 +99,6 @@ namespace WordPressReader.Phone.Repositories
                         {
                             _toastService.Show(item.Creator, item.Title);
                         }
-                        _settingsService.Set(SettingsNotificationsLatestUrl, newItems.First().Link);
                     }
                 }
                 return true;
