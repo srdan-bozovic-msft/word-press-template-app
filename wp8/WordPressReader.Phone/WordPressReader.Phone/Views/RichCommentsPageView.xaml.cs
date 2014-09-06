@@ -52,7 +52,7 @@ namespace WordPressReader.Phone.Views
             var tb = (PhoneTextBox)sender;
             tb.Background = new SolidColorBrush(Colors.Transparent);
             tb.BorderBrush = new SolidColorBrush(Colors.Transparent);
-            tb.SelectionBackground = new SolidColorBrush(Colors.Transparent);
+            tb.SelectionBackground = new SolidColorBrush(Color.FromArgb(255, 0, 132, 255));
 
             InputBubble.BorderBrush = new SolidColorBrush(Color.FromArgb(255, 0, 132, 255));
         }
