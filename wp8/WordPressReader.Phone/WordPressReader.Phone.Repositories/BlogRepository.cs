@@ -221,11 +221,19 @@ namespace WordPressReader.Phone.Repositories
                         {
                             if (item.Value.Contains("embed/videoseries"))
                                 continue;
-                            extractedContent = extractedContent.Replace(item.Value,
-                                string.Format(
-                                    "<div class='embed-youtube' style='position:relative;'><a href='#' onclick='window.external.Notify(\"youtube:{0}\");return false;'><div class='_nmyt' ></div><div><img src='http://img.youtube.com/vi/{0}/hqdefault.jpg'></img></div></a></div>",
-                                    item.Groups[3]
-                                    ));
+                            //extractedContent = extractedContent.Replace(item.Value,
+                            //    string.Format(
+                            //        "<div class='embed-youtube' style='position:relative;'><a href='#' onclick='window.external.Notify(\"youtube:{0}\");return false;'><div class='_nmyt' ></div><div><img src='http://img.youtube.com/vi/{0}/hqdefault.jpg'></img></div></a></div>",
+                            //        item.Groups[3]
+                            //        ));
+                            var original = item.Value;
+
+                            var modified = original
+                                .Replace("span", "div")
+                                .Replace("<iframe","<div><iframe")
+                                .Replace("</iframe>", string.Format("</iframe><div onclick='window.external.Notify(\"youtube:{0}\");return false;'></div></div>", item.Groups[3]));
+
+                            extractedContent = extractedContent.Replace(original, modified);
                         }
                     }
 
