@@ -7,6 +7,7 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using MSC.Phone.Shared.Contracts.PhoneServices;
 using MSC.Phone.Shared.Contracts.Services;
+using MyToolkit.Multimedia;
 using WordPressReader.Phone.Contracts.Models;
 using WordPressReader.Phone.Contracts.Repositories;
 using WordPressReader.Phone.Controls;
@@ -41,8 +42,20 @@ namespace WordPressReader.Phone.ViewModels
                     IsLoading = true;
 
                     var cts = new CancellationTokenSource();
-                    var url = p.Split(new[] {':'}, 2)[1];
-                    Html = await _blogRepository.GetArticleContentAsync(url, cts.Token);
+                    var command = p.Split(new[] {':'}, 2);
+                    switch (command[0])
+                    {
+                        case "reload":
+                            var url = command[1];
+                            Html = await _blogRepository.GetArticleContentAsync(url, cts.Token);
+                            break;
+                        case "youtube":
+                            var id = command[1];
+                            await
+                                YouTube.PlayWithPageDeactivationAsync(
+                                    id, false, YouTubeQuality.QualityMedium);
+                            break;
+                    }
 
                     IsLoading = false;
                 }

@@ -197,13 +197,48 @@ namespace WordPressReader.Phone.Repositories
                             );
                     }
 
-                    var matches = Regex.Matches(extractedContent, "href=\"" + baseArticleUrl + "(\\d+)" + "/\"", RegexOptions.IgnoreCase);
+                    //var matchesYouTubeList = Regex.Matches(extractedContent,
+                    //    "<span class='embed-youtube'.*?\\swidth='(\\d+)'.*?\\sheight='(\\d+)'.*?src='http://www.youtube.com/embed/videoseries\\?list=(\\w+).*'.*?</span>", RegexOptions.IgnoreCase);
+
+                    //if (matchesYouTubeList.Count > 0)
+                    //{
+                    //    foreach (Match item in matchesYouTubeList)
+                    //    {
+                    //        extractedContent = extractedContent.Replace(item.Value,
+                    //            string.Format(
+                    //                "<div class='embed-youtube' style='position:relative;'><a href='#' onclick='window.external.Notify(\"youtube:{0}\");return false;'><div class='_nmyt' ></div><div><img src='http://img.youtube.com/vi/{0}/hqdefault.jpg'></img></div></a></div>",
+                    //                item.Groups[3]
+                    //                ));
+                    //    }
+                    //}
+
+                    var matchesYouTube = Regex.Matches(extractedContent,
+                        "<span class='embed-youtube'.*?\\swidth='(\\d+)'.*?\\sheight='(\\d+)'.*?src='http://www.youtube.com/embed/([\\w_\\-]+).*'.*?</span>",RegexOptions.IgnoreCase);
+
+                    if (matchesYouTube.Count >  0)
+                    {
+                        foreach (Match item in matchesYouTube)
+                        {
+                            if (item.Value.Contains("embed/videoseries"))
+                                continue;
+                            extractedContent = extractedContent.Replace(item.Value,
+                                string.Format(
+                                    "<div class='embed-youtube' style='position:relative;'><a href='#' onclick='window.external.Notify(\"youtube:{0}\");return false;'><div class='_nmyt' ></div><div><img src='http://img.youtube.com/vi/{0}/hqdefault.jpg'></img></div></a></div>",
+                                    item.Groups[3]
+                                    ));
+                        }
+                    }
+
+                    var matches = Regex.Matches(extractedContent, "href=\"" + baseArticleUrl + "(\\d*)" + "/?\"", RegexOptions.IgnoreCase);
                     if(matches.Count>0)
                     {
                         foreach (Match item in matches)
                         {
+                            var pageNumber = item.Groups[1].Value;
+                            if (string.IsNullOrEmpty(pageNumber))
+                                pageNumber = "1";
                             //extractedContent = extractedContent.Replace(item.Value, string.Format("javascript:void(window.external.Notify('reload:{0}'));",item.Value));
-                            extractedContent = extractedContent.Replace(item.Value, string.Format("href=\"#\" onclick=\"window.external.Notify('reload:{0}{1}/');return false;\"", baseArticleUrl, item.Groups[1].Value));
+                            extractedContent = extractedContent.Replace(item.Value, string.Format("href=\"#\" onclick=\"window.external.Notify('reload:{0}{1}/');return false;\"", baseArticleUrl, pageNumber));
 
                         } 
                     }
