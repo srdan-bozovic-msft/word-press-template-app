@@ -186,6 +186,11 @@ namespace WordPressReader.Phone.Repositories
                                 await _httpClientService.GetRawAsync(articleUrl, cancellationToken).ConfigureAwait(false),
                                 _configurationService.GetContentXPath());
 
+                    while (extractedContent.Contains("<div class=\"tiled-gallery "))
+                    {
+                        extractedContent = fixGallery(extractedContent);
+                    }
+
                     var match = Regex.Match(extractedContent, "http:\\\\/\\\\/static.polldaddy.com\\\\/p\\\\/(\\d+).js", RegexOptions.IgnoreCase);
 
                     if (match.Success)
@@ -265,6 +270,17 @@ namespace WordPressReader.Phone.Repositories
             {
                 return RepositoryResult<string>.CreateError(xcp);
             }
+        }
+
+        private string fixGallery(string extractedContent)
+        {
+            var start = extractedContent.IndexOf("<div class=\"tiled-gallery ");
+            var end = extractedContent.IndexOf("<!-- close row --> </div>", start) + "<!-- close row --> </div>".Length;
+            var sub = extractedContent.Substring(start, end - start);
+            var imgStart = sub.IndexOf("data-orig-file=\"") + "data-orig-file=\"".Length;
+            var imgEnd = sub.IndexOf("\"", imgStart);
+            var imgUrl = sub.Substring(imgStart, imgEnd - imgStart);
+            return extractedContent.Replace(sub, string.Format("<p><img src=\"{0}\"/></p>", imgUrl));
         }
 
         public async Task<RepositoryResult<CommentsInfo>> GetCommentsInfoAsync(string articleUrl, CancellationToken cancellationToken)
