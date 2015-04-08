@@ -42,7 +42,7 @@ namespace WordPressReader.Phone.Services
             //return "//div[@class='entry']";
             //return "/html[1]/body[1]/div[1]/div[2]/div[3]/div[1]/div[1]/div[3]";
             //return "//div[@class='pf-content']";
-            return "//div[@class='entry-content']";
+            return "//div[@class='post-single-content box mark-links']";
             //return "//div[@class='entry fix']";
         }
 
