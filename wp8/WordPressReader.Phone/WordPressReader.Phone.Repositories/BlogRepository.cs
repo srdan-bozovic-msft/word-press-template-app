@@ -123,7 +123,7 @@ namespace WordPressReader.Phone.Repositories
 
         private async Task<CancellationToken> FetchAsync(string category, CancellationToken cancellationToken, string feedUrl)
         {
-            var feed = await _httpClientService.GetXmlAsync<RssFeed>(feedUrl + "?paged=" + _nextPages[category], cancellationToken);
+            var feed = await GetFeedAsync(feedUrl + "?paged=" + _nextPages[category], cancellationToken);
             var categoryFilter = _configurationService.GetCategoryFilter();
 
             var items = feed.Channel.Items;
@@ -149,6 +149,42 @@ namespace WordPressReader.Phone.Repositories
 
             _nextPages[category]++;
             return cancellationToken;
+        }
+
+        private async Task<RssFeed> GetFeedAsync(string url, CancellationToken cancellationToken)
+        {
+            try
+            {
+                var html =
+                    await
+                        _httpClientService.GetRawAsync(url.Replace("/feed", "").Replace("?paged=", "page/"),
+                            cancellationToken);
+                var htmlDoc = new HtmlAgilityPack.HtmlDocument();
+                htmlDoc.LoadHtml(html);
+                var nodes = htmlDoc.DocumentNode.SelectNodes("//article");
+                var items = new List<RssFeed.RssFeedChannel.RssFeedItem>(nodes.Count);
+                foreach (var node in nodes)
+                {
+                    var item = new RssFeed.RssFeedChannel.RssFeedItem();
+                    var link = node.SelectSingleNode("a");
+                    item.Link = link.Attributes["href"].Value;
+                    item.CommentRss = link.Attributes["href"].Value + "#comments";
+                    item.Title = link.Attributes["title"].Value;
+                    item.EncodedContent = link.ChildNodes.FindFirst("div").InnerHtml;
+                    item.Description = node.SelectSingleNode("div").InnerText.Trim();
+                    item.Creator = node.Descendants().Where(n=>n.Name=="span" && n.Attributes["class"].Value.Contains("theauthor")).First().InnerText.Trim();
+                    item.Categories = new[] { node.SelectSingleNode("//div[@class='featured-cat']").InnerText.Trim() };
+                    var pubDate = node.Descendants().Where(n => n.Name == "span" && n.Attributes["class"].Value.Contains("thetime")).First().InnerText.Trim().Split('/');
+                    item.pubDate =
+                        new DateTime(int.Parse(pubDate[2]), int.Parse(pubDate[1]), int.Parse(pubDate[0])).ToString();                    
+                    items.Add(item);
+                }
+                return new RssFeed{Channel = new RssFeed.RssFeedChannel{Items = items.ToArray()}};
+            }
+            catch (Exception)
+            {
+            }
+            return await _httpClientService.GetXmlAsync<RssFeed>(url, cancellationToken);
         }
 
         public async Task<RepositoryResult<Comment[]>> GetCommentsAsync(Article article, CancellationToken cancellationToken)

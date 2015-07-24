@@ -57,7 +57,7 @@
                                 <StackPanel Margin="0 -90 0 0">
                                     <TextBlock Text="{Binding Title}" FontWeight="Normal"  Foreground="#004c9a" TextWrapping="Wrap" Style="{StaticResource PhoneTextLargeStyle}"/>
                                     <TextBlock Text="{Binding Creator}" Style="{StaticResource PhoneTextNormalStyle}"/>
-                                    <TextBlock Text="{Binding PublishingDate}" Style="{StaticResource PhoneTextNormalStyle}"/>
+                                    <TextBlock Text="{Binding PublishingDate, StringFormat='{}{0:dd.MM.yyyy}'}" Style="{StaticResource PhoneTextNormalStyle}"/>
                                     <TextBlock Text="{Binding Description}"  Foreground="#444444" TextTrimming="WordEllipsis" Style="{StaticResource PhoneTextNormalStyle}"/>
                                 </StackPanel>
                             </StackPanel>
