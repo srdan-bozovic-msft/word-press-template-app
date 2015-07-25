@@ -6,7 +6,7 @@
     <Language code="sr-Latn" />
     <Language code="hr-HR" />
   </Languages>
-  <App xmlns="" ProductID="{b1d4905e-dfa6-451d-b3df-4737df9771eb}" Title="Nokiamob" RuntimeType="Silverlight" Version="2.0.1.9" Genre="apps.normal" Author="WordPressReader.Phone author" Description="" Publisher="WordPressReader.Phone" PublisherID="{4fea5e3c-c7a4-489b-8de1-7f5dd2f79cd6}">
+  <App xmlns="" ProductID="{b1d4905e-dfa6-451d-b3df-4737df9771eb}" Title="Nokiamob" RuntimeType="Silverlight" Version="2.0.1.10" Genre="apps.normal" Author="WordPressReader.Phone author" Description="" Publisher="WordPressReader.Phone" PublisherID="{4fea5e3c-c7a4-489b-8de1-7f5dd2f79cd6}">
     <IconPath IsRelative="true" IsResource="false">Assets\ApplicationIcon.png</IconPath>
     <Capabilities>
       <Capability Name="ID_CAP_NETWORKING" />
