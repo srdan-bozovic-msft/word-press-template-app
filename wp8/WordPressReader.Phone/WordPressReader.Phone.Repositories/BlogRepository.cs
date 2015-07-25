@@ -157,7 +157,7 @@ namespace WordPressReader.Phone.Repositories
             {
                 var html =
                     await
-                        _httpClientService.GetRawAsync(url.Replace("/feed", "").Replace("?paged=", "page/"),
+                        _httpClientService.GetRawAsync(url.Replace("/feed", "").Replace("?paged=", "page/")+"?guid=" + Guid.NewGuid(),
                             cancellationToken);
                 var htmlDoc = new HtmlAgilityPack.HtmlDocument();
                 htmlDoc.LoadHtml(html);
